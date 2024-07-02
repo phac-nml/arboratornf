@@ -11,7 +11,8 @@ process MAP_TO_TSV {
     val metadata_rows
 
     output:
-    path(output_place), emit: tsv_path
+    path(output_place),          emit: tsv_path
+    val nonempty_column_headers, emit: nonempty_column_headers
 
     exec:
     def output_file = "aggregated_data.tsv"
@@ -23,11 +24,21 @@ process MAP_TO_TSV {
     def delimiter = '\t'
     output_place = task.workDir.resolve(output_file)
 
+    metadata = [metadata_headers] + metadata_rows
+    metadata = metadata.transpose()
+    
+    for (int i in (metadata.size()-1)..0) { // Reverse order
+        if (metadata[i][1..-1].every {it == ""}) { // Every except for header
+            metadata.removeAt(i)
+        }
+    }
+
+    metadata = metadata.transpose()
+    nonempty_column_headers = metadata[0]
+
     output_place.withWriter{ writer ->
 
-        writer.writeLine "${metadata_headers.join(delimiter)}"
-
-        metadata_rows.each{ row ->
+        metadata.each{ row ->
             writer.writeLine "${row.join(delimiter)}"
         }
     }

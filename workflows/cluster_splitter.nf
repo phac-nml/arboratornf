@@ -66,12 +66,14 @@ workflow CLUSTER_SPLITTER {
     }.collect())
     ch_versions = ch_versions.mix(profiles_merged.versions)
 
-    merged_metadata = MAP_TO_TSV(metadata_headers, metadata_rows).tsv_path
-    arborator_config = BUILD_CONFIG(metadata_headers).config
+    merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
+    merged_metadata_path = merged_metadata_output.tsv_path
+    nonempty_column_headers = merged_metadata_output.nonempty_column_headers
+    arborator_config = BUILD_CONFIG(nonempty_column_headers).config
 
     arborator_output = ARBORATOR(
         merged_profiles=profiles_merged.combined_profiles,
-        metadata=merged_metadata,
+        metadata=merged_metadata_path,
         configuration_file=arborator_config,
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
