@@ -24,8 +24,7 @@
             "default": "",
             "properties": {
                 "ar_config": {
-                    "type": "string",
-                    "default": "tests/data/configs/config.json"
+                    "type": "string"
                 },
                 "ar_thresholds": {
                     "type": "string",
