@@ -69,7 +69,7 @@ workflow CLUSTER_SPLITTER {
     merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
     merged_metadata_path = merged_metadata_output.tsv_path
     nonempty_column_headers = merged_metadata_output.nonempty_column_headers
-    arborator_config = BUILD_CONFIG(nonempty_column_headers).config
+    arborator_config = params.ar_config ? params.ar_config : BUILD_CONFIG(nonempty_column_headers).config
 
     arborator_output = ARBORATOR(
         merged_profiles=profiles_merged.combined_profiles,
