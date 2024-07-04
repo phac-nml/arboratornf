@@ -6,8 +6,7 @@ process BUILD_CONFIG {
     label 'process_single'
 
     input:
-    val metadata_headers
-    // tuple(ID (header name), metadata_partition_name, metadata_1_header, .. , metadata_8_header)
+    val metadata_headers // tuple(ID (header name), metadata_partition_name, metadata_1_header, .. , metadata_8_header)
 
     output:
     path("config.json"), emit: config
