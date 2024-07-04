@@ -28,6 +28,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
             }
         }
@@ -58,6 +60,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\tage\tdate\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\t21\t2024/05/30\tbeef\ttrue")
             }
         }
@@ -80,6 +84,18 @@ nextflow_process {
 
         then {
             assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7")
+            }
         }
 
     }
@@ -108,6 +124,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tcountry\tage\tsource")
                 assert tsv_text.contains("S1\t1\tEscherichia coli\tCanada\t21\tbeef")
             }
         }
@@ -140,6 +158,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
                 assert tsv_text.contains("S2\t1\tEscherichia coli\tEHEC/STEC\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
                 assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
@@ -174,6 +194,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\tage\tdate\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\t21\t2024/05/30\tbeef\ttrue")
                 assert tsv_text.contains("S2\t1\t55\t2024/05/21\tmilk\tfalse")
                 assert tsv_text.contains("S3\t2\t14\t2024/04/30\tcheese\ttrue")
@@ -208,6 +230,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage")
                 assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21")
                 assert tsv_text.contains("S2\t1\tEscherichia coli\tEHEC/STEC\tThe United States\tO157:H7\t55")
                 assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\tFrance\tO125\t14")
@@ -242,6 +266,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tcountry\tage\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\tEscherichia coli\tCanada\t21\tbeef\ttrue")
                 assert tsv_text.contains("S2\t1\tEscherichia coli\tThe United States\t55\tmilk\tfalse")
                 assert tsv_text.contains("S3\t2\tEscherichia coli\tFrance\t14\tcheese\ttrue")
@@ -278,6 +304,8 @@ nextflow_process {
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
                 assert tsv_text.contains("S1\t1\t\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\t")
                 assert tsv_text.contains("S2\t1\tEscherichia coli\t\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\t")
                 assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\t\tO125\t14\t2024/04/30\tcheese\ttrue")
