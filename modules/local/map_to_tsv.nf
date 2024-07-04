@@ -28,7 +28,7 @@ process MAP_TO_TSV {
     metadata = metadata.transpose()
     
     for (int i in (metadata.size()-1)..0) { // Reverse order
-        if (metadata[i][1..-1].every {it == ""}) { // Every except for header
+        if (metadata[i][1..-1].every {it == "" || it == null}) { // Every except for header
             metadata.removeAt(i)
         }
     }
