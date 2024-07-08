@@ -21,6 +21,14 @@ process MAP_TO_TSV {
         exit 1, "Metadata fields are empty"
     }
 
+    for (int i in (0..(metadata_rows.size() - 1))) {
+        if (metadata_headers.size() != metadata_rows[i].size()) {
+            def length_message = "The length of the metadata header row does not match the length of a metadata content row."
+            log.error length_message
+            exit 1, length_message
+        }
+    }
+
     def delimiter = '\t'
     output_place = task.workDir.resolve(output_file)
 
