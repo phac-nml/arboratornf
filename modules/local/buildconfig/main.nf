@@ -34,12 +34,6 @@ process BUILD_CONFIG {
     OUTLIER_THRESH = "outlier_thresh"
     json_data[OUTLIER_THRESH] = lookup_config_json[OUTLIER_THRESH]
 
-    CLUSTERING_METHOD = "clustering_method"
-    json_data[CLUSTERING_METHOD] = lookup_config_json[CLUSTERING_METHOD]
-
-    CLUSTERING_THRESHOLD = "clustering_threshold"
-    json_data[CLUSTERING_THRESHOLD] = lookup_config_json[CLUSTERING_THRESHOLD]
-
     MIN_CLUSTER_MEMBERS = "min_cluster_members"
     json_data[MIN_CLUSTER_MEMBERS] = lookup_config_json[MIN_CLUSTER_MEMBERS]
 
