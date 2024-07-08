@@ -27,9 +27,16 @@ process MAP_TO_TSV {
     metadata = [metadata_headers] + metadata_rows
     metadata = metadata.transpose()
     
-    for (int i in (metadata.size()-1)..0) { // Reverse order
-        if (metadata[i][1..-1].every {it == "" || it == null}) { // Every except for header
+    for (int i in (metadata.size()-1)..0) {
+        // Working in reverse order, remove all columns that contain no entries,
+        // excluding the header itself.
+        if (metadata[i][1..-1].every {it == "" || it == null}) {
             metadata.removeAt(i)
+        }
+        // If the column is not removed, replace any null headers to prevent issues:
+        // https://github.com/askimed/nf-test/issues/226
+        else if(metadata[i][0] == null) {
+            metadata[i][0] = ""
         }
     }
 
