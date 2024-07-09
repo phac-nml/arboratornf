@@ -16,12 +16,11 @@ include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-
-include { IRIDA_NEXT_OUTPUT    } from '../modules/local/iridanextoutput/main'
 include { LOCIDEX_MERGE } from '../modules/local/locidex/merge/main'
 include { MAP_TO_TSV } from '../modules/local/map_to_tsv.nf'
 include { ARBORATOR } from '../modules/local/arborator/main'
 include { ARBOR_VIEW } from '../modules/local/arborview'
+include { BUILD_CONFIG } from '../modules/local/buildconfig/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,28 +42,11 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 
 workflow CLUSTER_SPLITTER {
 
-    /*
-    ID column (ID_COLUMN) is set to define the field containing the ID of the samples in Arborator, as the
-    metadata is merged within nextflow we are using the 'id' field from our meta map. As this will
-    match the header in the prepared metadata file
-
-    Replace ID name (REPLACE_ID_NAME) is set as we will rename the first header of the locidex merged output to match what we
-    are creating when we aggreagate the metadata while also keeping in line with nf-core satandards. As we must
-    specify and ID column in arborator to merge the two datasets on, however locidex merge outputs a header called 'sample_id'
-    that we cannot change
-
-    Partition column (PARTITION_COLUMN) is set to the first metadata field in the defined in nextflow_schema.json.
-    as it is a string constant it will be listed here and it is marked as mandatory.
-    */
     ID_COLUMN = "sample"
-
     ch_versions = Channel.empty()
-
-    // Create a new channel of metadata from a sample sheet
-    // NB: `input` corresponds to `params.input` and associated sample sheet schema
     input = Channel.fromSamplesheet("input")
 
-    metadata_headers = Channel.of(
+    metadata_headers = Channel.value(
         tuple(
             ID_COLUMN, params.metadata_partition_name,
             params.metadata_1_header, params.metadata_2_header,
@@ -84,28 +66,26 @@ workflow CLUSTER_SPLITTER {
     }.collect())
     ch_versions = ch_versions.mix(profiles_merged.versions)
 
-    merged_metadata = MAP_TO_TSV(metadata_headers, metadata_rows).tsv_path
+    merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
+    merged_metadata_path = merged_metadata_output.tsv_path
+    nonempty_column_headers = merged_metadata_output.nonempty_column_headers
+    arborator_config = params.ar_config ? params.ar_config : BUILD_CONFIG(nonempty_column_headers).config
 
-    arborator_config = file(params.ar_config)
-    if(!arborator_config.exists()){
-        error("The Arborator config file ${params.ar_config} does not exist.")
-    }
-
-    arbys_out = ARBORATOR(
+    arborator_output = ARBORATOR(
         merged_profiles=profiles_merged.combined_profiles,
-        metadata=merged_metadata,
+        metadata=merged_metadata_path,
         configuration_file=arborator_config,
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
         thresholds=params.ar_thresholds)
 
-    ch_versions = ch_versions.mix(arbys_out.versions)
+    ch_versions = ch_versions.mix(arborator_output.versions)
 
-    trees = arbys_out.trees.flatten().map {
+    trees = arborator_output.trees.flatten().map {
         tuple(it.getParent().getBaseName(), it)
     }
 
-    metadata_for_trees = arbys_out.metadata.flatten().map{
+    metadata_for_trees = arborator_output.metadata.flatten().map{
         tuple(it.getParent().getBaseName(), it)
     }
 

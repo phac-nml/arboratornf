@@ -9,8 +9,6 @@ nextflow_pipeline {
                 input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
                 outdir = "results"
 
-                ar_config = "$baseDir/tests/data/configs/config.json"
-
                 metadata_partition_name = "outbreak"
                 metadata_1_header = "organism"
                 metadata_2_header = "subtype"
@@ -37,6 +35,22 @@ nextflow_pipeline {
             def expected_metadata = path("$baseDir/tests/data/metadata/expected_merged_data.tsv")
             assert actual_metadata.text == expected_metadata.text
 
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_samplesheet.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tFalse,True")
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/basic/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
             // Check that the ArborView output is created
             def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview.exists()
@@ -45,6 +59,66 @@ nextflow_pipeline {
             actual_arborview = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview.exists()
             assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+        }
+    }
+
+    test("Small-scale test of full pipeline, missing metadata"){
+        tag "pipeline"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-little-metadata.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/merged/profile.tsv")
+            def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
+            assert actual_profile_tsv.text == expected_profile_tsv.text
+
+            // Check aggregated metadata
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = path("$baseDir/tests/data/metadata/little-metadata-merged.tsv")
+            assert actual_metadata.text == expected_metadata.text
+
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_little-metadata.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC")
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/little_metadata/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            // Check that the ArborView output is created
+            def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\nS1\\t1\\tEscherichia coli\\tEHEC/STEC\\nS2\\t1\\tEscherichia coli\\tEHEC/STEC\\n")
+
+            actual_arborview = path("$launchDir/results/arborview/2_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\nS3\\t2\\tEscherichia coli\\tEPEC\\nS4\\t2\\tEscherichia coli\\tEPEC\\n")
         }
     }
 }
