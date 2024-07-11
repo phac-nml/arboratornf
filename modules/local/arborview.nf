@@ -1,6 +1,6 @@
-// Inline output tree into ArborView.html
-// TODO include versions for python and arbor view when available
-
+/*
+Generates a visualization of a dendogram alongside metadata.
+*/
 
 
 process ARBOR_VIEW {

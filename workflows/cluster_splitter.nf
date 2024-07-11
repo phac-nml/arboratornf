@@ -46,6 +46,7 @@ workflow CLUSTER_SPLITTER {
     ch_versions = Channel.empty()
     input = Channel.fromSamplesheet("input")
 
+    // Metadata headers:
     metadata_headers = Channel.value(
         tuple(
             ID_COLUMN, params.metadata_partition_name,
@@ -55,22 +56,30 @@ workflow CLUSTER_SPLITTER {
             params.metadata_7_header, params.metadata_8_header)
         )
 
+    // Metadata rows:
     metadata_rows = input.map{
         meta, mlst_files -> tuple(meta.id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
     }.toList()
 
+    // Merging individual JSON-formatted genomic profile files
+    // into one TSV-formatted file:
     profiles_merged = LOCIDEX_MERGE(input.map{
         meta, alleles -> alleles
     }.collect())
     ch_versions = ch_versions.mix(profiles_merged.versions)
 
+    // Mapping metadata provided in the sample sheet
+    // into a Arborator-compatible TSV-formatted file:
     merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
     merged_metadata_path = merged_metadata_output.tsv_path
     nonempty_column_headers = merged_metadata_output.nonempty_column_headers
+
+    // Build an Arborator config file is none was provided:
     arborator_config = params.ar_config ? params.ar_config : BUILD_CONFIG(nonempty_column_headers).config
 
+    // Arborator:
     arborator_output = ARBORATOR(
         merged_profiles=profiles_merged.combined_profiles,
         metadata=merged_metadata_path,
@@ -81,6 +90,7 @@ workflow CLUSTER_SPLITTER {
 
     ch_versions = ch_versions.mix(arborator_output.versions)
 
+    // ArborView
     trees = arborator_output.trees.flatten().map {
         tuple(it.getParent().getBaseName(), it)
     }

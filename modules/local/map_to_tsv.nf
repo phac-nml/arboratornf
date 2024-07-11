@@ -1,5 +1,5 @@
 /*
-    Convert a list of lazyMaps into a tsv for later passing into arborator
+Generates a TSV-formatted file containing all metadata in an Arborator-compliant format.
 */
 
 process MAP_TO_TSV {
