@@ -1,6 +1,6 @@
 {
-    "name": "phac-nml/iridanextexample",
-    "homePage": "https://github.com/phac-nml/iridanextexample",
+    "name": "phac-nml/clustersplitter",
+    "homePage": "https://github.com/phac-nml/clustersplitter",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

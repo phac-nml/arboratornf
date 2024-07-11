@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    phac-nml/iridanextexample
+    phac-nml/clustersplitter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/phac-nml/iridanextexample
+    Github : https://github.com/phac-nml/clustersplitter
 ----------------------------------------------------------------------------------------
 */
 
@@ -33,7 +33,7 @@ if (params.validate_params) {
 include { CLUSTER_SPLITTER } from './workflows/cluster_splitter'
 
 //
-// WORKFLOW: Run main phac-nml/iridanextexample analysis pipeline
+// WORKFLOW: Run main phac-nml/clustersplitter analysis pipeline
 //
 workflow PHACNML_CLUSTER_SPLITTER {
     CLUSTER_SPLITTER ()

@@ -1,10 +1,10 @@
-# phac-nml/iridanextexample: Usage
+# phac-nml/clustersplitter: Usage
 
 ## Introduction
 
-This pipeline is an example that illustrates running a nf-core-compliant pipeline on IRIDA Next.
+This [Nextflow](https://www.nextflow.io/) pipeline implements [Arborator](https://github.com/phac-nml/arborator). Arborator takes as input JSON-formatted genomic profiles and corresponding metadata, groups genomic profiles according to specified metadata criteria, and then summarizes each group and its corresponding metadata.
 
-## Samplesheet input
+## Samplesheet Input
 
 You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
 
@@ -14,22 +14,26 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Full samplesheet
 
-The input samplesheet must contain three columns: `ID`, `fastq_1`, `fastq_2`. The IDs within a samplesheet should be unique. All other columns will be ignored.
+The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_1`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below.
+An input sample sheet compatible with this workflow would look as follows:
 
 ```console
-sample,fastq_1,fastq_2
-SAMPLE1,sample1_R1.fastq.gz,sample1_R2.fastq.gz
-SAMPLE2,sample2_R1.fastq.gz,sample2_R2.fastq.gz
-SAMPLE3,sample1_R1.fastq.gz,
+sample,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
+S1,S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true
+S2,S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false
+S3,S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true
+S4,S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true
+S5,S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false
+S6,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false
 ```
 
 | Column    | Description                                                                                                                |
 | --------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. Samples should be unique within a samplesheet.                                                         |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". |
+| `sample`  | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                         |
+| `mlst_alleles` | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json). |
+| `metadata_partition` | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs. |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -38,7 +42,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run main.nf --input ./samplesheet.csv --outdir ./results -profile singularity
+nextflow run phac-nml/clustersplitter -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
 ```
 
 This will launch the pipeline with the `singularity` configuration profile. See below for more information about profiles.
@@ -62,7 +66,7 @@ Do not use `-c <file>` to specify parameters as this will result in errors. Cust
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run phac-nml/iridanextexample -profile docker -params-file params.yaml
+nextflow run phac-nml/clustersplitter -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
 ```
 
 with `params.yaml` containing:
@@ -70,6 +74,15 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
+metadata_partition_name: "outbreak"
+metadata_1_header: "organism"
+metadata_2_header: "subtype"
+metadata_3_header: "country"
+metadata_4_header: "serovar"
+metadata_5_header: "age"
+metadata_6_header: "date"
+metadata_7_header: "source"
+metadata_8_header: "special"
 <...>
 ```
 
@@ -79,7 +92,7 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [phac-nml/iridanextexample page](https://github.com/phac-nml/iridanextexample) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
+First, go to the [phac-nml/clustersplitter page](https://github.com/phac-nml/clustersplitter) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 
