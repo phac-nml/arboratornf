@@ -32,7 +32,7 @@ Furthermore, the structure of the sample sheet is programmatically defined in [a
 
 The mandatory parameters are `--input`, which specifies the samplesheet as described above, and `--output`, which specifies the output results directory. You may wish to provide `-profile singularity` to specify the use of singularity containers and `-r [branch]` to specify which GitHub branch you would like to run. Metadata-related parameters are described above in [Input](#input).
 
-Further parameters (defaults from nf-core) are defined in [nextflow_schema.json](nextflow_schmea.json).
+Further parameters (defaults from nf-core) are defined in [nextflow_schema.json](nextflow_schema.json).
 
 # Running
 
