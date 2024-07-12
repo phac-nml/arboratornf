@@ -11,7 +11,7 @@ Initial release of the clustersplitter pipeline to be used for running [Arborato
 
 - Basic functionality of Arborator.
 - Added support for metadata.
-- Automatically Arborator generate config files.
+- Automatically generate Arborator config files.
 - ArborView integration.
 
 [0.1.0]: https://github.com/phac-nml/clustersplitter/releases/tag/0.1.0
