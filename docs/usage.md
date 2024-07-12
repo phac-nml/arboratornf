@@ -28,12 +28,12 @@ S5,S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01",
 S6,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false
 ```
 
-| Column    | Description                                                                                                                |
-| --------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                         |
-| `mlst_alleles` | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json). |
-| `metadata_partition` | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
-| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs. |
+| Column                   | Description                                                                                                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                 | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
+| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
