@@ -19,10 +19,10 @@ The columns of the samplesheet are defined as follows:
 - metadata_partition: The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc.
 - metadata_1..metadata_8: Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.
 
-The names of each metadata column (metadata_partition, and metadata_1..metadata_2) are provided using the following parameters:
+The names of each metadata column (metadata_partition, and metadata_1..metadata_8) are provided using the following parameters:
 
 - metadata_partition_name: The name of the metadata_partition column (for example: "outbreak").
-- metadata_1_header..metadata_1_header: The name of each individual metadata column (for example: "organism" or "source").
+- metadata_1_header..metadata_8_header: The name of each individual metadata column (for example: "organism" or "source").
 
 An example of the sample sheet is available in [tests/data/samplesheets/samplesheet.csv](tests/data/samplesheets/samplesheet.csv) and corresponding example metadata headers are available in [assets/parameters.yaml](assets/parameters.yaml).
 

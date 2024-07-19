@@ -14,7 +14,7 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Full samplesheet
 
-The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_1`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
+The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_8`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
 An input sample sheet compatible with this workflow would look as follows:
 
