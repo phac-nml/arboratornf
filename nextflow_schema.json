@@ -5,18 +5,6 @@
     "description": "IRIDA Next Example Pipeline",
     "type": "object",
     "definitions": {
-        "arborview": {
-            "title": "ArborView",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "av_html": {
-                    "type": "string",
-                    "default": "assets/ArborView.html"
-                }
-            }
-        },
         "arborator": {
             "title": "Arborator",
             "type": "object",
@@ -312,9 +300,6 @@
         }
     },
     "allOf": [
-        {
-            "$ref": "#/definitions/arborview"
-        },
         {
             "$ref": "#/definitions/arborator"
         },

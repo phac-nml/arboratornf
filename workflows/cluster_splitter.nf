@@ -100,7 +100,7 @@ workflow CLUSTER_SPLITTER {
     }
 
     trees_meta = trees.join(metadata_for_trees)
-    tree_html = file(params.av_html)
+    tree_html = file("$projectDir/assets/ArborView.html")
     ARBOR_VIEW(trees_meta, tree_html)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
