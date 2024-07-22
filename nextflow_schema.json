@@ -5,21 +5,6 @@
     "description": "IRIDA Next Example Pipeline",
     "type": "object",
     "definitions": {
-        "arborator": {
-            "title": "Arborator",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "ar_config": {
-                    "type": "string"
-                },
-                "ar_thresholds": {
-                    "type": "string",
-                    "default": "10,9,8,7,6,5,4,3,2,1"
-                }
-            }
-        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -44,33 +29,27 @@
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
-                "project_name": {
-                    "type": "string",
-                    "default": "assembly",
-                    "pattern": "^\\S+$",
-                    "description": "The name of the project.",
-                    "fa_icon": "fas fa-tag"
-                },
-                "assembler": {
-                    "type": "string",
-                    "default": "stub",
-                    "fa_icon": "fas fa-desktop",
-                    "description": "The sequence assembler to use for sequence assembly.",
-                    "enum": ["default", "stub", "experimental"]
-                },
-                "random_seed": {
-                    "type": "integer",
-                    "default": 1,
-                    "fa_icon": "fas fa-dice-six",
-                    "description": "The random seed to use for sequence assembly.",
-                    "minimum": 1
-                },
                 "email": {
                     "type": "string",
                     "description": "Email address for completion summary.",
                     "fa_icon": "fas fa-envelope",
                     "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
                     "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                }
+            }
+        },
+        "arborator": {
+            "title": "Arborator",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "ar_config": {
+                    "type": "string"
+                },
+                "ar_thresholds": {
+                    "type": "string",
+                    "default": "10,9,8,7,6,5,4,3,2,1"
                 }
             }
         },
