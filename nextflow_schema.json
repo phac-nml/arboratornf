@@ -45,11 +45,16 @@
             "default": "",
             "properties": {
                 "ar_config": {
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^\\S+\\.json$",
+                    "format": "file-path",
+                    "description": "The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output."
                 },
                 "ar_thresholds": {
                     "type": "string",
-                    "default": "10,9,8,7,6,5,4,3,2,1"
+                    "default": "10,9,8,7,6,5,4,3,2,1",
+                    "description": "The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.",
+                    "pattern": "^(\\d+(\\.\\d+)?,)*\\d+(\\.\\d+)?$"
                 }
             }
         },
