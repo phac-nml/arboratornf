@@ -84,6 +84,6 @@
                 "pattern": "^[^\\n\\t\"]+$"
             }
         },
-        "required": ["sample", "mlst_alleles", "metadata_partition"]
+        "required": ["sample", "mlst_alleles"]
     }
 }
