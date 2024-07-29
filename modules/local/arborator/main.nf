@@ -1,5 +1,5 @@
-/* Main module for arborator
-
+/*
+Runs Arborator to generate cluster and metadata summaries.
 */
 
 
@@ -10,7 +10,6 @@ process ARBORATOR {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     'https://depot.galaxyproject.org/singularity/arborator%3A1.0.0--pyhdfd78af_1' :
     'quay.io/biocontainers/arborator:1.0.0--pyhdfd78af_1' }"
-
 
     input:
     path merged_profiles // The allelic profiles
@@ -35,7 +34,6 @@ process ARBORATOR {
     path("${prefix}/threshold_map.json"), emit: threshold_map
     path("${prefix}/run.json"), emit: run_json
     path "versions.yml", emit: versions
-
 
     script:
     prefix = "output_folder"

@@ -1,3 +1,7 @@
+/*
+Builds an Aborator-compliant config file to facilitate improved readability of Arborator outputs.
+*/
+
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 

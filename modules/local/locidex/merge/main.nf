@@ -1,7 +1,6 @@
 /*
-Process for merging multiple allelic profiles
+Merges multiple genomic profiles provided in the sample sheet into one TSV-formatted file.
 */
-
 
 process LOCIDEX_MERGE {
     tag 'Merge Profiles'
