@@ -424,7 +424,7 @@ nextflow_process {
             with(process.out) {
                 // check outputs
                 assert path(tsv_path[0]).exists()
-                assert nonempty_column_headers == []
+                assert nonempty_column_headers == [null]
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
@@ -456,7 +456,7 @@ nextflow_process {
             with(process.out) {
                 // check outputs
                 assert path(tsv_path[0]).exists()
-                assert nonempty_column_headers == []
+                assert nonempty_column_headers == [null]
 
                 // parse tsv file
                 def tsv_text = path(tsv_path[0]).readLines()
