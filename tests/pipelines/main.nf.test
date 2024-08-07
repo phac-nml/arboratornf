@@ -51,6 +51,24 @@ nextflow_pipeline {
             def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/basic/metadata.included.tsv")
             assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
 
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
             // Check that the ArborView output is created
             def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview.exists()
@@ -110,6 +128,24 @@ nextflow_pipeline {
             def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
             def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/little_metadata/metadata.included.tsv")
             assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
 
             // Check that the ArborView output is created
             def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
