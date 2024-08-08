@@ -18,7 +18,7 @@
                 "type": "string",
                 "format": "file-path",
                 "pattern": "^\\S+\\.mlst(\\.subtyping)?\\.json(\\.gz)?$",
-                "errorMessage": "MLST JSON file from locidex report, cannot contain spaces and must have the extension: '.mlst.json' or '.mlst.json.gz'."
+                "errorMessage": "MLST JSON file from locidex report. The file path cannot contain spaces and must have one of the following extensions: '.mlst.json', '.mlst.json.gz', '.mlst.subtyping.json', or '.mlst.subtyping.json.gz'."
             },
             "metadata_partition": {
                 "type": "string",
