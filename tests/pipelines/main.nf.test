@@ -210,6 +210,9 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
         }
     }
 }
