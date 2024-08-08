@@ -16,7 +16,7 @@ The columns of the samplesheet are defined as follows:
 
 - sample: The sample ID name. This name should not contain spaces.
 - mlst_alleles: A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](tests/data/profiles/S1.mlst.json).
-- metadata_partition: The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc.
+- metadata_partition: The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. If an individual sample row in the sample sheet is missing the `metadata_partition` entry, that sample will not be included in the analysis and will instead be reported in the `arborator/metadata.excluded.tsv` output file.
 - metadata_1..metadata_8: Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.
 
 The names of each metadata column (metadata_partition, and metadata_1..metadata_8) are provided using the following parameters:
@@ -77,6 +77,8 @@ An example of the what the contents of the IRIDA Next JSON-formatted file looks 
 ```
 
 Within the `files` section of this JSON-formatted file, all of the output paths are relative to the `outdir`. Therefore, `"path": "arborator/cluster_summary.tsv"` refers to a file located within `outdir/arborator/cluster_summary.tsv`.
+
+The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file.
 
 ## Test profile
 
