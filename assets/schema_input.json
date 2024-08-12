@@ -12,76 +12,76 @@
                 "pattern": "^\\S+$",
                 "meta": ["id"],
                 "unique": true,
-                "errorMessage": "Sample name must be provided and cannot contain spaces"
+                "errorMessage": "Sample name must be provided and cannot contain spaces."
             },
             "mlst_alleles": {
                 "type": "string",
                 "format": "file-path",
                 "pattern": "^\\S+\\.mlst(\\.subtyping)?\\.json(\\.gz)?$",
-                "errorMessage": "MLST JSON file from locidex report, cannot contain spaces and must have the extension: '.mlst.json' or '.mlst.json.gz'"
+                "errorMessage": "MLST JSON file from locidex report. The file path cannot contain spaces and must have one of the following extensions: '.mlst.json', '.mlst.json.gz', '.mlst.subtyping.json', or '.mlst.subtyping.json.gz'."
             },
             "metadata_partition": {
                 "type": "string",
                 "meta": ["metadata_partition"],
-                "errorMessage": "Metadata column used to partition clusters. All samples with the same value in this column will be partitioned into the same group.",
+                "errorMessage": "Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters.",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[a-zA-Z0-9_.-]+$"
             },
             "metadata_1": {
                 "type": "string",
                 "meta": ["metadata_1"],
-                "errorMessage": "Metadata associated with the sample (metadata_1).",
+                "errorMessage": "Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_2": {
                 "type": "string",
                 "meta": ["metadata_2"],
-                "errorMessage": "Metadata associated with the sample (metadata_2).",
+                "errorMessage": "Metadata associated with the sample (metadata_2). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_3": {
                 "type": "string",
                 "meta": ["metadata_3"],
-                "errorMessage": "Metadata associated with the sample (metadata_3).",
+                "errorMessage": "Metadata associated with the sample (metadata_3). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_4": {
                 "type": "string",
                 "meta": ["metadata_4"],
-                "errorMessage": "Metadata associated with the sample (metadata_4).",
+                "errorMessage": "Metadata associated with the sample (metadata_4). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_5": {
                 "type": "string",
                 "meta": ["metadata_5"],
-                "errorMessage": "Metadata associated with the sample (metadata_5).",
+                "errorMessage": "Metadata associated with the sample (metadata_5). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_6": {
                 "type": "string",
                 "meta": ["metadata_6"],
-                "errorMessage": "Metadata associated with the sample (metadata_6).",
+                "errorMessage": "Metadata associated with the sample (metadata_6). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_7": {
                 "type": "string",
                 "meta": ["metadata_7"],
-                "errorMessage": "Metadata associated with the sample (metadata_7).",
+                "errorMessage": "Metadata associated with the sample (metadata_7). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             },
             "metadata_8": {
                 "type": "string",
                 "meta": ["metadata_8"],
-                "errorMessage": "Metadata associated with the sample (metadata_8).",
+                "errorMessage": "Metadata associated with the sample (metadata_8). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;><",
                 "default": "",
-                "pattern": "^[^\\n\\t\"]+$"
+                "pattern": "^[^\\n\\t\\\"\\'\\\\|;><]+$"
             }
         },
         "required": ["sample", "mlst_alleles"]

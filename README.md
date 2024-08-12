@@ -24,6 +24,10 @@ The names of each metadata column (metadata_partition, and metadata_1..metadata_
 - metadata_partition_name: The name of the metadata_partition column (for example: "outbreak").
 - metadata_1_header..metadata_8_header: The name of each individual metadata column (for example: "organism" or "source").
 
+Entries in the `metadata_partition` column in the sample sheet, as well as the name provided by the `metadata_partition_name` parameter, must contain only the following characters alphanumeric, `_`, `.`, and `-` characters.
+
+Entries in the metadata columns in the sample sheet (`metadata_1` through `metadata_8`), as well as the name provided by the metadata header parameters (`metadata_1_header` through `metadata_8_header`), may not contain newlines, tabs, `"`, `'`, `\`, `|`, `;`, `>`, or `<` characters.
+
 An example of the sample sheet is available in [tests/data/samplesheets/samplesheet.csv](tests/data/samplesheets/samplesheet.csv) and corresponding example metadata headers are available in [assets/parameters.yaml](assets/parameters.yaml).
 
 Furthermore, the structure of the sample sheet is programmatically defined in [assets/schema_input.json](assets/schema_input.json). Validation of the sample sheet is performed by [nf-validation](https://nextflow-io.github.io/nf-validation/).
