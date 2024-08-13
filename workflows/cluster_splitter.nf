@@ -17,10 +17,11 @@ include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { LOCIDEX_MERGE } from '../modules/local/locidex/merge/main'
-include { MAP_TO_TSV } from '../modules/local/map_to_tsv.nf'
-include { ARBORATOR } from '../modules/local/arborator/main'
-include { ARBOR_VIEW } from '../modules/local/arborview'
-include { BUILD_CONFIG } from '../modules/local/buildconfig/main'
+include { MAP_TO_TSV    } from '../modules/local/map_to_tsv.nf'
+include { ARBORATOR     } from '../modules/local/arborator/main'
+include { ARBOR_VIEW    } from '../modules/local/arborview'
+include { BUILD_CONFIG  } from '../modules/local/buildconfig/main'
+include { INPUT_ASSURE  } from "../modules/local/input_assure/main"
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,6 +47,11 @@ workflow CLUSTER_SPLITTER {
     ch_versions = Channel.empty()
     input = Channel.fromSamplesheet("input")
 
+    // Make sure the ID in samplesheet / meta.id is the same ID
+    // as the corresponding MLST JSON file:
+    input_assure = INPUT_ASSURE(input)
+    ch_versions = ch_versions.mix(input_assure.versions)
+
     // Metadata headers:
     metadata_headers = Channel.value(
         tuple(
@@ -57,7 +63,7 @@ workflow CLUSTER_SPLITTER {
         )
 
     // Metadata rows:
-    metadata_rows = input.map{
+    metadata_rows = input_assure.result.map{
         meta, mlst_files -> tuple(meta.id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
@@ -65,7 +71,7 @@ workflow CLUSTER_SPLITTER {
 
     // Merging individual JSON-formatted genomic profile files
     // into one TSV-formatted file:
-    profiles_merged = LOCIDEX_MERGE(input.map{
+    profiles_merged = LOCIDEX_MERGE(input_assure.result.map{
         meta, alleles -> alleles
     }.collect())
     ch_versions = ch_versions.mix(profiles_merged.versions)
