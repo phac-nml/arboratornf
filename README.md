@@ -1,6 +1,6 @@
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A523.04.3-brightgreen.svg)](https://www.nextflow.io/)
 
-# clustersplitter (Arborator)
+# arboratornf (Arborator)
 
 This [Nextflow](https://www.nextflow.io/) pipeline implements [Arborator](https://github.com/phac-nml/arborator). Arborator takes as input JSON-formatted genomic profiles and corresponding metadata, groups genomic profiles according to specified metadata criteria, and then summarizes each group and its corresponding metadata.
 
@@ -43,7 +43,7 @@ Further parameters (defaults from nf-core) are defined in [nextflow_schema.json]
 To execute the pipeline, please run:
 
 ```bash
-nextflow run phac-nml/clustersplitter -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
+nextflow run phac-nml/arboratornf -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
 ```
 
 Where the `samplesheet.csv` is structured as specified in the [Input](#input) section and `parameters.yaml` provides parameters for renaming metadata column headers, which may either be specified individually on the command line or collectively in a parameters file.
@@ -89,7 +89,7 @@ The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` outp
 To run with the test profile, please do:
 
 ```bash
-nextflow run phac-nml/clustersplitter -profile docker,test -r main -latest --outdir results
+nextflow run phac-nml/arboratornf -profile docker,test -r main -latest --outdir results
 ```
 
 # Legal
