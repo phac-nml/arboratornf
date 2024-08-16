@@ -9,8 +9,10 @@ process ARBOR_VIEW {
     stageInMode 'copy' // Need to copy in arbor view html
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    "docker.io/python:3.11.6" :
-    "docker.io/python:3.11.6" }"
+    'docker.io/python:3.11.6' :
+    task.ext.override_configured_container_registry != false ? 
+    'docker.io/python:3.11.6' : 
+    'python:3.11.6' }"
 
     input:
     tuple val(cluster_group), path(tree), path(contextual_data)
