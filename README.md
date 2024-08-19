@@ -21,8 +21,8 @@ The columns of the samplesheet are defined as follows:
 
 The names of each metadata column (metadata_partition, and metadata_1..metadata_8) are provided using the following parameters:
 
-- metadata_partition_name: The name of the metadata_partition column (for example: "outbreak").
-- metadata_1_header..metadata_8_header: The name of each individual metadata column (for example: "organism" or "source").
+- `--metadata_partition_name`: The name of the metadata_partition column (for example: "outbreak").
+- `--metadata_1_header..metadata_8_header`: The name of each individual metadata column (for example: "organism" or "source").
 
 Entries in the `metadata_partition` column in the sample sheet, as well as the name provided by the `metadata_partition_name` parameter, must contain only the following characters alphanumeric, `_`, `.`, and `-` characters.
 
@@ -36,6 +36,15 @@ Furthermore, the structure of the sample sheet is programmatically defined in [a
 
 The mandatory parameters are `--input`, which specifies the samplesheet as described above, and `--output`, which specifies the output results directory. You may wish to provide `-profile singularity` to specify the use of singularity containers and `-r [branch]` to specify which GitHub branch you would like to run. Metadata-related parameters are described above in [Input](#input).
 
+## Optional
+
+The optional parameters are as follows:
+
+### Arborator
+
+* `--ar_config`: The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output.
+* `--ar_thresholds`: The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.
+
 Further parameters (defaults from nf-core) are defined in [nextflow_schema.json](nextflow_schema.json).
 
 # Running
@@ -47,6 +56,8 @@ nextflow run phac-nml/arboratornf -profile singularity -r main -latest --input a
 ```
 
 Where the `samplesheet.csv` is structured as specified in the [Input](#input) section and `parameters.yaml` provides parameters for renaming metadata column headers, which may either be specified individually on the command line or collectively in a parameters file.
+
+Additional details on usage of the pipeline are found in [docs/usage.md](docs/usage.md).
 
 # Output
 
@@ -83,6 +94,8 @@ An example of the what the contents of the IRIDA Next JSON-formatted file looks 
 Within the `files` section of this JSON-formatted file, all of the output paths are relative to the `outdir`. Therefore, `"path": "arborator/cluster_summary.tsv"` refers to a file located within `outdir/arborator/cluster_summary.tsv`.
 
 The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file.
+
+Additional details on output files are found in [docs/output.md](docs/output.md)
 
 ## Test profile
 
