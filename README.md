@@ -77,7 +77,8 @@ An example of the what the contents of the IRIDA Next JSON-formatted file looks 
             },
             {
                 "path": "arborator/cluster_summary.tsv"
-            }
+            },
+            // ...
         ],
         "samples": {
 
@@ -95,7 +96,7 @@ Within the `files` section of this JSON-formatted file, all of the output paths 
 
 The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file.
 
-Additional details on output files are found in [docs/output.md](docs/output.md)
+Additional details on output files are found in [docs/output.md](docs/output.md).
 
 ## Test profile
 
