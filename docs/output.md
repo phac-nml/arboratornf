@@ -1,4 +1,4 @@
-# phac-nml/clustersplitter: Output
+# phac-nml/arboratornf: Output
 
 ## Introduction
 

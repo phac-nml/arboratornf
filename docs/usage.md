@@ -1,4 +1,4 @@
-# phac-nml/clustersplitter: Usage
+# phac-nml/arboratornf: Usage
 
 ## Introduction
 
@@ -42,7 +42,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run phac-nml/clustersplitter -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
+nextflow run phac-nml/arboratornf -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
 ```
 
 This will launch the pipeline with the `singularity` configuration profile. See below for more information about profiles.
@@ -66,7 +66,7 @@ Do not use `-c <file>` to specify parameters as this will result in errors. Cust
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run phac-nml/clustersplitter -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
+nextflow run phac-nml/arboratornf -profile singularity -r main -latest --input assets/samplesheet.csv -params-file assets/parameters.yaml --outdir results
 ```
 
 with `params.yaml` containing:
@@ -92,7 +92,7 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [phac-nml/clustersplitter page](https://github.com/phac-nml/clustersplitter) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
+First, go to the [phac-nml/arboratornf page](https://github.com/phac-nml/arboratornf) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 

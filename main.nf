@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    phac-nml/clustersplitter
+    phac-nml/arboratornf
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/phac-nml/clustersplitter
+    Github : https://github.com/phac-nml/arboratornf
 ----------------------------------------------------------------------------------------
 */
 
@@ -33,7 +33,7 @@ if (params.validate_params) {
 include { CLUSTER_SPLITTER } from './workflows/cluster_splitter'
 
 //
-// WORKFLOW: Run main phac-nml/clustersplitter analysis pipeline
+// WORKFLOW: Run main phac-nml/arboratornf analysis pipeline
 //
 workflow PHACNML_CLUSTER_SPLITTER {
     CLUSTER_SPLITTER ()
