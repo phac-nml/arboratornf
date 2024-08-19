@@ -1,5 +1,5 @@
 nextflow_pipeline {
-    name "Integration Tests for Cluster Splitting"
+    name "Integration Tests for Arborator pipeline"
     script "main.nf"
 
     test("Small-scale test of full pipeline"){
