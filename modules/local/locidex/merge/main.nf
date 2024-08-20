@@ -1,7 +1,6 @@
 /*
-Process for merging multiple allelic profiles
+Merges multiple genomic profiles provided in the sample sheet into one TSV-formatted file.
 */
-
 
 process LOCIDEX_MERGE {
     tag 'Merge Profiles'
@@ -9,11 +8,10 @@ process LOCIDEX_MERGE {
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     'https://depot.galaxyproject.org/singularity/locidex:0.1.1--pyhdfd78af_0' :
-    'quay.io/biocontainers/locidex:0.1.1--pyhdfd78af_0' }"
+    'biocontainers/locidex:0.1.1--pyhdfd78af_0' }"
 
     input:
     path input_values // [file(sample1), file(sample2), file(sample3), etc...]
-    tuple val(column_rename), val(column_new_value)
 
     output:
     path("${combined_dir}/*.tsv"), emit: combined_profiles
@@ -23,8 +21,6 @@ process LOCIDEX_MERGE {
     combined_dir = "merged"
     """
     locidex merge -i ${input_values.join(' ')} -o ${combined_dir}
-
-    sed -i 's/$column_rename/$column_new_value/1' ${combined_dir}/*.tsv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

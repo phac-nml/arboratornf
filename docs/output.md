@@ -1,4 +1,4 @@
-# phac-nml/iridanextexample: Output
+# phac-nml/arboratornf: Output
 
 ## Introduction
 
@@ -6,11 +6,12 @@ This document describes the output produced by the pipeline.
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
-- assembly: very small mock assembly files for each sample
-- generate: intermediate files used in generating the IRIDA Next JSON output
-- pipeline_info: information about the pipeline's execution
-- simplify: simplified intermediate files used in generating the IRIDA Next JSON output
-- summary: summary report about the pipeline's execution and results
+- arborator: Output from Arborator containing the cluster summary file and results for each individual cluster.
+- arborview: The ArborView visualization of a dendrogram alongside metadata.
+- build: Contains the automatically generated JSON-formatted config file for formatting the clustering information shown to the user by Arborator.
+- merged: Contains a file with all genomic profiles provided in the input sample sheet merged into one TSV-formatted file.
+- metadata: Contains a file with all metadata assocated with each genomic profile provided in the input sample sheet merged into one TSV-formatted file.
+- pipeline_info: Information about the pipeline's execution.
 
 The IRIDA Next-compliant JSON output file will be named `iridanext.output.json.gz` and will be written to the top-level of the results directory. This file is compressed using GZIP and conforms to the [IRIDA Next JSON output specifications](https://github.com/phac-nml/pipeline-standards#42-irida-next-json).
 
@@ -18,60 +19,65 @@ The IRIDA Next-compliant JSON output file will be named `iridanext.output.json.g
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [Assembly stub](#assembly-stub) - Performs a stub assembly by generating a mock assembly
-- [Generate sample JSON](#generate-sample-json) - Generates a JSON file for each sample
-- [Generate summary](#generate-summary) - Generates a summary text file describing the samples and assemblies
-- [Simplify IRIDA JSON](#simplify-irida-json) - Simplifies the sample JSONs by limiting nesting depth
-- [IRIDA Next Output](#irida-next-output) - Generates a JSON output file that is compliant with IRIDA Next
-- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+- [Locidex Merge](#locidex-merge) - Merges multiple genomic profiles provided in the sample sheet into one TSV-formatted file.
+- [Map to TSV](#map-to-tsv) - Generates a TSV-formatted file containing all metadata in an Arborator-compliant format.
+- [Build Config](#build-config) - Builds an Aborator-compliant config file to facilitate improved readability of Arborator outputs.
+- [Arborator](#arborator) - Runs Arborator to generate cluster and metadata summaries.
+- [ArborView](#arborview) - Generates a visualization of a dendogram alongside metadata.
+- [Pipeline Information](#pipeline-information) - Report metrics generated during the workflow execution.
 
-### Assembly stub
+### Locidex Merge
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `assembly/`
-  - Mock assembly files: `ID.assembly.fa.gz`
+- `merged/`
+  - Merged profiles: `profile.tsv`
 
 </details>
 
-### Generate sample JSON
+### Map to TSV
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `generate/`
-  - JSON files: `ID.json.gz`
+- `metadata/`
+  - Merged metadata: `aggregated_data.tsv`
 
 </details>
 
-### Generate summary
+### Build Config
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `summary/`
-  - Text summary describing samples and assemblies: `summary.txt.gz`
+- `build/`
+  - Generated Arborview config file: `config.json`
 
 </details>
 
-### Simplify IRIDA JSON
+### Arborator
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `simplify/`
-  - Simplified JSON files: `ID.simple.json.gz`
+- `arborator/`
+  - Numbered directories containing information about each cluster: `[N/]`
+  - Cluster summary: `cluster_summary.tsv`
+  - Line list summarizes metadata of excluded profiles: `metadata.excluded.tsv`
+  - Line list summarizes metadata of included profiles: `metadata.included.tsv`
+  - Summary of clustering thresholds used: `threshold_map.json`
+  - Directory containing information about unassociated clusters: `unassociated`
 
 </details>
 
-### IRIDA Next Output
+### ArborView
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `/`
-  - IRIDA Next-compliant JSON output: `iridanext.output.json.gz`
+- `arborview/`
+  - Viewable HTML-formatted dendogram for each cluster: `[N]_arborview.html`
 
 </details>
 

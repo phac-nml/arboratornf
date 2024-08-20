@@ -1,5 +1,5 @@
-/* Main module for arborator
-
+/*
+Runs Arborator to generate cluster and metadata summaries.
 */
 
 
@@ -9,8 +9,7 @@ process ARBORATOR {
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
     'https://depot.galaxyproject.org/singularity/arborator%3A1.0.0--pyhdfd78af_1' :
-    'quay.io/biocontainers/arborator:1.0.0--pyhdfd78af_1' }"
-
+    'biocontainers/arborator:1.0.0--pyhdfd78af_1' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -23,13 +22,18 @@ process ARBORATOR {
     output:
     path("${prefix}/*/tree.nwk"), emit: trees, optional: true
     path("${prefix}/*/metadata.tsv"), emit: metadata, optional: true
+    path("${prefix}/*/clusters.tsv"), emit: clusters_tsv, optional: true
+    path("${prefix}/*/loci.summary.tsv"), emit: loci_summary, optional: true
+    path("${prefix}/*/matrix.pq"), emit: matrix_pq, optional: true
+    path("${prefix}/*/matrix.tsv"), emit: matrix_tsv, optional: true
+    path("${prefix}/*/outliers.tsv"), emit: outliers, optional: true
+    path("${prefix}/*/profile.tsv"), emit: profiles, optional: true
     path("${prefix}/cluster_summary.tsv"), emit: cluster_summary
     path("${prefix}/metadata.excluded.tsv"), emit: metadata_exluded
     path("${prefix}/metadata.included.tsv"), emit: metadata_included
     path("${prefix}/threshold_map.json"), emit: threshold_map
     path("${prefix}/run.json"), emit: run_json
     path "versions.yml", emit: versions
-
 
     script:
     prefix = "output_folder"

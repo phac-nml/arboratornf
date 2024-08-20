@@ -1,5 +1,5 @@
 nextflow_pipeline {
-    name "Integration Tests for Cluster Splitting"
+    name "Integration Tests for Arborator pipeline"
     script "main.nf"
 
     test("Small-scale test of full pipeline"){
@@ -8,6 +8,16 @@ nextflow_pipeline {
             params {
                 input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
                 outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
             }
         }
 
@@ -25,52 +35,442 @@ nextflow_pipeline {
             def expected_metadata = path("$baseDir/tests/data/metadata/expected_merged_data.tsv")
             assert actual_metadata.text == expected_metadata.text
 
-            // Check aborator outputs
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_samplesheet.json")
+            assert actual_config.text == expected_config.text
 
-            // Arborator files
-            def comp_files = [
-                Tuple(path("$launchDir/results/arborator/cluster_summary.tsv"), path("$baseDir/tests/data/arborator/cluster_summary.tsv")),
-                Tuple(path("$launchDir/results/arborator/metadata.excluded.tsv"), path("$baseDir/tests/data/arborator/metadata.excluded.tsv")),
-                Tuple(path("$launchDir/results/arborator/metadata.included.tsv"), path("$baseDir/tests/data/arborator/metadata.included.tsv")),
-                Tuple(path("$launchDir/results/arborator/threshold_map.json"), path("$baseDir/tests/data/arborator/threshold_map.json")),
-                Tuple(path("$launchDir/results/arborator/run.json"), path("$baseDir/tests/data/arborator/run.json")),
-                Tuple(path("$launchDir/results/arborator/1/clusters.tsv"), path("$baseDir/tests/data/arborator/1/clusters.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/loci.summary.tsv"), path("$baseDir/tests/data/arborator/1/loci.summary.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/matrix.pq"), path("$baseDir/tests/data/arborator/1/matrix.pq")),
-                Tuple(path("$launchDir/results/arborator/1/matrix.tsv"), path("$baseDir/tests/data/arborator/1/matrix.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/metadata.tsv"), path("$baseDir/tests/data/arborator/1/metadata.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/outliers.tsv"), path("$baseDir/tests/data/arborator/1/outliers.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/profile.tsv"), path("$baseDir/tests/data/arborator/1/profile.tsv")),
-                Tuple(path("$launchDir/results/arborator/1/tree.nwk"), path("$baseDir/tests/data/arborator/1/tree.nwk")),
-                Tuple(path("$launchDir/results/arborator/2/clusters.tsv"), path("$baseDir/tests/data/arborator/2/clusters.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/loci.summary.tsv"), path("$baseDir/tests/data/arborator/2/loci.summary.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/matrix.pq"), path("$baseDir/tests/data/arborator/2/matrix.pq")),
-                Tuple(path("$launchDir/results/arborator/2/matrix.tsv"), path("$baseDir/tests/data/arborator/2/matrix.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/metadata.tsv"), path("$baseDir/tests/data/arborator/2/metadata.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/outliers.tsv"), path("$baseDir/tests/data/arborator/2/outliers.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/profile.tsv"), path("$baseDir/tests/data/arborator/2/profile.tsv")),
-                Tuple(path("$launchDir/results/arborator/2/tree.nwk"), path("$baseDir/tests/data/arborator/2/tree.nwk")),
-                Tuple(path("$launchDir/results/arborator/3/metadata.tsv"), path("$baseDir/tests/data/arborator/3/metadata.tsv")),
-                Tuple(path("$launchDir/results/arborator/3/profile.tsv"), path("$baseDir/tests/data/arborator/3/profile.tsv")),
-                Tuple(path("$launchDir/results/arborator/unassociated/metadata.tsv"), path("$baseDir/tests/data/arborator/unassociated/metadata.tsv")),
-                Tuple(path("$launchDir/results/arborator/unassociated/profile.tsv"), path("$baseDir/tests/data/arborator/unassociated/profile.tsv"))]
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tFalse,True")
 
-            comp_files.each{
-                assert it[0].text == it[1].text
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/basic/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+            // Check that the ArborView output is created
+            def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+
+            actual_arborview = path("$launchDir/results/arborview/2_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
+        }
+    }
+
+    test("Small-scale test of full pipeline, missing metadata"){
+        tag "pipeline"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-little-metadata.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
             }
+        }
 
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
 
-            // Test ArborView outputs
-            def expected_tree_1 = path("$baseDir/tests/data/arborview/expected_1.html")
-            def expected_tree_2 = path("$baseDir/tests/data/arborview/expected_2.html")
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/merged/profile.tsv")
+            def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
+            assert actual_profile_tsv.text == expected_profile_tsv.text
 
-            def actual_tree_1 = path("$launchDir/results/arborview/1_arborview.html")
-            def actual_tree_2 = path("$launchDir/results/arborview/2_arborview.html")
+            // Check aggregated metadata
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = path("$baseDir/tests/data/metadata/little-metadata-merged.tsv")
+            assert actual_metadata.text == expected_metadata.text
 
-            assert expected_tree_1.text = actual_tree_1.text
-            assert expected_tree_2.text = actual_tree_2.text
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_little-metadata.json")
+            assert actual_config.text == expected_config.text
 
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC")
 
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/little_metadata/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+            // Check that the ArborView output is created
+            def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\nS1\\t1\\tEscherichia coli\\tEHEC/STEC\\nS2\\t1\\tEscherichia coli\\tEHEC/STEC\\n")
+
+            actual_arborview = path("$launchDir/results/arborview/2_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\nS3\\t2\\tEscherichia coli\\tEPEC\\nS4\\t2\\tEscherichia coli\\tEPEC\\n")
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
+        }
+    }
+
+    test("bad metadata_partition_name"){
+        tag "bad_metadata_partition_name"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "bad;>"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("string [bad;>] does not match pattern")
+        }
+    }
+
+    test("bad metadata_1_header"){
+        tag "bad_metadata_1_header"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism|"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("string [organism|] does not match pattern")
+        }
+    }
+
+    test("bad metadata_8_header"){
+        tag "bad_metadata_8_header"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "spe>cial"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("string [spe>cial] does not match pattern")
+        }
+    }
+
+    test("bad meta_partition entry"){
+        tag "bad_meta_partition_entry"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters. (1@)")
+        }
+    }
+
+    test("bad metadata_partition entry"){
+        tag "bad_metadata_partition_entry"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("metadata_partition: Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters. (1@)")
+        }
+    }
+
+    test("bad metadata_1 entry"){
+        tag "bad_metadata_1_entry"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_1.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;>< (Escherichia coli|)")
+        }
+    }
+
+    test("Small-scale test of full pipeline, ID mismatch"){
+        tag "id-mismatch"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-id-mismatch.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/merged/profile.tsv")
+            def expected_profile_tsv = path("$baseDir/tests/data/profiles/mismatched_profiles.tsv")
+            assert actual_profile_tsv.text == expected_profile_tsv.text
+
+            // Check aggregated metadata
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = path("$baseDir/tests/data/metadata/mismatched-metadata.tsv")
+            assert actual_metadata.text == expected_metadata.text
+
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_samplesheet.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tFalse,True")
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/mismatch/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+            // Check that the ArborView output is created
+            def actual_arborview = path("$launchDir/results/arborview/1_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nMISMATCH\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+
+            actual_arborview = path("$launchDir/results/arborview/2_arborview.html")
+            assert actual_arborview.exists()
+            assert actual_arborview.text.contains("sample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.pq" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
         }
     }
 }

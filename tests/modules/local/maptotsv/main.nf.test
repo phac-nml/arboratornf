@@ -1,0 +1,469 @@
+nextflow_process {
+
+    name "Test Process MAP_TO_TSV"
+    script "modules/local/map_to_tsv.nf"
+    process "MAP_TO_TSV"
+
+    test("Single row, basic input") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "EHEC/STEC", "Canada", "O157:H7", "21", "2024/05/30", "beef", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
+            }
+        }
+
+    }
+
+    test("Single row, empty columns, head") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "", "", "", "", "21", "2024/05/30", "beef", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\t21\t2024/05/30\tbeef\ttrue")
+            }
+        }
+
+    }
+
+    test("Single row, empty columns, tail") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "EHEC/STEC", "Canada", "O157:H7", "", "", "", ""])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7")
+            }
+        }
+
+    }
+
+    test("Single row, empty columns, mixed") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "", "Canada", "", "21", "", "beef", ""])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "country", "age", "source"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\tcountry\tage\tsource")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tCanada\t21\tbeef")
+            }
+        }
+
+    }
+
+    test("Multiple rows, basic input") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "EHEC/STEC", "Canada", "O157:H7", "21", "2024/05/30", "beef", "true"],
+                                    ["S2", "1", "Escherichia coli", "EHEC/STEC", "The United States", "O157:H7", "55", "2024/05/21", "milk", "false"],
+                                    ["S3", "2", "Escherichia coli", "EPEC", "France", "O125", "14", "2024/04/30", "cheese", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
+                assert tsv_text.contains("S2\t1\tEscherichia coli\tEHEC/STEC\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
+                assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
+            }
+        }
+
+    }
+
+    test("Multiple rows, empty columns, head") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "", "", "", "", "21", "2024/05/30", "beef", "true"],
+                                    ["S2", "1", "", "", "", "", "55", "2024/05/21", "milk", "false"],
+                                    ["S3", "2", "", "", "", "", "14", "2024/04/30", "cheese", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\t21\t2024/05/30\tbeef\ttrue")
+                assert tsv_text.contains("S2\t1\t55\t2024/05/21\tmilk\tfalse")
+                assert tsv_text.contains("S3\t2\t14\t2024/04/30\tcheese\ttrue")
+            }
+        }
+
+    }
+
+    test("Multiple rows, empty columns, tail") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "EHEC/STEC", "Canada", "O157:H7", "21", "", "", ""],
+                                    ["S2", "1", "Escherichia coli", "EHEC/STEC", "The United States", "O157:H7", "55", "", "", ""],
+                                    ["S3", "2", "Escherichia coli", "EPEC", "France", "O125", "14", "", "", ""])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar", "age"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21")
+                assert tsv_text.contains("S2\t1\tEscherichia coli\tEHEC/STEC\tThe United States\tO157:H7\t55")
+                assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\tFrance\tO125\t14")
+            }
+        }
+
+    }
+
+    test("Multiple rows, empty columns, mixed") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "", "Canada", "", "21", "", "beef", "true"],
+                                    ["S2", "1", "Escherichia coli", "", "The United States", "", "55", "", "milk", "false"],
+                                    ["S3", "2", "Escherichia coli", "", "France", "", "14", "", "cheese", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "country", "age", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tcountry\tage\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tCanada\t21\tbeef\ttrue")
+                assert tsv_text.contains("S2\t1\tEscherichia coli\tThe United States\t55\tmilk\tfalse")
+                assert tsv_text.contains("S3\t2\tEscherichia coli\tFrance\t14\tcheese\ttrue")
+            }
+        }
+
+    }
+
+    test("Multiple rows, partially empty columns") {
+
+        tag "partially_empty"
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "", "EHEC/STEC", "Canada", "O157:H7", "21", "2024/05/30", "beef", ""],
+                                    ["S2", "1", "Escherichia coli", "", "The United States", "O157:H7", "55", "2024/05/21", "milk", ""],
+                                    ["S3", "2", "Escherichia coli", "EPEC", "", "O125", "14", "2024/04/30", "cheese", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 4
+                assert tsv_text.contains("sample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\t\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\t")
+                assert tsv_text.contains("S2\t1\tEscherichia coli\t\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\t")
+                assert tsv_text.contains("S3\t2\tEscherichia coli\tEPEC\t\tO125\t14\t2024/04/30\tcheese\ttrue")
+            }
+        }
+
+    }
+
+    test("Single row, null columns") {
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "subtype", "country", "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", null, null, null, null, "21", "2024/05/30", "beef", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\t21\t2024/05/30\tbeef\ttrue")
+            }
+        }
+
+    }
+
+    test("Single row, null and empty headers") {
+
+        tag "nulls"
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak", "organism", "", null, "serovar", "age", "date", "source", "special")
+                input[1] = new Tuple(["S1", "1", "Escherichia coli", "EHEC/STEC", "Canada", "O157:H7", "21", "2024/05/30", "beef", "true"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [["sample", "outbreak", "organism", "", "", "serovar", "age", "date", "source", "special"]]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\toutbreak\torganism\t\t\tserovar\tage\tdate\tsource\tspecial")
+                assert tsv_text.contains("S1\t1\tEscherichia coli\tEHEC/STEC\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
+            }
+        }
+
+    }
+
+    test("Mismatched header and row lengths") {
+
+        tag "mismatched lengths"
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "outbreak")
+                input[1] = new Tuple(["S1"])
+                """
+            }
+        }
+
+        then {
+            assert process.success == false
+        }
+
+    }
+
+    test("All empty data, empty strings") {
+
+        tag "empty data - strings"
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("", "", "", "", "", "", "", "", "", "")
+                input[1] = new Tuple(["", "", "", "", "", "", "", "", "", ""])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [null]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 0
+            }
+        }
+
+    }
+
+    test("All empty data, nulls") {
+
+        tag "empty data - nulls"
+
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple(null, null, null, null, null, null, null, null, null, null)
+                input[1] = new Tuple([null, null, null, null, null, null, null, null, null, null])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                // check outputs
+                assert path(tsv_path[0]).exists()
+                assert nonempty_column_headers == [null]
+
+                // parse tsv file
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 0
+            }
+        }
+
+    }
+
+}
