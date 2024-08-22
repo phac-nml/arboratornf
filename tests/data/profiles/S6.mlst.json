@@ -1,11 +1,25 @@
 {
-  "S6": {
-    "locus_1": 2,
-    "locus_2": 3,
-    "locus_3": "3",
-    "locus_4": "-",
-    "locus_5": "?",
-    "locus_6": 9,
-    "locus_7": 0
+  "db_info": {},
+  "parameters": {
+    "mode": "normal",
+    "min_match_ident": 100,
+    "min_match_cov": 100,
+    "max_ambiguous": 0,
+    "max_internal_stops": 0
+  },
+  "data": {
+    "sample_name": "S6",
+    "profile": {
+      "S6": {
+        "locus_1": 2,
+        "locus_2": 3,
+        "locus_3": "3",
+        "locus_4": "-",
+        "locus_5": "?",
+        "locus_6": 9,
+        "locus_7": 0
+      }
+    },
+    "seq_data": {}
   }
 }

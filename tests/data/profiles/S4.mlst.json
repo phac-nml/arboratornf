@@ -1,11 +1,25 @@
 {
-  "S4": {
-    "locus_1": 1,
-    "locus_2": 2,
-    "locus_3": "3",
-    "locus_4": "2",
-    "locus_5": "1",
-    "locus_6": 6,
-    "locus_7": 1
+  "db_info": {},
+  "parameters": {
+    "mode": "normal",
+    "min_match_ident": 100,
+    "min_match_cov": 100,
+    "max_ambiguous": 0,
+    "max_internal_stops": 0
+  },
+  "data": {
+    "sample_name": "S4",
+    "profile": {
+      "S4": {
+        "locus_1": 1,
+        "locus_2": 2,
+        "locus_3": "3",
+        "locus_4": "2",
+        "locus_5": "1",
+        "locus_6": 6,
+        "locus_7": 1
+      }
+    },
+    "seq_data": {}
   }
 }
