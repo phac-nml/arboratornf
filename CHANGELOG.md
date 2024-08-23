@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Upgraded `locidex/merge` to version `0.2.2` and updated `input_assure.py` and test data for compatibility with the new `mlst.json` allele file format.
+- Upgraded `locidex/merge` to version `0.2.3` and updated `input_assure.py` and test data for compatibility with the new `mlst.json` allele file format.
   - [PR19](https://github.com/phac-nml/arboratornf/pull/19)
 
 ## [0.1.0] - 2024-08-20
