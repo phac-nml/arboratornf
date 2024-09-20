@@ -43,9 +43,30 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 
 workflow CLUSTER_SPLITTER {
 
-    ID_COLUMN = "sample"
+    ID_COLUMN = "sample_name"
     ch_versions = Channel.empty()
+
+    // Track processed IDs
+    def processedIDs = [] as Set
+
     input = Channel.fromSamplesheet("input")
+    // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
+    .map { meta, mlst_file ->
+            if (!meta.id) {
+                meta.id = meta.irida_id
+            } else {
+                // Non-alphanumeric characters (excluding _,-,.) will be replaced with "_"
+                meta.id = meta.id.replaceAll(/[^A-Za-z0-9_.\-]/, '_')
+            }
+            // Ensure ID is unique by appending meta.irida_id if needed
+            while (processedIDs.contains(meta.id)) {
+                meta.id = "${meta.id}_${meta.irida_id}"
+            }
+            // Add the ID to the set of processed IDs
+            processedIDs << meta.id
+
+            tuple(meta, mlst_file)}
+
 
     // Make sure the ID in samplesheet / meta.id is the same ID
     // as the corresponding MLST JSON file:
