@@ -12,7 +12,7 @@ You will need to create a samplesheet with information about the samples you wou
 --input '[path to samplesheet file]'
 ```
 
-### Full samplesheet
+### Full Standard Samplesheet
 
 The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_8`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
@@ -36,6 +36,29 @@ S6,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2
 | `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+### IRIDA-Next Optional Samplesheet Configuration
+
+`arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which contain the following columns: `sample`, `sample_name`, `fastq_1`, `fastq_2`, `reference_assembly`, and `metadata_1` - `metadata_8`. The sample IDs within a samplesheet should be unique.
+
+A final samplesheet file consisting of both single- and paired-end data may look something like the one below.
+
+```console
+sample,sample_name,fastq_1,fastq_2,reference_assembly,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
+SAMPLE1,A1,/path/to/sample1_fastq1.fq,/path/to/sample1_fastq2.fq,/path/to/sample1_assembly.fa,,,,,,,,
+SAMPLE2,B2,/path/to/sample2_fastq1.fq,,,,,,,,,,
+```
+
+| Column                       | Description                                                                                                                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                     | Custom sample name. Samples should be unique within a samplesheet.                                                                                                                     |
+| `sample_name`                | Sample name used in outputs (filenames and sample names)                                                                                                                               |
+| `fastq_1`                    | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `fastq_2`                    | (Optional) Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                  |
+| `reference_assembly`         | (Optional) Full path to a FASTA file representing a reference assembly derived from this sample. This field provides a method for selecting a reference genome for the whole pipeline. |
+| `metadata_1` to `metadata_8` | (Optional) Permits up to 8 columns for user-defined contextual metadata associated with each `sample`.                                                                                 |
+
+An [example samplesheet](../tests/data/samplesheets/samplesheet-samplename.csv) has been provided with the pipeline.
 
 ## Running the pipeline
 
