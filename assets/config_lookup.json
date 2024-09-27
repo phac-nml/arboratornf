@@ -2,7 +2,7 @@
     "outlier_thresh": "25",
     "min_cluster_members": 2,
     "partition_column_name": "outbreak",
-    "id_column_name": "sample",
+    "id_column_name": "sample_name",
     "only_report_labeled_columns": "False",
     "skip_qa": "False",
 
@@ -62,6 +62,7 @@
         "organism": { "data_type": "None", "label": "Organism", "default": "", "display": "True" },
         "outbreak": { "data_type": "None", "label": "Outbreak Code", "default": "", "display": "True" },
         "sample": { "data_type": "None", "label": "Sample", "default": "", "display": "True" },
+        "sample_name": { "data_type": "None", "label": "Sample", "default": "", "display": "True" },
         "serovar": { "data_type": "Categorical", "label": "Serovar", "default": "", "display": "True" },
         "special": { "data_type": "Categorical", "label": "Special", "default": "", "display": "True" },
         "source": { "data_type": "Categorical", "label": "Source Type", "default": "", "display": "True" },
