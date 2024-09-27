@@ -61,6 +61,7 @@
         "min_dist": { "data_type": "None", "label": "min_dist", "default": "0", "display": "True" },
         "organism": { "data_type": "None", "label": "Organism", "default": "", "display": "True" },
         "outbreak": { "data_type": "None", "label": "Outbreak Code", "default": "", "display": "True" },
+        "sample": { "data_type": "None", "label": "Sample", "default": "", "display": "True" },
         "sample_name": { "data_type": "None", "label": "Sample", "default": "", "display": "True" },
         "serovar": { "data_type": "Categorical", "label": "Serovar", "default": "", "display": "True" },
         "special": { "data_type": "Categorical", "label": "Special", "default": "", "display": "True" },
