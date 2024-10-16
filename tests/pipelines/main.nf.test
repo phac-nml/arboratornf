@@ -72,11 +72,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
@@ -179,11 +179,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
@@ -437,11 +437,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nMISMATCH\\tMISMATCH\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nMISMATCH\\tMISMATCH\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
@@ -544,11 +544,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tsample1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\tsample_2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nsample1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nsample_2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample\\tsample_name\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tsample_3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tsample4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
