@@ -30,7 +30,7 @@ process BUILD_CONFIG {
     def json_grouped = [:]
     def json_linelist = [:]
 
-    def id = metadata_headers[1]
+    def id = metadata_headers[0]
     def PARTITION_INDEX = 2
     def partition = metadata_headers[PARTITION_INDEX]
 
