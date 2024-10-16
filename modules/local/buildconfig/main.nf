@@ -30,8 +30,8 @@ process BUILD_CONFIG {
     def json_grouped = [:]
     def json_linelist = [:]
 
-    def id = metadata_headers[1] // Should probably not be set by column number
-    def PARTITION_INDEX = 2 // Should probably not be set by column number
+    def id = metadata_headers[1]
+    def PARTITION_INDEX = 2
     def partition = metadata_headers[PARTITION_INDEX]
 
     // GENERAL
