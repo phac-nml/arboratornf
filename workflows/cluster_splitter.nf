@@ -77,7 +77,7 @@ workflow CLUSTER_SPLITTER {
     // Metadata headers:
     metadata_headers = Channel.value(
         tuple(
-            ID_COLUMN2, ID_COLUMN, params.metadata_partition_name,
+            ID_COLUMN, ID_COLUMN2, params.metadata_partition_name,
             params.metadata_1_header, params.metadata_2_header,
             params.metadata_3_header, params.metadata_4_header,
             params.metadata_5_header, params.metadata_6_header,
@@ -86,7 +86,7 @@ workflow CLUSTER_SPLITTER {
 
     // Metadata rows:
     metadata_rows = input_assure.result.map{
-        meta, mlst_files -> tuple(meta.irida_id, meta.id, meta.metadata_partition,
+        meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
     }.toList()
