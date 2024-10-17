@@ -43,9 +43,31 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 
 workflow CLUSTER_SPLITTER {
 
-    ID_COLUMN = "sample"
+    ID_COLUMN = "sample_name"
+    ID_COLUMN2 = "sample"
     ch_versions = Channel.empty()
+
+    // Track processed IDs
+    def processedIDs = [] as Set
+
     input = Channel.fromSamplesheet("input")
+    // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
+    .map { meta, mlst_file ->
+            if (!meta.id) {
+                meta.id = meta.irida_id
+            } else {
+                // Non-alphanumeric characters (excluding _,-,.) will be replaced with "_"
+                meta.id = meta.id.replaceAll(/[^A-Za-z0-9_.\-]/, '_')
+            }
+            // Ensure ID is unique by appending meta.irida_id if needed
+            while (processedIDs.contains(meta.id)) {
+                meta.id = "${meta.id}_${meta.irida_id}"
+            }
+            // Add the ID to the set of processed IDs
+            processedIDs << meta.id
+
+            tuple(meta, mlst_file)}
+
 
     // Make sure the ID in samplesheet / meta.id is the same ID
     // as the corresponding MLST JSON file:
@@ -55,7 +77,7 @@ workflow CLUSTER_SPLITTER {
     // Metadata headers:
     metadata_headers = Channel.value(
         tuple(
-            ID_COLUMN, params.metadata_partition_name,
+            ID_COLUMN, ID_COLUMN2, params.metadata_partition_name,
             params.metadata_1_header, params.metadata_2_header,
             params.metadata_3_header, params.metadata_4_header,
             params.metadata_5_header, params.metadata_6_header,
@@ -64,7 +86,7 @@ workflow CLUSTER_SPLITTER {
 
     // Metadata rows:
     metadata_rows = input_assure.result.map{
-        meta, mlst_files -> tuple(meta.id, meta.metadata_partition,
+        meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
     }.toList()
