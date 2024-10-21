@@ -2,7 +2,7 @@
     "outlier_thresh": "25",
     "min_cluster_members": 2,
     "partition_column_name": "outbreak",
-    "id_column_name": "sample",
+    "id_column_name": "sample_name",
     "only_report_labeled_columns": "False",
     "skip_qa": "False",
     "grouped_metadata_columns": {
@@ -62,7 +62,7 @@
         }
     },
     "linelist_columns": {
-        "sample": {
+        "sample_name": {
             "data_type": "None",
             "label": "Sample",
             "default": "",
