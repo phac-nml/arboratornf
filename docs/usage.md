@@ -39,24 +39,25 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 
 ### IRIDA-Next Optional Samplesheet Configuration
 
-`arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which contain the following columns: `sample`, `sample_name`, `fastq_1`, `fastq_2`, `reference_assembly`, and `metadata_1` - `metadata_8`. The sample IDs within a samplesheet should be unique.
-
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below.
+`arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which contain the following columns: `sample`, `sample_name`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_8`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
 ```console
-sample,sample_name,fastq_1,fastq_2,reference_assembly,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
-SAMPLE1,A1,/path/to/sample1_fastq1.fq,/path/to/sample1_fastq2.fq,/path/to/sample1_assembly.fa,,,,,,,,
-SAMPLE2,B2,/path/to/sample2_fastq1.fq,,,,,,,,,,
+sample,sample_name,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
+S1,sample1,S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true
+S2,sample2,S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false
+S3,sampleQ,S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true
+S4,sampleQ,S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true
+S5,sample#5,S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false
+S6,,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false
 ```
 
-| Column                       | Description                                                                                                                                                                            |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                     | Custom sample name. Samples should be unique within a samplesheet.                                                                                                                     |
-| `sample_name`                | Sample name used in outputs (filenames and sample names)                                                                                                                               |
-| `fastq_1`                    | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2`                    | (Optional) Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                  |
-| `reference_assembly`         | (Optional) Full path to a FASTA file representing a reference assembly derived from this sample. This field provides a method for selecting a reference genome for the whole pipeline. |
-| `metadata_1` to `metadata_8` | (Optional) Permits up to 8 columns for user-defined contextual metadata associated with each `sample`.                                                                                 |
+| Column                   | Description                                                                                                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                 | Custom sample name. Samples should be unique within a samplesheet.                                                                                                              |
+| `sample_name`            | Sample name used in outputs (filenames and sample names)                                                                                                                        |
+| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../tests/data/samplesheets/samplesheet-samplename.csv) has been provided with the pipeline.
 

@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2024-11-05
+
+- Fixed the replacement of `docker.userEmulation` with `docker.runOptions      = '-u $(id -u):$(id -g)'` that was causing a bug in Azure
+
 ## [0.3.0] - 2024-10-21
 
 - Added the ability to include a `sample_name` column in the input samplesheet.csv. Allows for compatibility with IRIDA-Next input configuration.
@@ -36,3 +40,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.1.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.1.0
 [0.2.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.2.0
 [0.3.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.0
+[0.3.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.1
