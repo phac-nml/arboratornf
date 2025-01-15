@@ -117,7 +117,8 @@ nextflow_pipeline {
         }
     }
 
-    test("Small-scale test of full pipeline with all samples same partition"){
+    test("Small-scale test of full pipeline with all samples same partition, tree comparison"){
+        tag "pipeline"
         tag "pipeline_all"
         when {
             params {
@@ -145,22 +146,8 @@ nextflow_pipeline {
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
-            // Check aggregated metadata
-            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
-            def expected_metadata = path("$baseDir/tests/data/metadata/expected_merged_data.tsv")
-            //assert actual_metadata.text == expected_metadata.text
-
-            // Arborator outputs:
-            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
-            // so it's not possible to compare the entire output.
-            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
-            //assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
-            //assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tFalse,True")
-
-            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
-            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/basic/metadata.included.tsv")
-            //assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
-
+            // The goal of this test is to make sure that the produced tree has correct branches
+            // So other comparisons for metadata, etc, were removed
             def actual_arborator_tree_1 = path("$launchDir/results/arborator/1_tree.nwk")
             def expected_arborator_tree_1 = path("$baseDir/tests/data/arborator/1/tree_all_single_partition.nwk")
             assert actual_arborator_tree_1.text == expected_arborator_tree_1.text
@@ -183,11 +170,6 @@ nextflow_pipeline {
             assert !path("$launchDir/results/arborator/2_outliers.tsv").exists()
             assert !path("$launchDir/results/arborator/2_profile.tsv").exists()
             assert !path("$launchDir/results/arborator/2_tree.nwk").exists()
-
-            // Check that the ArborView output is created
-            def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
-            //assert actual_arborview1.exists()
-            //assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
