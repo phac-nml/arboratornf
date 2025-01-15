@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-01-15
+
+- Updated the build of the arborator container in order to update the `genomic_address_service` dependency to [version 0.1.3](https://github.com/phac-nml/genomic_address_service/releases/tag/0.1.3), which fixes an issue with branch lengths in newick files.
+
 ## [0.3.1] - 2024-11-05
 
 - Fixed the replacement of `docker.userEmulation` with `docker.runOptions      = '-u $(id -u):$(id -g)'` that was causing a bug in Azure
@@ -41,3 +45,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.2.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.2.0
 [0.3.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.0
 [0.3.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.1
+[0.3.2]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.2
