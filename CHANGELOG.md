@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2025-02-11
+
+- Updated the build of the arborator container in order to update the `genomic_address_service` dependency to [version 0.1.4](https://github.com/phac-nml/genomic_address_service/releases/tag/0.1.4).
+
+
 ## [0.3.2] - 2025-01-15
 
 - Updated the build of the arborator container in order to update the `genomic_address_service` dependency to [version 0.1.3](https://github.com/phac-nml/genomic_address_service/releases/tag/0.1.3), which fixes an issue with branch lengths in Newick files [PR 27](https://github.com/phac-nml/arboratornf/pull/27).
