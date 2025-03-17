@@ -17,9 +17,9 @@ include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { LOCIDEX_MERGE } from '../modules/local/locidex/merge/main'
-include { MAP_TO_TSV    } from '../modules/local/map_to_tsv.nf'
+include { MAP_TO_TSV    } from '../modules/local/maptotsv/main'
 include { ARBORATOR     } from '../modules/local/arborator/main'
-include { ARBOR_VIEW    } from '../modules/local/arborview'
+include { ARBOR_VIEW    } from '../modules/local/arborview/main'
 include { BUILD_CONFIG  } from '../modules/local/buildconfig/main'
 include { INPUT_ASSURE  } from "../modules/local/input_assure/main"
 
