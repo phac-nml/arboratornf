@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.0.0--pyhdfd78af_3' :
-    'biocontainers/arborator:1.0.0--pyhdfd78af_3' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.0.0--pyhdfd78af_4' :
+    'biocontainers/arborator:1.0.0--pyhdfd78af_4' }"
 
     input:
     path merged_profiles // The allelic profiles

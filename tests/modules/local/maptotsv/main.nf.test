@@ -1,7 +1,7 @@
 nextflow_process {
 
     name "Test Process MAP_TO_TSV"
-    script "modules/local/map_to_tsv.nf"
+    script "modules/local/maptotsv/main.nf"
     process "MAP_TO_TSV"
 
     test("Single row, basic input") {
