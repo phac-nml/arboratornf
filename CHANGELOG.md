@@ -7,15 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Updated`
 
-- Update the `ArborView` version to [0.0.8](https://github.com/phac-nml/ArborView/releases/tag/v0.0.8) (i.e. replace `bin/inline_arborview.py` with `scripts/fillin_data.py`) [PR 33](https://github.com/phac-nml/arboratornf/pull/33)
+- Update the `ArborView` version to [0.0.8](https://github.com/phac-nml/ArborView/releases/tag/v0.0.8) (i.e. replace `bin/inline_arborview.py` with `scripts/fillin_data.py` and `assets/ArborView.html` with `html/table.html`) [PR 33](https://github.com/phac-nml/arboratornf/pull/33)
 
 ## [0.3.4] - 2025-03-20
 
 ### Changed
 
-- Updated the build of the arborator container in order to update the `genomic_address_service` dependency to [version 0.1.5](https://github.com/phac-nml/genomic_address_service/releases/tag/0.1.5). See [PR #31](https://github.com/phac-nml/arborator/pull/31).
-- Fixed some nf-core linting warnings and moved arborview.nf and map_to_tsv.nf modules to subfolders. See [PR #31](https://github.com/phac-nml/arborator/pull/31).
-- Removed unneeded input_check.nf. See [PR #31](https://github.com/phac-nml/arborator/pull/31).
+- Updated the build of the arborator container in order to update the `genomic_address_service` dependency to [version 0.1.5](https://github.com/phac-nml/genomic_address_service/releases/tag/0.1.5). See [PR #31](https://github.com/phac-nml/arboratornf/pull/31).
+- Fixed some nf-core linting warnings and moved arborview.nf and map_to_tsv.nf modules to subfolders. See [PR #31](https://github.com/phac-nml/arboratornf/pull/31).
+- Removed unneeded input_check.nf. See [PR #31](https://github.com/phac-nml/arboratornf/pull/31).
 
 ## [0.3.3] - 2025-02-11
 
