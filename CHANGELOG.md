@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Updated`
 
 - Update the `ArborView` version to [0.0.8](https://github.com/phac-nml/ArborView/releases/tag/v0.0.8) (i.e. replace `bin/inline_arborview.py` with `scripts/fillin_data.py` and `assets/ArborView.html` with `html/table.html`) [PR #33](https://github.com/phac-nml/arboratornf/pull/33)
+- Update the `aborator` container [build](https://github.com/bioconda/bioconda-recipes/pull/55278) which in turn updates the dependency, `profile_dists`, to version 1.0.4 [PR #36](https://github.com/phac-nml/arboratornf/pull/36)
 
 ### `Changed`
 
