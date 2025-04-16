@@ -53,7 +53,7 @@ The optional parameters are as follows:
 ### Arborator
 
 - `--ar_config`: The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output.
-- `--ar_thresholds`: The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.
+- `--ar_thresholds`: The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers (default: 100,50,25,20,15,10,5,0).
 
 Further parameters (defaults from nf-core) are defined in [nextflow_schema.json](nextflow_schema.json).
 
