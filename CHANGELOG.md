@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Updated`
 
-- Update the `ArborView` version to [0.0.8](https://github.com/phac-nml/ArborView/releases/tag/v0.0.8) (i.e. replace `bin/inline_arborview.py` with `scripts/fillin_data.py` and `assets/ArborView.html` with `html/table.html`) [PR 33](https://github.com/phac-nml/arboratornf/pull/33)
+- Update the `ArborView` version to [0.0.8](https://github.com/phac-nml/ArborView/releases/tag/v0.0.8) (i.e. replace `bin/inline_arborview.py` with `scripts/fillin_data.py` and `assets/ArborView.html` with `html/table.html`) [PR #33](https://github.com/phac-nml/arboratornf/pull/33)
 
 ### `Changed`
 
-- Changed the defaults for the `arborator` parameter `--ar_thresholds` from "10,9,8,7,6,5,4,3,2,1" to "100,50,25,20,15,10,5,0"
+- Changed the defaults for the `arborator` parameter `--ar_thresholds` from "10,9,8,7,6,5,4,3,2,1" to "100,50,25,20,15,10,5,0" [PR #35](https://github.com/phac-nml/arboratornf/pull/35)
 
 ## [0.3.4] - 2025-03-20
 
