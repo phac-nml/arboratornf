@@ -52,7 +52,7 @@
                 },
                 "ar_thresholds": {
                     "type": "string",
-                    "default": "10,9,8,7,6,5,4,3,2,1",
+                    "default": "100,50,25,20,15,10,5,0",
                     "description": "The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.",
                     "pattern": "^(\\d+(\\.\\d+)?,)*\\d+(\\.\\d+)?$"
                 }
