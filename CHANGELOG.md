@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fix`
 
-- Fixes the issue [#38](https://github.com/phac-nml/arboratornf/issues/38) `metadata_partition` containing a "." where leading to misnamed Arborview output files. [PR #38](https://github.com/phac-nml/arboratornf/pull/38)
+- Fixes the issue [#38](https://github.com/phac-nml/arboratornf/issues/38) `metadata_partition` containing a "." were leading to misnamed Arborview output files. [PR #38](https://github.com/phac-nml/arboratornf/pull/38)
+
+### `Added`
+
+- `/pipeline_info/software_versions.yml` now added to the global files in the `iridanext.output.json.gz` to allow IRIDA-Next users access to software versions. [PR #38](https://github.com/phac-nml/arboratornf/pull/38)
 
 ## [0.3.5] - 2025-04-16
 
