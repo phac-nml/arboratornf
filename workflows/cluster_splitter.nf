@@ -120,11 +120,11 @@ workflow CLUSTER_SPLITTER {
 
     // ArborView
     trees = arborator_output.trees.flatten().map {
-        tuple(it.getParent().getBaseName(), it)
+        tuple(it.getParent().getName(), it)
     }
 
     metadata_for_trees = arborator_output.metadata.flatten().map{
-        tuple(it.getParent().getBaseName(), it)
+        tuple(it.getParent().getName(), it)
     }
 
     trees_meta = trees.join(metadata_for_trees)
