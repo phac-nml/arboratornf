@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update the `arborator` software to version [1.0.6](https://github.com/phac-nml/arborator/releases/tag/1.0.6). [PR #41](https://github.com/phac-nml/arboratornf/pull/41)
 - Updated `nf-iridanext` plugin to version [0.3.0](https://github.com/phac-nml/nf-iridanext/releases/tag/0.3.0). [PR #41](https://github.com/phac-nml/arboratornf/pull/41)
 
+### `Changed`
+
+- Changed the arborator Nextflow module to print the versions of `gas` and `profile_dists` to make it easier to verify which versions of those software were used. [PR #41](https://github.com/phac-nml/arboratornf/pull/41)
+
 ### `Removed`
 
 - Removed `matrix.pq` (parquet) file in IRIDA Next JSON. [PR #41](https://github.com/phac-nml/arboratornf/pull/41)

@@ -46,6 +46,8 @@ process ARBORATOR {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         arborator : \$(echo \$(arborator -V 2>&1) | sed 's/arborator //')
+        genomic_address_service: \$( gas mcluster -V | sed -e "s/gas//g" )
+        profile_dists: \$( profile_dists -V | sed -e "s/profile_dists//g" )
     END_VERSIONS
     """
 }
