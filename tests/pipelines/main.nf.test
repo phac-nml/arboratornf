@@ -150,7 +150,6 @@ nextflow_pipeline {
 
             assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
             assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
-            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
             assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
             assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
             assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
@@ -160,7 +159,6 @@ nextflow_pipeline {
             // Since all samples in same partition, 1, should be no output files prefixed with 2
             assert !path("$launchDir/results/arborator/2_clusters.tsv").exists()
             assert !path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
-            assert !path("$launchDir/results/arborator/2_matrix.pq").exists()
             assert !path("$launchDir/results/arborator/2_matrix.tsv").exists()
             assert !path("$launchDir/results/arborator/2_metadata.tsv").exists()
             assert !path("$launchDir/results/arborator/2_outliers.tsv").exists()
@@ -175,7 +173,6 @@ nextflow_pipeline {
 
             assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
-            assert iridanext_global.findAll { it.path == "arborator/1_matrix.pq" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
@@ -185,7 +182,6 @@ nextflow_pipeline {
             // Since all samples in same partition, 1, should be no output files prefixed with 2
             assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 0
-            assert iridanext_global.findAll { it.path == "arborator/2_matrix.pq" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 0
