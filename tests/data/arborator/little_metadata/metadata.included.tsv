@@ -1,7 +1,7 @@
-sample_name	outbreak	organism	subtype	sample
-S1	1	Escherichia coli	EHEC/STEC	S1
-S2	1	Escherichia coli	EHEC/STEC	S2
-S3	2	Escherichia coli	EPEC	S3
-S4	2	Escherichia coli	EPEC	S4
-S5	3	Escherichia coli	EAEC	S5
-S6	unassociated	Escherichia coli	EAEC	S6
+sample_name	outbreak	organism	subtype	gas_denovo_cluster_address
+S1	1	Escherichia coli	EHEC/STEC	1|1.1.1.1.1.1.1.1.1.1
+S2	1	Escherichia coli	EHEC/STEC	1|1.1.1.1.1.1.1.1.2.2
+S3	2	Escherichia coli	EPEC	2|1.1.1.1.1.1.1.1.1.1
+S4	2	Escherichia coli	EPEC	2|1.1.1.1.1.1.1.1.1.2
+S5	3	Escherichia coli	EAEC	
+S6	unassociated	Escherichia coli	EAEC	
