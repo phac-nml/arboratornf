@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.0.0--pyhdfd78af_5' :
-    'biocontainers/arborator:1.0.0--pyhdfd78af_5' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.0.6--pyhdfd78af_0' :
+    'biocontainers/arborator:1.0.6--pyhdfd78af_0' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -46,6 +46,8 @@ process ARBORATOR {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         arborator : \$(echo \$(arborator -V 2>&1) | sed 's/arborator //')
+        genomic_address_service: \$( gas mcluster -V | sed -e "s/gas//g" )
+        profile_dists: \$( profile_dists -V | sed -e "s/profile_dists//g" )
     END_VERSIONS
     """
 }
