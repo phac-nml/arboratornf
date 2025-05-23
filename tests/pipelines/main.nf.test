@@ -607,7 +607,6 @@ nextflow_pipeline {
 
             assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
             assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
-            assert path("$launchDir/results/arborator/1_matrix.pq").exists()
             assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
             assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
             assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
@@ -616,7 +615,6 @@ nextflow_pipeline {
 
             assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
             assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
-            assert path("$launchDir/results/arborator/2_matrix.pq").exists()
             assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
             assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
             assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
@@ -626,11 +624,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nsample1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nsample_2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\t1|1.1.1.1.1.1.1.1.1.1\\nsample_2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\t1|1.1.1.1.1.1.1.1.2.2\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
@@ -640,7 +638,6 @@ nextflow_pipeline {
 
             assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
-            assert iridanext_global.findAll { it.path == "arborator/1_matrix.pq" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
@@ -648,7 +645,6 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
-            assert iridanext_global.findAll { it.path == "arborator/2_matrix.pq" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
@@ -692,11 +688,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1.1.1.1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS1\\tS1\\t1.1.1.1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\nS2\\tS2\\t1.1.1.1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS1\\tS1\\t1.1.1.1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\t1.1.1.1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1.1.1.1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\t1.1.1.1|1.1.1.1.1.1.1.1.2.2\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/1.1.1.2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\nS3\\tS3\\t1.1.1.2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\nS4\\tS4\\t1.1.1.2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS3\\tS3\\t1.1.1.2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t1.1.1.2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t1.1.1.2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t1.1.1.2|1.1.1.1.1.1.1.1.1.2\\n")
 
         }
     }
