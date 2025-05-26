@@ -17,7 +17,7 @@
             display: none;
         }
 
-
+        
         .input-group-text:hover {
             filter: brightness(80%);
         }
@@ -70,9 +70,35 @@
             animation: updown 1s ease infinite
         }
 
+        /* dataTables Search input box */
+    
+        .dataTables_filter {
+            position: relative;
+            margin-right: 24px;
+        }
+        .dataTables_wrapper .dataTables_filter input{
+            border-radius: 20px !important;
+            margin-top: 1px;
+        }
+    
+        .dataTables_filter input {
+            width: 250px;
+            height: 26px;
+            background: #fcfcfc;
+            box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+            text-indent: 10px;
+        }
+    
+        .dataTables_filter .fa-search {
+            position: absolute;
+            top: 10px;
+            left: auto;
+            right: 10px;
+        }
+
 
     </style>
-
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Random colour library for creating some nice highlighted trees  https://github.com/davidmerfield/randomColor   -->
@@ -83,7 +109,7 @@
     <!-- Below switching to tidy tree 0.5.1 as the dev broke 0.5.0 -->
 
     <script rel="stylesheet" type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-
+    
     <!--JQuery Beautiful Data Tables-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -93,10 +119,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-
+    
+    
     <!--toggle buttons by https://palcarazm.github.io/bootstrap5-toggle/ -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.jquery.min.js"></script>
@@ -104,7 +130,10 @@
     <!-- Sweet Alerts 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!--Colour distances calculation library at https://github.com/color-js/color.js-->
+    <script src="https://colorjs.io/dist/color.global.js"></script>
 
+    
 
     <script type="text/javascript">
 
@@ -116,6 +145,7 @@
         const DATA = __DEADFOOD__;
         const DEBUG = false;
         const TREE_OFFSET = 100;
+        var METDATA_TABLE_NON_FULL_SCREEEN_HEIGTH = null; //before changing to full screen mode save the current size of the metadata table
         var NEWICK = null;
         var tree_root = null;
         var METADATA = null;
@@ -124,17 +154,17 @@
         var query_table = null;
         var ORIGINAL_DATA = null;
         var ORIGINAL_VIEW_BOX = null;
-        var ORIGINAL_WIDTH_SVG = 0;
+        var ORIGINAL_WIDTH_SVG = 0;  
         var LAST_MOVE_X = 0;
         var LAST_MOVE_Y = 0;
         var SHOW_BRANCH_LENGTHS = true;
         var SHOW_METADATA_IN_NAME = false;
         var LINE_THICKNESS = 2.0;
-
+        
         //var TREE_VAL = 1; // sets defualt tree to draw
         var TREE_VAL = "Dendrogram"; // sets defualt tree to draw
         //var TREE_SWITCH = false;
-        var collapse_subtree = false; // can think of another way to signal state without our larger refactor
+        var collapse_subtree = false; // can think of another way to signal state without our larger refactor 
         var focused_element = null; // Focused element to have its colour reset
         var RADIUS_INCREASED = false;
         var MENU_CREATED = false;
@@ -164,14 +194,14 @@
                 var ele = document.getElementById("TreeData");
                 var ele_style = window.getComputedStyle(ele);
                 const width = parseInt(ele_style.width);
-
+    
                 //var width = window.innerWidth;
                 const marginTop = 40;
                 const marginRight = 10;
                 const marginBottom = 30; // updated for viewing
                 const marginLeft = 40;
 
-                const label_safety_factor = 300;
+                const label_safety_factor = 300; 
                 const inner_radius = width - label_safety_factor;
 
 
@@ -184,10 +214,10 @@
                 // “bottom”, in the data domain. The width of a column is based on the tree’s height.
                 const root = d3.hierarchy(data);
                 root.sort((a, b) => b.height - a.height || d3.ascending(a.id, b.id));
-
+                
                 const leaves_in_tree = root.leaves();
                 const pixels_per_label = 15;
-
+                
                 const dx = 20;
 
                 const dy = inner_radius / root.height;
@@ -197,29 +227,29 @@
                     d.distance = inner_radius - (d.height * dy)
                     if (d.children){
                         d.children.forEach(d => setDistance(d, y0, k, dy));
-                    }
+                    } 
                 }
 
                 setDistance(root, root.data.d = 0, (inner_radius / maxLength(root)), dy) // Third value is a scaling factor
 
-
+                
                 tree = d3.cluster()
                             .nodeSize([dx, dy])
                             .separation( (a, b) => { return 1;}) // Can pass in a custom function to alter distance between labels, 1 means all labels are spaced the same distance
-
+                
                 diagonal = (d) => {
                     // https://www.w3.org/TR/SVG/paths.html#PathElement for path movements meanings
                     // https://yqnn.github.io/svg-path-editor/ for planning paths
                     return `M${d.source.distance},${d.source.x} V${d.target.x} H${d.target.distance}`
 
                 };
-
+                
                 // Create the SVG container, a layer for the links and a layer for the nodes.
                 const svg = d3.create("svg")
                     .attr("id", "TreeSVG")
                     .attr("width", width) //makes sure all tree nodes are within view
                     .attr("style", `width:100%; height: auto; font: 10px sans-serif; user-select: none;`)
-
+                    
                 const gLink = svg.append("g")
                     .attr("fill", "none")
                     .attr("stroke", "#555")
@@ -242,7 +272,7 @@
 
                     let left = root;
                     let right = root;
-
+                    
                     root.eachBefore(node => {
                         if (node.x < left.x) left = node;
                         if (node.x > right.x) right = node;
@@ -276,7 +306,7 @@
                                 return "tree-node leaf-node";
                             }
                             return "tree-node inner-node";
-                        })
+                        }) 
                         .on("mousedown", (event, d) => {
                             d.children = d.children ? null : d._children;
                             if(event.which == left_mouse){
@@ -302,9 +332,9 @@
 
                     nodeEnter.append("circle")
                         .attr("r", d => !d.data.leaf ? INNER_NODE_SIZE : LEAF_NODE_SIZE) // size 6 for leaf nodes and 4 for inner nodes
-                        .attr("fill", d => !d.data.leaf ? "#555" : "#999")
+                        .attr("fill", d => !d.data.leaf ? "#555" : "#999")               
                         .attr("stroke-width", 10);
-
+                    
                     // Add branch length to all inner nodes
                     nodeEnter.append("text")
                         .text((d) => {
@@ -320,18 +350,18 @@
                             }
                         })
                         .attr("text-anchor", d => d.parent === null ? "start" : "end")
-                        .attr("dx", (d) => {
-                            let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString();
+                        .attr("dx", (d) => { 
+                            let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString(); 
                             return `${-val.length + 1}pt`;
                         })
                         .attr("dy", 14)
                         .attr("font-size", 12);
-
+                    
                     nodeEnter.append("text")
                         // dx the 12 corresponds to a safety metric to add some space between nodes, no children, dx is 0 to align leaves to inner nodes
                         // Below two lines allow for inner nodes to show up
-                        .attr("dx", d => !d.data.leaf ? 0 : inner_radius - d.distance + 12)
-                        .attr("dy", d => !d.data.leaf  ? -8 : 0)
+                        .attr("dx", d => !d.data.leaf ? 0 : inner_radius - d.distance + 12) 
+                        .attr("dy", d => !d.data.leaf  ? -8 : 0) 
                         .attr("x", d => !d.data.leaf ? -10 : 6)
                         .attr("font-size", 12)
                         .attr("text-anchor", d => !d.data.leaf ? "end" : "start")
@@ -340,7 +370,7 @@
                         .text(d => d.data.meta ? d.data.name ? `${d.data.name}-${d.data.meta}` : d.data.meta : d.data.name )
                         .clone(true).lower()
                         .attr("stroke", "white");
-
+                    
                     // Transition nodes to their new position.
                     const nodeUpdate = node.merge(nodeEnter).transition(transition)
                         .attr("transform", d => `translate(${d.distance},${d.x})`) // aligns the text to the nodes
@@ -385,9 +415,9 @@
             d.id = i;
             d._children = d.children;
             });
-
+            
             update(null, root);
-
+            
             return svg.node();
         };
 
@@ -398,14 +428,14 @@
                 var ele = document.getElementById("TreeData");
                 var ele_style = window.getComputedStyle(ele);
                 const width = parseInt(ele_style.width);
-
+    
                 //var width = window.innerWidth;
                 const marginTop = 40;
                 const marginRight = 10;
                 const marginBottom = 30; // updated for viewing
                 const marginLeft = 40;
 
-                let label_safety_factor = 300;
+                let label_safety_factor = 300; 
                 const inner_radius = width - label_safety_factor;
 
                 function setDistance(d, y0, k) {
@@ -427,7 +457,7 @@
 
                 const leaves_in_tree = root.leaves();
                 const pixels_per_label = 15;
-
+                
                 const dx = 20;
                 //const dy = (width - marginRight - marginLeft) / (1 + root.height);
                 const dy = inner_radius / root.height;
@@ -443,13 +473,13 @@
                     // https://www.w3.org/TR/SVG/paths.html#PathElement for path movements meanings
                     return `M${d.source.distance},${d.source.x} L${d.source.distance},${d.target.x} L${d.target.distance},${d.target.x}`
                 };
-
+                
                 // Create the SVG container, a layer for the links and a layer for the nodes.
                 const svg = d3.create("svg")
                     .attr("id", "TreeSVG")
                     .attr("width", width + 20) //makes sure all tree nodes are within view
                     .attr("style", `width:100%; height: auto; font: 10px sans-serif; user-select: none;`)
-
+                    
                 const gLink = svg.append("g")
                     .attr("fill", "none")
                     .attr("stroke", "#555")
@@ -460,7 +490,7 @@
                 const gNode = svg.append("g")
                     .attr("cursor", "pointer")
                     .attr("pointer-events", "all");
-
+                
                 function showLinkExtension(d, show=true) {
                         const dest = show ? inner_radius : d.target.distance;
                         const path = d3.path();
@@ -558,7 +588,7 @@
                         .attr("r", d => !d.data.leaf ? INNER_NODE_SIZE : LEAF_NODE_SIZE) // size 6 for leaf nodes and 4 for inner nodes
                         .attr("fill", d => !d.data.leaf ? "#555" : "#999")
                         .attr("stroke-width", 10);
-
+                    
                     // Add branch length to all inner nodes
                     nodeEnter.append("text")
                         .text((d) => {
@@ -574,18 +604,18 @@
                             }
                         })
                         .attr("text-anchor", d => d.parent === null ? "start" : "end")
-                        .attr("dx", (d) => {
-                                let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString();
+                        .attr("dx", (d) => { 
+                                let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString(); 
                                 return `${-val.length + 1}pt`;
                         })
                         .attr("dy", 14)
                         .attr("font-size", 12);
-
+                    
                     nodeEnter.append("text")
                         // dx the 12 corresponds to a safety metric to add some space between nodes, no children, dx is 0 to align leaves to inner nodes
                         // Below two lines allow for inner nodes to show up
-                        .attr("dx", d => !d.data.leaf ? 0 : inner_radius - d.distance + 12)
-                        .attr("dy", d => !d.data.leaf ? -8 : 0)
+                        .attr("dx", d => !d.data.leaf ? 0 : inner_radius - d.distance + 12) 
+                        .attr("dy", d => !d.data.leaf ? -8 : 0) 
                         .attr("x", d => !d.data.leaf ? -10 : 6)
                         .attr("font-size", 12)
                         .attr("text-anchor", d => !d.data.leaf ? "end" : "start")
@@ -594,7 +624,7 @@
                         .text(d => d.data.meta ? d.data.name ? `${d.data.name}-${d.data.meta}` : d.data.meta : d.data.name )
                         .clone(true).lower()
                         .attr("stroke", "white");
-
+                    
                     // Transition nodes to their new position.
                     const nodeUpdate = node.merge(nodeEnter).transition(transition)
                         .attr("transform", d => `translate(${d.distance},${d.x})`) // aligns the text to the nodes
@@ -639,9 +669,9 @@
             d.id = i;
             d._children = d.children;
             });
-
+            
             update(null, root);
-
+            
             return svg.node();
         };
 
@@ -650,33 +680,33 @@
             // Made with lots of help from: https://observablehq.com/d/6c52fee38fb28b2f
             var ele = document.getElementById("TreeData");
             var ele_style = window.getComputedStyle(ele);
-
+            
             const width = parseInt(ele_style.width);
             const height = width;
-            const outerRadius = width / 2;
+            const outerRadius = width / 2; 
             const innerRadius = outerRadius - 170;
             const decimal_places = 4;
             const sc_to_radians = Math.PI / 180;
 
             const root = d3.hierarchy(data);
             root.sort((a, b) => b.height - a.height || d3.ascending(a.id, b.id));
-
-            const dx = 20;
+            
+            const dx = 20; 
             const dy = outerRadius;
-
+    
             function linkStep(startAngle, startRadius, endAngle, endRadius) {
                 const c0 = Math.cos(startAngle = (startAngle - 90) / 180 * Math.PI);
                 const s0 = Math.sin(startAngle);
-                const c1 = Math.cos(endAngle = (endAngle - 90) / 180 * Math.PI);
-                const s1 = Math.sin(endAngle);
-
+                const c1 = Math.cos(endAngle = (endAngle - 90) / 180 * Math.PI); 
+                const s1 = Math.sin(endAngle); 
+                
                 return "M" + startRadius * c0 + "," + startRadius * s0
                     + (endAngle === startAngle ? "" : "A" + startRadius + "," + startRadius + " 0 0 " + (endAngle > startAngle ? 1 : 0) + " " + startRadius * c1 + "," + startRadius * s1)
                     + " L" + endRadius * c1 + "," + endRadius * s1;
             }
-
+            
             function setRadius(d, y0, k) {
-
+                
                 d.radius = (y0 += d.data.d) * k;
                 if (d.children) d.children.forEach(d => setRadius(d, y0, k));
             }
@@ -715,7 +745,7 @@
                 .attr("cursor", "pointer")
                 .attr("pointer-events", "all")
                 .attr("transform", `translate(${outerRadius}, ${outerRadius})`);
-
+            
             const gLink = svg.append("g")
                     .attr("fill", "none")
                     .attr("stroke", "#555")
@@ -723,7 +753,7 @@
                     .attr("class", "adjustable-line")
                     .attr("stroke-width", LINE_THICKNESS)
                     .attr("transform", `translate(${outerRadius}, ${outerRadius})`);
-
+            
             root.data.d = 0
             const max_len = innerRadius / maxLength(root)
             setRadius(root, root.data.d, max_len);
@@ -741,9 +771,9 @@
                 if(!d.data.leaf){
                     new_rad = d.radius
                 }
+                
 
-
-
+                
                 let x = Math.cos((d.x - 90) * sc_to_radians) * new_rad;
                 let y = Math.sin((d.x - 90) * sc_to_radians) * new_rad;
 
@@ -756,10 +786,10 @@
                 let output = `translate(${x}, ${y}) rotate(${rot_val})`
                 return output
             }
-
-
+            
+            
             function update(event, source){
-
+                
 
                 const duration = event?.altKey ? 2500 : 250; // hold the alt key to slow down the transition
                 const nodes = root.descendants().reverse(); // Might be able to replace with the recurse tree function for speed up
@@ -782,7 +812,7 @@
                     .attr("d", (d) => linkExtensionVariable(d))
                     // Added to move points over
                     .attr("transform", `translate(${outerRadius}, ${outerRadius})`);
-
+                
                 let left = root;
                 let right = root;
                 root.eachBefore(node => {
@@ -863,8 +893,8 @@
                     })
                     .attr("text-anchor", d => d.parent === null ? "start" : "end")
                         //.attr("position", "relative")
-                    .attr("dx", (d) => {
-                        let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString();
+                    .attr("dx", (d) => { 
+                        let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString(); 
                         return `${-val.length + 1}pt`;
                     })
                     .attr("transform", (d) => {
@@ -872,11 +902,11 @@
                     })
                     .attr("dy", 14)
                     .attr("font-size", "12");
-
+                
                 nodeEnter.append("text")
                     .attr("dy", d => !d.data.leaf ? -8 : 0) // dx being in a different cord system seems to be causing issues...
                     .attr("dx", (d) => {
-                        let hyp = 0
+                        let hyp = 0 
                         if(d.data.leaf){
                             hyp = innerRadius - d.radius + 6;
                         }else{
@@ -890,7 +920,7 @@
                     .attr("font-size", "12")
                     .attr("stroke-linejoin", "round")
                     .attr("stroke", "white");
-
+                    
 
                 // Getting spontatnous errors in redraw
                 // get new position
@@ -899,18 +929,18 @@
                     .attr("transform", translate_points) // aligns the text to the nodes
                     .attr("fill-opacity", 1)
                     .attr("stroke-opacity", 1);
-
+                
 
                 const nodeExit = node.exit().transition(transition).remove()
                     .attr("transform", translate_points) // aligns the text to the nodes
                     .attr("fill-opacity", 0)
                     .attr("stroke-opacity", 0);
-
+                
                 // Update the links…
                 const link = gLink.selectAll("path")
                     .data(links, d => d.target.id)
                     .attr("d", linkVariable);
-
+                
                 const linkEnter = link.enter().append("path")
                                     .attr("d", linkVariable);
 
@@ -928,7 +958,7 @@
                 });
                 return true;
             }
-
+            
             root.x0 = root.x
             root.y0 = 0;
             root.descendants().forEach((d, i) => {
@@ -936,10 +966,10 @@
                 d._children = d.children;
             });
 
-
+            
             update(null, root);
 
-
+            
             return svg.node();
         };
 
@@ -950,9 +980,9 @@
                 var ele = document.getElementById("TreeData");
                 var ele_style = window.getComputedStyle(ele);
                 const width = parseInt(ele_style.width);
+    
 
-
-
+                
                 //const width = window.innerWidth;
                 const marginTop = 40;
                 const marginRight = 10;
@@ -970,7 +1000,7 @@
                 // Define the tree layout and the shape for links.
                 tree = d3.tree().nodeSize([dx, dy]);
                 diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x);
-
+                
                 // Create the SVG container, a layer for the links and a layer for the nodes.
                 const svg = d3.create("svg")
                     .attr("id", "TreeSVG")
@@ -988,7 +1018,7 @@
                 const gNode = svg.append("g")
                     .attr("cursor", "pointer")
                     .attr("pointer-events", "all");
-
+                
 
                 function update(event, source) {
                     const duration = event?.altKey ? 2500 : 250; // hold the alt key to slow down the transition
@@ -1079,8 +1109,8 @@
                         })
                         .attr("text-anchor", d => d.parent === null ? "start" : "end")
                         //.attr("position", "relative")
-                        .attr("dx", (d) => {
-                            let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString();
+                        .attr("dx", (d) => { 
+                            let val = Number((d.data.d).toFixed(DECIMAL_PLACES)).toString(); 
                             return `${-val.length + 1}pt`;
                         })
                         .attr("dy", 18)
@@ -1088,7 +1118,7 @@
 
 
                     nodeEnter.append("text")
-                        .attr("dy", d => !d.data.leaf ? -6 : 0)
+                        .attr("dy", d => !d.data.leaf ? -6 : 0) 
                         .attr("x", d => !d.data.leaf ? -6 : 6)
                         .style("visibility", d => d.data.leaf ? "" : SHOW_METADATA_IN_NAME ? "visible" : "hidden")
                         .attr("class", d => d.data.leaf ? "" : "inner-node-label")
@@ -1098,7 +1128,7 @@
                         .attr("stroke-width", 3)
                         .attr("stroke", "white")
                         .attr("font-size", "12");
-
+                    
 
                     // Transition nodes to their new position.
                     const nodeUpdate = node.merge(nodeEnter).transition(transition)
@@ -1149,17 +1179,17 @@
                 d.id = i;
                 d._children = d.children;
                 });
-
+                
                 update(null, root);
-
+                
                 return svg.node();
 
         }
 
         const TREE_SWITCH = new Map([
-            ["Dendrogram", dendrogram_chart],
-            ["TidyTree", tidytree_chart],
-            ["Radial Dendrogram", dendrogram_circle],
+            ["Dendrogram", dendrogram_chart], 
+            ["TidyTree", tidytree_chart], 
+            ["Radial Dendrogram", dendrogram_circle], 
             ["Cladeogram", cladeogram_chart]]); // key value pairs map to switch between tree views
 
 
@@ -1215,7 +1245,7 @@
                     if(circle.dataset.oldfill === SelectedNodes.#default_color){
                         delete circle.dataset.oldfill
                     }
-
+                    
                 }else{
                     circle.style.fill = SelectedNodes.#default_color
                 }
@@ -1230,15 +1260,15 @@
                 return [element, circle, text]; // element is g tag
             }
 
-            static addNodes(element) {
+            static addNodes(element) {    
             /* Function to update the set of nodes, going forward each node should probably contain the element by ID and the html element
-
+            
             This class is also being refactored as it should never get a none leaf-node
 
             param element: a html "g" element to update the colour of
-            */
+            */        
                 let [parent, circle, text] = SelectedNodes.getNodeData(element.closest(SelectedNodes.#svg_parent));
-
+                
                 if(!SelectedNodes.nodes.has(text.textContent)){
                     SelectedNodes.nodes.set(text.textContent, parent);
                     SelectedNodes.setSelectedColours(text, circle);
@@ -1257,7 +1287,7 @@
                 if (DEBUG) {
                     console.log("Dropping values:", text.textContent, dropped);
                 }
-
+                
             }
 
             static deselectNodes(){
@@ -1280,13 +1310,13 @@
                         attributes.push(`<div class="d-flex border-bottom align-items-center selected-node">
                         <div onclick="scroll_into_view_treenode('${item}')" class="flex-grow-1">${item}</div>
                         <div>
-                            <button onclick="remove_selected_node(this.dataset.nodeId)" data-node-id="${item}"
+                            <button onclick="remove_selected_node(this.dataset.nodeId)" data-node-id="${item}" 
                             class="btn btn-danger m-1 btn-sm">x</button>
                         </div>
                         </div>\n`);
-
+                        
                     }
-
+                    
                     return `${attributes.join("")}`;
                 });
             }
@@ -1334,7 +1364,7 @@
             tree.node.push(z);
             return i;
         }
-
+    
         function kn_parse(str)
             {
                 // Heng li Newick parsing code
@@ -1379,9 +1409,9 @@
 
 
         let CreateMenuItem = (node_type, text, evt_list_func, on_click) => {
-
+            
             let node = document.createElement(node_type);
-
+            
             if(node_type !== "h4"){ // Not liking the way this is formatted
                 node.style.cursor = "default";
             }
@@ -1416,7 +1446,7 @@
                 circle.setAttribute("r", increased_size);
                 RADIUS_INCREASED = true;
             }
-
+            
             let drop_down_menu = document.createElement("div");
 
             drop_down_menu.classList.add("dropdown")
@@ -1458,7 +1488,7 @@
         let NodeDropDownMenu = (event, data, func) => {
             // Rendering dropdown menu on click, it may be better to render a hidden menu for each node in a div
             // This would clutter the dom however
-
+            
             if(event.target.parentNode.classList.contains("inner-node")){
                 if(!MENU_CREATED){
                     MENU_CREATED = true;
@@ -1466,7 +1496,7 @@
                     let title = CreateMenuItem("h4", "Node Options");
 
 
-                    let collapse_tree = CreateMenuItem("p", "Collapse/Un-collapse branch", ColourMouseOver, func);
+                    let collapse_tree = CreateMenuItem("p", "Collapse/Un-collapse branch", ColourMouseOver, func);                    
 
                     // TODO need to remove selected nodes when drawing subtree
                     let create_subtree = CreateMenuItem("p", "Display Sub-tree", ColourMouseOver, () => {
@@ -1477,7 +1507,7 @@
                         SelectChildren(event, data);
                     });
 
-                    AppendToParent(drop_down_menu, title, collapse_tree, create_subtree, select_child_nodes);
+                    AppendToParent(drop_down_menu, title, collapse_tree, create_subtree, select_child_nodes);            
                     let tree_element = document.getElementById("TreeData");
                     tree_element.append(drop_down_menu)
                 }
@@ -1532,7 +1562,7 @@
         // Select all children of an inner-node
         let SelectChildren = (event, data) => {
             const circle_pos = SelectedNodes.getCirclePos();
-            const trg_name_pos = SelectedNodes.getNamePos();
+            const trg_name_pos = SelectedNodes.getNamePos(); 
 
             // D3 functions to collect the sub-tree do not appear to be working here
             let selected_children = RecurseTree(data);
@@ -1583,7 +1613,7 @@
             }
         };
 
-
+        
 
         let drawTree = (newick_) => {
             $("#tree-splash").remove()
@@ -1607,8 +1637,13 @@
         let CreateDataTable = () => {
             data_table = $('#metadata').DataTable({
                 //stateSave: true,
+                //"paging": false,
                 "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
                 className: ".editable",
+                initComplete: function (settings, json) {
+                    console.log("DataTables has finished its initialization");
+                    
+                },
                 columnDefs: [{
                         targets: '_all',
                         createdCell : (td, cellData, rowData, row, col) =>
@@ -1619,6 +1654,64 @@
                         }
                     }
                 ],
+                //dom: 'lfrtip',
+                drawCallback: function(){
+        
+         
+         
+         //html.innerHTML='<div class="paginate_button displayAll">DISPLAY ALL RECORDS</div>'
+         
+         
+        //let icon=document.create("i")
+        ///icon.style="position:absolute; top:0; right: 0; cursor: pointer; color:blue; margin-right:1px"
+        //icon.id="tree_fullscreen_btn"
+        //icon.onclick="tree_full_screen_mode()"
+
+        let html=document.createElement("div");
+        html.className = "paginate_button displayAll"
+        html.id = "paginate_button_all"
+        html.textContent = "ALL records"
+        if(document.querySelector("#paginate_button_all") === null){
+            document.querySelector("#metadata_paginate").appendChild(html)
+        }
+        let maximize_button_html=document.createElement("i");
+        maximize_button_html.style = "position:absolute; top:0; right: 0; cursor: pointer; color:blue; margin-right:1px"
+        maximize_button_html.className="d-flex fs-5 bi-arrow-up-right-square"
+        maximize_button_html.id = "metadata_fullscreen_btn"
+        maximize_button_html.setAttribute("onclick", "metadata_full_screen_mode()")
+        if(document.querySelector("#metadata_fullscreen_btn") === null){
+            document.querySelector("#metadata_wrapper").appendChild(maximize_button_html)
+        }    
+          
+
+         $('.paginate_button.displayAll:not(.disabled)', this.api().table().container())          
+         .on('click', function(){
+            
+            if(data_table.context[0]._iDisplayLength !== -1){
+                console.log("Paginate OFF")
+                
+                //this.textContent="XXXXXX"
+                data_table.context[0]._iDisplayLength=-1; //remove pagination
+                data_table.draw();
+                $('#metadata_length select').val(-1); //change "Show X entires" selector to ALL value
+                
+                $('#paginate_button_all').text("First 10")
+                console.log(this.textContent)
+                
+            }else{
+                console.log("Paginate ON")
+                console.log($('#paginate_button_all').text())
+                data_table.context[0]._iDisplayLength=10;
+                $('#metadata_length select').val(10); //change "Show X entires" selector to ALL value
+                //
+                data_table.draw();
+                $('#paginate_button_all').text("ALL records");
+                console.log(this.textContent)
+                
+            }    
+            
+         });       
+   }
 
             });
             $('#metadata_filter input').attr("id", "search-bar").attr("class", "table table-striped"); // Give search bar ID to squash warnings
@@ -1630,10 +1723,10 @@
                 ORIGINAL_DATA.set(value[ID_FIELD], value)
             });
 
-
-            // TODO This can likely be initialized in the above loop pushing to value
+            
+            // TODO This can likely be initialized in the above loop pushing to value 
             for(const [key, value] of ORIGINAL_DATA.entries()){
-                value.push(false); // Append a key to flag whether the value has been modified
+                value.push(false); // Append a key to flag whether the value has been modified    
             }
         };
 
@@ -1693,9 +1786,9 @@
                 let field_value=item[0]
                 if(field_value === ''){field_value="Not defined"}
                 row_legend_node.append(`
-                <input type="color" value="${item[1]}" data-sampleID="${value2samples[item[0]].join(',')}"  onchange="changeLegendItemColour(this)"
+                <input type="color" value="${item[1]}" data-sampleID="${value2samples[item[0]].join(',')}"  onchange="changeLegendItemColour(this)" 
                 style="width: 20px; height:20px; padding: 1px; border: 1px solid black"></input>\n
-                <small onclick="select_deselect_nodes_by_field_value(this, ${column_index})"
+                <small onclick="select_deselect_nodes_by_field_value(this, ${column_index})" 
                 style="padding-left:5px">${field_value}</small>`)
                 node_leg.append(row_legend_node)
             }
@@ -1703,7 +1796,7 @@
             document.querySelector('#colour-legend').style.left = `${document.querySelector('#TreeData').scrollLeft}px`
 
         };
-
+        
 
         let lineThickness = (ele) => {
             if(ele){
@@ -1729,7 +1822,7 @@
                     }else{
                         circle.style.fill = newColourValueHex;
                     }
-
+                    
                 }
             })
 
@@ -1741,7 +1834,7 @@
                 if (value[query_key] in json_groups) {
                     json_groups[value[query_key]].push(key);
                 }
-
+                
             });
             return json_groups;
         };
@@ -1800,7 +1893,7 @@
                 text.push("</div>\n")
                 return text.join("\n")
         }
-
+        
         let colour_by_element = (ele) => {
             // Create a legend for the column selected
             if(tree_root === null){
@@ -1820,12 +1913,66 @@
             // Need to create groupings of the each set of ID's belonging to each value grouping
             let break_down_values = Array.from(unq_data);
             break_down_values.sort()
-
+            
             // Instead of searching the array for ID's using the datatable, I am just going to use a linear look up
-            let group_vals = CreateColoringGroups(break_down_values);
-            break_down_values = PopulateGroups(group_vals, col_index);
+            let group_vals = CreateColoringGroups(break_down_values); // {"unique_item":[],"unique_item2":[]}
+            break_down_values = PopulateGroups(group_vals, col_index); //{"unique_item":["id1","id2"...],"unique_item2":["id3"]}
+            
 
             let colours = randomColor({luminosity: 'dark', count: Object.keys(break_down_values).length, seed: 42, format: "hex"});
+        
+            /* Heuristic alogrithm to pick non-overlapping colours above threshold */ 
+            
+            //given a random colours for legend items find highly similar colours below the deltaE2000 threshold
+            if(colours.length <= 50){
+                const deltaE2000_threshold = 10;
+                let problematic_colours_idx=[];
+                colours.map((picked_color, j)=>{
+                
+                    //find highly similar colours in a panel below deltaE2000_threshold
+                    for (const [i,legend_color] of colours.entries()){
+                        let deltaE2000 = Color.deltaE2000(picked_color, legend_color)
+                        if(deltaE2000 <= deltaE2000_threshold && deltaE2000 !== 0){
+                            problematic_colours_idx.push(i)            
+                        }
+
+                    }//for loop ends
+
+                    problematic_colours_idx = [ ... new Set(problematic_colours_idx)].sort((a,b)=> a-b)
+                
+                });
+
+                console.debug(`Found problematic too similar ${problematic_colours_idx} with indices ${problematic_colours_idx.length} out of ${colours.length}`)    
+                
+                //if highly similar colours in legend found, try to find a suitable replacement that will be above the deltaE2000_threshold
+                //try randomly pick 1000 colours and test them against all colours in the legend
+                let found_new_color_bool = false;
+                problematic_colours_idx.forEach(i =>{
+                    found_new_color_bool = false
+                 
+                    const seed_offset = parseInt(Math.random()*100000)+1;
+                    const max_random_colours = 1000;
+                    colour_random_list = randomColor({ seed: seed_offset, count: max_random_colours, format:'hex'})
+                
+                    for(const random_color_hex of colour_random_list) {
+                        //check distance to all colours in the legend
+                        let deltaE2000_list = colours.map(legend_color => {
+                            return Color.deltaE2000(random_color_hex, legend_color)
+                        });
+                        let minDeltaE2000 = Math.min(...deltaE2000_list)
+                    
+                        if(minDeltaE2000 > deltaE2000_threshold){
+                            console.debug(`Found a suitable color ${random_color_hex} with min deltaE2000 ${minDeltaE2000} for ${Object.keys(break_down_values)[i]}`)
+                            colours[i] = random_color_hex;
+                            found_new_color_bool = true;
+                            break;
+                        }
+                    }//for      
+                    
+                });//forEach ends 
+            }//if ends
+
+
             let colour_idx = 0;
             colour_legend.length = 0; // clear out old data, so new legend created each time
             for(const item in break_down_values){
@@ -1838,16 +1985,16 @@
                         }else{
                             circle.style.fill = colours[colour_idx];
                         }
-
+                        
                     }catch(error){
                         console.error("Could not find ", x, " In DOM");
-                        console.error(error);
+                        console.error(error); 
                     }
                 });
                 colour_legend.push([item, colours[colour_idx]])
                 colour_idx++;
             }
-            CreateNodeLegend(colour_legend, col_index, break_down_values);
+            CreateNodeLegend(colour_legend, col_index, break_down_values);    
 
         };
 
@@ -1893,7 +2040,7 @@
                     drawTree(TREE);
                 }else if(DEBUG){
                     drawTree(test_newick);
-
+                    
                 }
             }
 
@@ -1912,7 +2059,7 @@
 
 
             $("#ResetTree").on("click", (evt) => {
-
+                
                 if(focused_element !== null){
                     // Revert any focused node back to its original colours
                     // TODO perhaps this should be dropped as there is a redraw tree option
@@ -1928,21 +2075,21 @@
 
 
             $("#metadata").on("blur", ".editable", (evt)=>{
-                // Update element
-                let row_values = evt.target.closest("tr").childNodes;
+                // Update element        
+                let row_values = evt.target.closest("tr").childNodes;        
                 let edited_value = row_values[0].textContent;
                 let retrieved_value = ORIGINAL_DATA.get(edited_value);
                 let retrieved_val_length = retrieved_value.length;
                 let updated_bool_pos = retrieved_val_length -1; // last value in list is a boolean for wether the data has been modified
 
                 let updated = false;
-                for(let i = 0; i < updated_bool_pos; i++){
+                for(let i = 0; i < updated_bool_pos; i++){ 
                     if(row_values[i].textContent !== retrieved_value[i]){
                         // can alternatively use str1.localeCompare(str2)
                         retrieved_value[i] = row_values[i].textContent;
                         updated = true
                     }
-
+                    
                 }
 
                 // only update the row if the values are new
@@ -1956,7 +2103,7 @@
                 Optimization Note:
 
                 Initially just pasting in the string for the metadata which may or may not be a good thing...
-
+                
                 It could be slow due to the over head of the object existing as text in the page and in memory
                 TODO remove selectors
                 */
@@ -2001,7 +2148,7 @@
                 reader.onerror = (evt) => {
                     alert(`Could not read file ${metadata_file}`);
                 };
-
+                
             });
 
             $("#metadata-search-button").on('click', SubsetTable);
@@ -2012,7 +2159,7 @@
                 if(DEBUG){
                     console.log(`trying to add ${evt.target.textContent}`)
                 }
-
+                
                 let tree_node = document.querySelector( `[id='${evt.target.textContent}']`)
                 let text = tree_node.lastChild
                 let circle = tree_node.querySelector('circle')
@@ -2023,7 +2170,7 @@
                 }
 
                 SelectedNodes.drawSelectedNodes();
-
+                
             } );
 
 
@@ -2033,8 +2180,8 @@
             $("#metadata").on('click', 'tr td:first-child', (evt) => {
                 if(DEBUG){
                     console.log(`ZOOMING on node selected in metadata table ${evt.target.textContent}`)
-                }
-
+                } 
+                
                 let identified_point = document.querySelector(`[id='${evt.target.textContent}']`)
                 let identified_point_id = identified_point.childNodes[0].textContent; // gets nodes name
                 let is_selected = SelectedNodes.nodes.has(identified_point_id);
@@ -2042,11 +2189,11 @@
                 if(focused_element !== null){
                     is_selected_focus = SelectedNodes.nodes.has(focused_element.childNodes[0].textContent);
                 }
-
+                
                 // if there is a foucsed item, the new focused item is not selected and the focused item is not selected
                 // set its texts to black
                 if(focused_element !== null && !is_selected_focus){
-                    // Return elements state unless it is already adjusted due to being selected
+                    // Return elements state unless it is already adjusted due to being selected 
                     focused_element.childNodes[2].style.fill = "black";
                 }
                 focused_element = identified_point; // Save reference to new point
@@ -2058,18 +2205,18 @@
                     }
                     identified_point.childNodes[2].style.fill = clicked_color;
                 }
-
+                
                 let rect = identified_point.getBBox();
                 let translated_coords = identified_point.getAttribute('transform').replace('translate(', '').replace(")", '').split(",");
                 let rect_x = parseFloat(translated_coords[0]);
                 let rect_y = parseFloat(translated_coords[1]);
                 let svg = document.querySelector('#TreeSVG')
-
+                
                 //delay execution so that double click event is possible on the metadata row
                 setTimeout(function() {
                     scroll_into_view_treenode(`${evt.target.textContent}`)
-                },500);
-
+                },500);    
+                
             });
 
             $("#TreeData").on('scroll', '#TreeSVG', (evt) => {
@@ -2085,8 +2232,8 @@
             const zoom_times = parseFloat(document.querySelector('#zoom_slider').value)
             const tree_data_elm = document.querySelector('#TreeData')
             const tree_svg = document.querySelector('#TreeSVG')
-            document.querySelector('#zoom_slider_value').textContent =  zoom_times
-
+            document.querySelector('#zoom_slider_value').textContent =  zoom_times 
+        
             const new_width = ORIGINAL_WIDTH_SVG  * zoom_times //use global value as getBBox() at high zooms gives wrong values
             const prev_width = parseFloat(document.querySelector('#TreeSVG').style.width)
 
@@ -2095,11 +2242,11 @@
             const prev_y_scroll_pos = tree_data_elm.scrollTop
             document.querySelector('#TreeSVG').style.width = new_width ; //modify width of SVG tree
 
-            //store new translated x and y coordinates after zooming
-            let zoom_x_translated = 0
+            //store new translated x and y coordinates after zooming 
+            let zoom_x_translated = 0 
             let zoom_y_translated = 0
             const scaleChange = new_width/prev_width //sometimes the specified zoom factor is not exact, use this value instead
-
+            
             //keeping zoom centered on an element
             if(new_width > prev_width){
                 //get previous scroll position which is the left most x-coordinate position of a view
@@ -2107,14 +2254,14 @@
                 //add 1/4 view field length scaled to a new zoomed state coordinate
                 zoom_x_translated =  prev_x_scroll_pos*scaleChange + (tree_data_elm.clientWidth/4)*(scaleChange)
                 zoom_y_translated =  prev_y_scroll_pos*scaleChange + (tree_data_elm.clientHeight/4)*(scaleChange)
-
+            
             }else{
-                //Zooming out
+                //Zooming out 
                 //Scale current scroll position (previous scroll + 1/4 view field distance) to a new coordinate zoomed out state
                 //Substract the 1/4 offeset/margin that is already in the needed zoomed out state (no adjustments)
                 zoom_x_translated =  prev_x_scroll_pos*scaleChange - (tree_data_elm.clientWidth/4)
                 zoom_y_translated =  prev_y_scroll_pos*scaleChange - (tree_data_elm.clientHeight/4)
-
+            
             }
             document.querySelector('#TreeData').scrollTo(zoom_x_translated,zoom_y_translated)
         }
@@ -2125,14 +2272,14 @@
                 selectedNode.scrollIntoView({block: "center", inline:"center", behavior: "smooth"})
             }else{
                 console.error(`scroll_into_view_treenode(): Node ${id} is not available in this tree. Uncollapse all nodes`)
-            }
+            } 
         }
 
         legend_on_off = function(node){
             if(DEBUG){
                 console.log(node.checked)
             }
-
+            
             if(node.checked === false){
                 document.querySelector('#colour-legend').classList.add("d-none");
             }else{
@@ -2150,7 +2297,7 @@
                             }
                         });
         }
-
+        
         let show_inner_node_labels = (node) => {
             SHOW_METADATA_IN_NAME = !SHOW_METADATA_IN_NAME
             $(".inner-node-label").css("visibility", () => {
@@ -2172,13 +2319,13 @@
 
             }else{
                 console.error('No legend rendered skipping scroll_legend_into_view()')
-            }
+            }    
         }
 
         reset_zoom_slider = function(){
             document.querySelector('#zoom_slider_value').textContent = 1
             document.querySelector('#zoom_slider').value = 1
-        }
+        }    
 
         let select_deselect_nodes_by_field_value = (legend_node, column_index) => {
 
@@ -2190,9 +2337,9 @@
                     return false
                 }
             } ).indexes()
-
+            
             let selected = legend_node.classList.contains('fw-bold') ? true : false
-
+            
             if(!selected){
                 legend_node.classList.add('fw-bold');
             }else{
@@ -2212,13 +2359,13 @@
                     SelectedNodes.addNodes(text);
                 }else{
                     SelectedNodes.unselectNode(text);
-                }
+                }    
             }
             // Bring the terminal node into frame
             terminal_node = document.querySelector(`[id=${selected_node_ids[selected_node_ids.length-1]}`);
             terminal_node.scrollIntoView({block: "center", inline: "center"})
             SelectedNodes.drawSelectedNodes();
-
+            
         }
 
         remove_selected_node = function(node_id){
@@ -2231,7 +2378,7 @@
             // Create a text string of the original data
             let output_text = new Array();
             output_text.push(headers.join("\t"))
-
+            
             for(const [key, value] of ORIGINAL_DATA.entries()){
                 output_text.push(value.join("\t"))
             }
@@ -2304,7 +2451,7 @@
             const xlinkns = "http://www.w3.org/1999/xlink";
             const svgns = "http://www.w3.org/2000/svg";
             svg = svg.cloneNode(true);
-
+                        
             const lgd = document.getElementById("colour-legend");
             const legend_width = lgd.clientWidth;
 
@@ -2345,11 +2492,11 @@
             let downloadLink = document.createElement("a");
             downloadLink.download = 'tree_snapshot_'+date.getDate()+'-'+
                 (date.getMonth()+1)+'-'+date.getFullYear()+'_'+date.getHours()+'h.svg';
-            let svg =  document.getElementById("TreeData")
+            let svg =  document.getElementById("TreeData")    
             const blob = serialize2svg(svg)[0];
             downloadLink.href = window.URL.createObjectURL(blob);
             downloadLink.click(); //Trigger a click on the element
-            downloadLink.remove();
+            downloadLink.remove();               
         }
 
         /*Adapted from https://gist.github.com/tatsuyasusukida/1261585e3422da5645a1cbb9cf8813d6 and https://zooper.pages.dev/articles/how-to-convert-a-svg-to-png-using-canvas*/
@@ -2364,7 +2511,7 @@
             let canvas = document.createElement('canvas')
             canvas.width = svg_width+svg_width*0.05;
             canvas.height = svg_height+svg_width*0.15;
-
+            
             //create SVG image element
             let img = new Image();
             img.src = "data:image/svg+xml;base64," + btoa(svgData);
@@ -2386,27 +2533,44 @@
             }
 
 
+            
 
 
-
-        }
+        }    
 
         tree_full_screen_mode = function(){
-            document.querySelector('#TreeData').requestFullscreen()
+            if (document.fullscreenElement === null){
+                document.querySelector('#TreeData').requestFullscreen()
+            }else{
+                document.exitFullscreen();  
+            }    
+            
+        }
 
+        metadata_full_screen_mode = function(){
+            let metadata_panel = document.querySelector('#ClusterInfo>div')
+            if (document.fullscreenElement === null){
+                METDATA_TABLE_NON_FULL_SCREEEN_HEIGTH = metadata_panel.style.height;
+                document.querySelector('#ClusterInfo').requestFullscreen()
+                metadata_panel.style.height = '100vh';
+            }else{
+                document.exitFullscreen();
+                console.log(METDATA_TABLE_NON_FULL_SCREEEN_HEIGTH);
+                metadata_panel.style.height = METDATA_TABLE_NON_FULL_SCREEEN_HEIGTH;
+            }            
         }
 
         document.addEventListener("DOMContentLoaded",()=>{
             let button = document.querySelector('#tree_fullscreen_btn')
 
-            document.querySelector('#TreeData').addEventListener("fullscreenchange", (event) => {
-
+            /*document.querySelector('#TreeData').addEventListener("fullscreenchange", (event) => {
+                
                 if(button.classList.contains("d-none")){
                     button.classList.remove('d-none')
                 }else{
                     button.classList.add('d-none')
                 }
-            })
+            })*/
 
             document.querySelector('#ClusterInfo').addEventListener('hidden.bs.collapse', function () {
                 let heightMetaDiv = document.querySelector('#ClusterInfo>div').style.height
@@ -2425,8 +2589,8 @@
                 document.querySelector('#SelectedNodes').style.maxHeight = `${document.querySelector('#TreeData').offsetHeight - document.querySelector('#tree_menu_buttons').offsetHeight}px`
             })
 
-
-        });
+    
+        });    
 
 
         clear_selected_nodes = function(){
@@ -2442,7 +2606,7 @@
 
         copy_ids_to_clipboard = function(){
             let text2copyArray=[]
-
+            
             document.querySelectorAll('#SelectedNodes div>div:first-child').forEach(node => {
                 if(DEBUG){
                     console.log(node.textContent)
@@ -2478,19 +2642,19 @@
                                 window.URL.revokeObjectURL(url);
                             }
                         });
-                    }
-
+                    }    
+                   
                 });
 
-
+                
             }
             else{
                 Swal.fire({
                     html: "<b>No nodes to copy and export!</b><p>Select tree node(s) first and try again</p>",
                     icon: "error"
                     });
-
-            }
+                
+            }            
         }
 
         vertical_div_resize = function(event){
@@ -2506,7 +2670,7 @@
             document.addEventListener('mouseup', stop_resize, false)
             function resize(event){
                 event.stopPropagation();
-                const dy = event.y - cursor_pos_init
+                const dy = event.y - cursor_pos_init  
                 metadata_panel.style.height = metadata_panel_height_init - dy+'px'
                 treeData_panel.style.height  = treeData_panel_height_init + dy+'px'
                 control_panel.style.height = control_panel_height_init + dy+'px'
@@ -2514,7 +2678,7 @@
             function stop_resize(event){
                 document.removeEventListener('mousemove', resize)
                 document.querySelector('#SelectedNodes').style.maxHeight = `${document.querySelector('#TreeData').offsetHeight - document.querySelector('#tree_menu_buttons').offsetHeight}px`
-            }
+            }    
         }
         document.addEventListener('mouseup',(event)=>{
                 document.removeEventListener('mousemove', vertical_div_resize,false)
@@ -2523,7 +2687,7 @@
         let heightSelectedNodesPanel = `${document.querySelector('#TreeData').offsetHeight - document.querySelector('#tree_menu_buttons').offsetHeight}px`
         document.querySelector('#SelectedNodes').style.cssText = `height: ${heightSelectedNodesPanel}; max-height: ${heightSelectedNodesPanel} `
 
-    }
+    }    
 
     //The Bootstrap dropdown-menu position absolute css is not working and menu is obscured by other divs
     //This fixes the issue as we do not want to modify original BS code
@@ -2536,7 +2700,7 @@
         let legend_div = document.querySelector('#colour-legend')
         let control_panel_div = document.querySelector("#control_panel")
         let TreeData_div = document.querySelector('#TreeData')
-        let offset = {"x": event.clientX - control_panel_div.offsetWidth, "y": event.clientY + TreeData_div.scrollTop}
+        let offset = {"x": event.clientX - control_panel_div.offsetWidth, "y": event.clientY + TreeData_div.scrollTop}   
         document.addEventListener('mouseup', function(){isDown = false}, true)
         document.addEventListener('mousemove', move, true)
         function move(event){
@@ -2545,7 +2709,7 @@
                 offset = {"x": event.clientX-control_panel_div.offsetWidth, "y": event.clientY + TreeData_div.scrollTop}
                 legend_div.style['left'] = offset.x+"px"
                 legend_div.style['top'] = offset.y+"px"
-            }
+            }    
         }
     }
 
@@ -2557,32 +2721,32 @@
                 <div id="control_panel" class="col-2 border border-primary px-1 overflow-auto">
                     <div id="tree_menu_buttons" class="row m-0">
                                 <div class="d-flex flex-row align-items-center p-0 text-left mt-1">
-                                    <button class="h-100 flex-grow-1 me-1 btn-sm btn-primary text-break" data-toggle="tooltip" data-placement="top"
+                                    <button class="h-100 flex-grow-1 me-1 btn-sm btn-primary text-break" data-toggle="tooltip" data-placement="top" 
                                         title="Select a newick file" onclick="document.getElementById('tree-selector').click();" name="newick" id="tree-upload-button">
                                         <i class="bi bi-upload me-1"></i>Newick <i class="bi bi-tree ml-1"></i>
                                     </button>
-                                    <input  type="file" id="tree-selector" name="tree-selector" accept=".nwk, .newick, .treefile" hidden>
-                                    <button class="h-100 flex-grow-1 btn-sm btn-primary text-break" data-toggle="tooltip" data-placement="top"
-                                        title="Select a tab delimited metadata file" onclick="document.getElementById('metadata-selector').click();"
+                                    <input  type="file" id="tree-selector" name="tree-selector" accept=".nwk, .newick, .treefile" hidden> 
+                                    <button class="h-100 flex-grow-1 btn-sm btn-primary text-break" data-toggle="tooltip" data-placement="top" 
+                                        title="Select a tab delimited metadata file" onclick="document.getElementById('metadata-selector').click();" 
                                         id="metadata-selector-input" name="metadata-selector-input">
                                         <i class="bi bi-upload me-1"></i>Meta <i class="bi bi-file-spreadsheet ml-1"></i>
                                     </button>
-                                    <input type="file"  id="metadata-selector"
+                                    <input type="file"  id="metadata-selector" 
                                     name="metadata-selector" accept=".tsv, .tab" hidden>
                                 </div>
-                                <button type="button" class="btn-sm btn-primary w-100 text-break mb-1 mt-1" data-toggle="tooltip" data-placement="top"
-                                    title="Clear filters applied to the metadata table." name="ResetTable" id="reset-table-button">Clear filters</button>
-
+                                <button type="button" class="btn-sm btn-primary w-100 text-break mb-1 mt-1" data-toggle="tooltip" data-placement="top" 
+                                    title="Clear filters applied to the metadata table." name="ResetTable" id="reset-table-button">Clear filters</button>                                
+                                
                                 <div class="d-flex flex-row align-items-center p-0 text-left">
-                                    <button class="flex-grow-1 btn-sm btn-primary text-break me-1 mb-1" data-toggle="tooltip" data-placement="top"
+                                    <button class="flex-grow-1 btn-sm btn-primary text-break me-1 mb-1" data-toggle="tooltip" data-placement="top"  
                                         title="Copy selected node IDs to your clipboard to paste into another application and optionally generate a text file" onclick="copy_ids_to_clipboard()" name="CopyIDs" id="copy-ids-button">
                                         <i class="bi bi-clipboard me-1"></i>IDs
                                     </button>
-                                    <button class="flex-grow-1 btn-sm btn-primary text-break me-1 mb-1" data-toggle="tooltip" data-placement="top"
+                                    <button class="flex-grow-1 btn-sm btn-primary text-break me-1 mb-1" data-toggle="tooltip" data-placement="top" 
                                         title="Export the tree to SVG." onclick="export_tree_to_svg()" id="export-tree-to-svg">
                                         <i class="bi bi-download m-1"></i> SVG
                                     </button>
-                                    <button class="flex-grow-1 btn-sm btn-primary text-break mb-1" data-toggle="tooltip" data-placement="top"
+                                    <button class="flex-grow-1 btn-sm btn-primary text-break mb-1" data-toggle="tooltip" data-placement="top" 
                                         title="Export the tree to PNG." onclick="export_tree_to_png()" id="export-tree-to-png">
                                         <i class="bi bi-download m-1"></i> PNG
                                     </button>
@@ -2592,32 +2756,32 @@
                                         <i class="bi bi-download me-1"></i> Export Meta Table
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a id="export-metadata-view" data-toggle="tooltip" data-placement="top" title="Export the currently selected metadata."
+                                        <li><a id="export-metadata-view" data-toggle="tooltip" data-placement="top" title="Export the currently selected metadata." 
                                         class="dropdown-item flex-grow-1 me-1 btn-sm btn-primary text-break mb-1" onclick="export_metadata_table(this)" id="export-metadata-view">
                                             <i class="bi bi-download me-1"></i> Export Filtered Table
                                             </a>
                                         </li>
-                                        <li><a id="export-metadata-table" data-toggle="tooltip" data-placement="top" title="Export the currently selected metadata."
+                                        <li><a id="export-metadata-table" data-toggle="tooltip" data-placement="top" title="Export the currently selected metadata." 
                                             class="dropdown-item flex-grow-1 me-1 btn-sm btn-primary text-break mb-1" onclick="export_metadata_table(this)" id="export-metadata-view">
                                                 <i class="bi bi-download me-1"></i> Export Full Table
                                             </a>
                                         </li>
                                     </ul>
 
-                                    <!--button data-toggle="tooltip" data-placement="top" title="Export the entire metadata table below."
+                                    <!--button data-toggle="tooltip" data-placement="top" title="Export the entire metadata table below." 
                                     class="flex-grow-1 me-1 btn-sm btn-primary text-break mb-1" onclick="export_metadata_table(this)" id="export-metadata-table">
                                         <i class="bi bi-download me-1"></i> Export Full Table
                                     </button>
-                                    <button data-toggle="tooltip" data-placement="top"
-                                    title="Export the currently selected metadata."
-                                    class="flex-grow-1 me-1 btn-sm btn-primary text-break mb-1" onclick="export_metadata_table(this)"
+                                    <button data-toggle="tooltip" data-placement="top" 
+                                    title="Export the currently selected metadata." 
+                                    class="flex-grow-1 me-1 btn-sm btn-primary text-break mb-1" onclick="export_metadata_table(this)" 
                                     id="export-metadata-view">
                                         <i class="bi bi-download me-1"></i> Export Filtered Table
                                     </button-->
                                 </div>
                                 <!--Tree layout slider-->
                                 <div class="d-flex flex-row align-items-center p-0 text-left">
-                                    <button data-toggle="tooltip" data-placement="top" title="Redraw the entire tree undoing any changes."
+                                    <button data-toggle="tooltip" data-placement="top" title="Redraw the entire tree undoing any changes." 
                                     class="btn-sm btn-primary w-100 h-100 text-break me-1" name="RedrawTree" id="redraw-tree-button"><i class="bi bi-pencil-square"></i> Redraw Tree</button>
                                     <button data-toggle="tooltip" data-placement="top" title="Bring the tree back into focus" class="btn-sm btn-primary w-100 h-100" name="ResetTree" id="ResetTree"><i class="bi bi-eyeglasses"></i> Refocus tree</button>
                                 </div>
@@ -2629,8 +2793,8 @@
                                     </div>
                                     <div class="flex-grow-1 fw-bold text-center">
                                         <span id="zoom_slider_value">1</span>x
-                                    </div>
-                                </div>
+                                    </div>    
+                                </div>  
 
                                 <!--Slider for adjusting line thickness-->
                                 <div data-toggle="tooltip" data-placement="top" title="Adjust line thickness" class="d-flex flex-wrap align-items-center p-1">
@@ -2640,95 +2804,95 @@
                                     </div>
                                     <div class="flex-grow-1 fw-bold text-center">
                                         <span id="line-thickness-value">2.0</span>
-                                    </div>
-                                </div>
+                                    </div>    
+                                </div> 
 
                                 <div id="dropdown_tree_types" onclick="dropdownmenufix()" class="d-flex flex-wrap p-0 dropdown mb-1">
                                     <button id="tree_dropdown_menu"  class="btn btn-primary btn-sm dropdown-toggle w-100 text-wrap" type="button" data-toggle="tooltip" data-placement="top" title="List of fields to colour nodes by.">
                                         Select a tree layout</button>
-                                </div>
-                                <!--button class="btn-sm btn-primary w-100 text-break mb-1" onclick="switchTreeType()" name="SwitchTree" id="switch-tree">Switch Tree</button-->
+                                </div> 
+                                <!--button class="btn-sm btn-primary w-100 text-break mb-1" onclick="switchTreeType()" name="SwitchTree" id="switch-tree">Switch Tree</button-->   
                                 <div class="d-flex flex-wrap p-1 align-items-center text-left" data-toggle="tooltip" data-placement="top" title="Turn the legend on or off">
                                     <small  class="flex-grow-1" for="legend_toggle">Legend</small>
-                                    <input onchange="legend_on_off(this)" id="legend_toggle"
+                                    <input onchange="legend_on_off(this)" id="legend_toggle" 
                                     checked type="checkbox" data-toggle="toggle" data-onstyle="primary" data-size="sm">
-                                </div>
+                                </div> 
                                 <div class="d-flex flex-wrap p-1 align-items-center text-left" data-toggle="tooltip" data-placement="top" title="Turn branch lengths on or off" >
                                     <small data-toggle="tooltip" data-placement="top" title="Turn branch lengths on or off" class="flex-grow-1" for="legend_toggle">Branch lengths</small>
-                                    <input onchange="branch_lengths_on_off(this)" id="branch_lengths_toggle"
+                                    <input onchange="branch_lengths_on_off(this)" id="branch_lengths_toggle" 
                                     checked type="checkbox" data-toggle="toggle" data-placement="top" title="Turn branch lengths on or off" data-onstyle="primary" data-size="sm">
-                                </div>
+                                </div>  
                                 <div class="d-flex flex-wrap p-1 align-items-center text-left" data-toggle="tooltip" data-placement="top" title="Turn inner node labels on and off" >
                                     <small data-toggle="tooltip" data-placement="top" title="Turn inner node labels on and off" class="flex-grow-1" for="legend_toggle">Inner node labels</small>
-                                    <input onchange="show_inner_node_labels(this)" id="inner_node_labels_toggle"
+                                    <input onchange="show_inner_node_labels(this)" id="inner_node_labels_toggle" 
                                     type="checkbox" data-toggle="toggle" data-placement="top" title="Turn inner node labels on and off" data-onstyle="primary" data-size="sm">
-                                </div>
+                                </div>  
                                 <div id="dropdown_legend" onclick="dropdownmenufix()" class="d-flex flex-wrap p-0 dropdown mb-1">
                                     <button id="legend_dropdown_button" class="btn btn-danger btn-sm dropdown-toggle w-100 text-wrap" type="button" data-toggle="tooltip" data-placement="top" title="List of fields to colour nodes by.">
                                         Awaiting metadata</button>
-                                </div>
+                                </div> 
                                 <div class="d-flex flex-row align-items-center p-0 text-left">
-                                    <button data-toggle="tooltip" data-placement="top" title="Filter metadata for selected nodes"
+                                    <button data-toggle="tooltip" data-placement="top" title="Filter metadata for selected nodes" 
                                     class="flex-grow-1 btn-sm btn-primary text-break w-100 h-100 mb-1 me-1" name="SearchMetadata" id="metadata-search-button">
                                     <i class="bi bi-search icon-image"></i> Filter data</button>
-                                    <button data-toggle="tooltip" data-placement="top" title="Clear all selected nodes."
-                                    class="flex-grow-1  btn-sm btn-primary text-break w-100 h-100 mb-1" name="ClearSelectedNodes"
+                                    <button data-toggle="tooltip" data-placement="top" title="Clear all selected nodes." 
+                                    class="flex-grow-1  btn-sm btn-primary text-break w-100 h-100 mb-1" name="ClearSelectedNodes" 
                                     onclick="clear_selected_nodes()" id="clear-selected-nodes"><i class="bi bi-x-square"></i> Clear Nodes</button>
-                                </div>
-                    </div>
-
-                    <div data-toggle="tooltip" data-placement="top" title="Selected nodes on the tree will show up here."
-                      class="col border border-primary p-1 w-100 Tree inline-block-child scrollbar-window"
+                                </div>       
+                    </div> 
+            
+                    <div data-toggle="tooltip" data-placement="top" title="Selected nodes on the tree will show up here." 
+                      class="col border border-primary p-1 w-100 Tree inline-block-child scrollbar-window" 
                                 id="SelectedNodes">
-                        <div class="d-flex h-100 text-center text-uppercase text-center"><small class="align-self-center w-100">Selected Nodes</small></div>
+                        <div class="d-flex h-100 text-center text-uppercase text-center"><small class="align-self-center w-100">Selected Nodes</small></div>        
                     </div>
-                </div>
+                </div> 
 
 
-                <div class="position-relative p-0 bg-white col-10 Tree inline-block-child scrollbar-window"
+                <div class="position-relative p-0 bg-white col-10 Tree inline-block-child scrollbar-window" 
                 onscroll="scroll_legend_into_view(document.querySelector('#colour-legend'), document.querySelector('#tree_fullscreen_btn'), this)"
                 id="TreeData" style="height:70vh;">
 
                         <div id="tree-splash" class="fs-2 d-flex justify-content-center align-items-center" style="height:50vh;"><i class="bi bi-tree"></i> Your tree will show up here when loaded!</div>
-
+                        
                         <div id="colour-legend"
-                        class="d-none p-1 position-absolute border border-primary text-break Tree inline-block-child scrollbar-window"
-                        style="top:0px; left:0px; resize: both; max-height:100%; background-color: rgba(255, 255, 255, 0.9)">
+                        class="d-none p-1 position-absolute border border-primary text-break Tree inline-block-child scrollbar-window" 
+                        style="top:0px; left:0px; resize: both; max-height:100%; background-color: rgba(255, 255, 255, 0.9)">   
                         </div>
-
-                        <i style="position:absolute; top:0; right: 0; cursor: pointer; color:blue; margin-right:1px" id="tree_fullscreen_btn"
+                        
+                        <i style="position:absolute; top:0; right: 0; cursor: pointer; color:blue; margin-right:1px" id="tree_fullscreen_btn" 
                         onclick="tree_full_screen_mode()" class="d-flex fs-5 bi-arrow-up-right-square"></i>
+                        
+                </div> 
 
                 </div>
-
-                </div>
-
-
+                
+                
             </div>
             <div class="row" style="height:5px;background-color: #0d6efd;">
-                <a  href="#" data-bs-toggle="collapse"
+                <a  href="#" data-bs-toggle="collapse" 
                 data-bs-target="#ClusterInfo">
                 </a>
-                <div class="p-0" onmousedown="vertical_div_resize(event)"
-                style="position:absolute; cursor: ns-resize; box-shadow: 1px 1px 1px 1px rgba(0,0,0,.8); border-radius: 3px; left:50%;
+                <div class="p-0" onmousedown="vertical_div_resize(event)" 
+                style="position:absolute; cursor: ns-resize; box-shadow: 1px 1px 1px 1px rgba(0,0,0,.8); border-radius: 3px; left:50%; 
                 background-color: #dc3545; width:50px; height:10px; z-index: 2;">
                 </div>
             </div>
-            <div id="ClusterInfo" class="row collapse show border border-primary">
-                <div class="col-12 overflow-auto" style="height:28.9vh">
+            <div id="ClusterInfo" class="row bg-white collapse show border border-primary w-100 m-0">
+                <div class="col-12 p-0 overflow-auto" style="height:28.9vh">
                     <div id="table-splash" class="fs-2 d-flex justify-content-center align-items-center" style="height:25vh" ><i class="bi bi-file-spreadsheet"></i> Your metadata will go here when loaded!</div>
                     <table id="metadata" class="w-100 display overflow-scroll" >
                     </table>
-                </div>
+                </div>    
             </div>
-
+                
                 <!-- Need to have the legend be scrollable and situated under the selected nodes-->
+                
+            
+        </div> 
+        <div id="TestSubTree"></div> 
+        
 
-
-        </div>
-        <div id="TestSubTree"></div>
-
-
-
+    
     </body>
 </html>
