@@ -1,7 +1,7 @@
-sample_name	outbreak	organism	subtype	country	serovar	age	date	source	special	sample
-S1	1	Escherichia coli	EHEC/STEC	Canada	O157:H7	21	2024/05/30	beef	True	S1
-MISMATCH	1	Escherichia coli	EHEC/STEC	The United States	O157:H7	55	2024/05/21	milk	False	MISMATCH
-S3	2	Escherichia coli	EPEC	France	O125	14	2024/04/30	cheese	True	S3
-S4	2	Escherichia coli	EPEC	France	O125	35	2024/04/22	cheese	True	S4
-S5	3	Escherichia coli	EAEC	Canada	O126:H27	61	2012/09/01	milk	False	S5
-S6	unassociated	Escherichia coli	EAEC	Canada	O111:H21	43	2011/12/25	fruit	False	S6
+sample_name	outbreak	organism	subtype	country	serovar	age	date	source	special	gas_denovo_cluster_address
+S1	1	Escherichia coli	EHEC/STEC	Canada	O157:H7	21	2024/05/30	beef	True	1|1.1.1.1.1.1.1.1.1.1
+MISMATCH	1	Escherichia coli	EHEC/STEC	The United States	O157:H7	55	2024/05/21	milk	False	1|1.1.1.1.1.1.1.1.2.2
+S3	2	Escherichia coli	EPEC	France	O125	14	2024/04/30	cheese	True	2|1.1.1.1.1.1.1.1.1.1
+S4	2	Escherichia coli	EPEC	France	O125	35	2024/04/22	cheese	True	2|1.1.1.1.1.1.1.1.1.2
+S5	3	Escherichia coli	EAEC	Canada	O126:H27	61	2012/09/01	milk	False	
+S6	unassociated	Escherichia coli	EAEC	Canada	O111:H21	43	2011/12/25	fruit	False	
