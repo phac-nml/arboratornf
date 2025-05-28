@@ -18,15 +18,19 @@ process ARBOR_VIEW {
 
 
     output:
-    path(output_value), emit: html
+    path(output_value),  emit: html
+    path "versions.yml", emit: versions
 
 
     script:
     output_value = "${cluster_group}_arborview.html"
     """
     inline_arborview.py -d ${contextual_data} -n ${tree} -o ${output_value} -t ${arbor_view}
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        ArborView : 0.1.0
+    END_VERSIONS
     """
-
-
 
 }
