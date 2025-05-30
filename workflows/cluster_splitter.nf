@@ -16,14 +16,12 @@ include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { WRITE_METADATA  } from '../modules/local/write/main'
-include { LOCIDEX_MERGE   } from '../modules/local/locidex/merge/main'
-include { LOCIDEX_CONCAT  } from '../modules/local/locidex/concat/main'
-include { COPY_FILE       } from '../modules/local/copyFile/main'
-include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
-include { ARBORATOR       } from '../modules/local/arborator/main'
-include { ARBOR_VIEW      } from '../modules/local/arborview/main'
-include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
+include { LOCIDEX_MERGE } from '../modules/local/locidex/merge/main'
+include { MAP_TO_TSV    } from '../modules/local/maptotsv/main'
+include { ARBORATOR     } from '../modules/local/arborator/main'
+include { ARBOR_VIEW    } from '../modules/local/arborview/main'
+include { BUILD_CONFIG  } from '../modules/local/buildconfig/main'
+include { INPUT_ASSURE  } from "../modules/local/input_assure/main"
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,7 +33,6 @@ include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
 // MODULE: Installed directly from nf-core/modules
 //
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-include { loadIridaSampleIds          } from 'plugin/nf-iridanext'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,9 +49,8 @@ workflow CLUSTER_SPLITTER {
 
     // Track processed IDs
     def processedIDs = [] as Set
-    def processedMLST = [] as Set
 
-    pre_input = Channel.fromSamplesheet("input")
+    input = Channel.fromSamplesheet("input")
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
     .map { meta, mlst_file ->
             if (!meta.id) {
