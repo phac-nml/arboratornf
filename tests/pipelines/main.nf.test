@@ -26,7 +26,7 @@ nextflow_pipeline {
             assert path("$launchDir/results").exists()
 
             // Check merged profiles
-            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile.tsv")
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
@@ -138,7 +138,7 @@ nextflow_pipeline {
             assert path("$launchDir/results").exists()
 
             // Check merged profiles
-            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile.tsv")
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
@@ -223,7 +223,7 @@ nextflow_pipeline {
             assert path("$launchDir/results").exists()
 
             // Check merged profiles
-            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile.tsv")
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
@@ -477,7 +477,7 @@ nextflow_pipeline {
             assert path("$launchDir/results").exists()
 
             // Check merged profiles
-            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile.tsv")
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/mismatched_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
@@ -580,7 +580,7 @@ nextflow_pipeline {
             assert path("$launchDir/results").exists()
 
             // Check merged profiles
-            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile.tsv")
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/samplenames_profiles.tsv")
             assert actual_profile_tsv.text == expected_profile_tsv.text
 
