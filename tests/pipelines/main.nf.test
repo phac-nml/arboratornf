@@ -696,4 +696,43 @@ nextflow_pipeline {
 
         }
     }
+
+test("Testing when batch size is used for LOCIDEX_MERGE"){
+        // Downstream of LOCIDEX_MERGE, the batch size is used to split the input into smaller chunks.
+        // This is useful for large datasets to increase parallelism and reduce memory usage.
+
+        tag "batch-size"
+
+        when{
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-batchsize.csv"
+                outdir = "results"
+                batch_size = 1
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check that LOCIDEX_MERGE was called with the correct batch size
+            // Profiles for reference samples
+
+            def lines1 = path("$launchDir/results/locidex/merged/profile_1.tsv").readLines()
+            assert lines1.contains("S1\t1\t1\t1\t1\t1\t1\t1")
+            def lines2 = path("$launchDir/results/locidex/merged/profile_2.tsv").readLines()
+            assert lines2.contains("S2\t1\t1\t2\t2\t?\t4\t1")
+            def lines3 = path("$launchDir/results/locidex/merged/profile_3.tsv").readLines()
+            assert lines3.contains("S3\t1\t2\t2\t2\t1\t5\t1")
+            def lines4 = path("$launchDir/results/locidex/merged/profile_4.tsv").readLines()
+            assert lines4.contains("SX\t1\t2\t3\t2\t1\t6\t1")
+
+            // Error reports
+            // Only error report for sampleP should have content to check`
+            def error_report = path("$launchDir/results/locidex/merged/MLST_error_report_4.csv").readLines()
+            assert error_report.contains("SX,[\'S4\'],SX ID and JSON key in S4.mlst.json DO NOT MATCH. The \'S4\' key in S4.mlst.json has been forcefully changed to \'SX\': User should manually check input files to ensure correctness.")
+
+        }
+    }
+
 }
