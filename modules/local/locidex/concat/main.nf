@@ -1,6 +1,7 @@
 process LOCIDEX_CONCAT {
     tag 'Concat LOCIDEX files'
     label 'process_medium'
+    fair true
 
     conda "bioconda::csvtk=0.30.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

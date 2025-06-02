@@ -789,6 +789,11 @@ nextflow_pipeline {
             def lines6 = path("$launchDir/results/locidex/merged/profile_6.tsv").readLines()
             assert lines6.contains("sample1_S2\t1\t1\t1\t1\t1\t1\t1")
 
+            // Check concatenated profiles
+            def actual_concat_profile = path("$launchDir/results/locidex/concat/profile_concat.tsv")
+            def expected_concat_profile = path("$baseDir/tests/data/profiles/expected-concat-profile-duplicateMLST.tsv")
+            assert actual_concat_profile.text == expected_concat_profile.text
+
             // Check aggregated metadata
             def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
             def expected_metadata = path("$baseDir/tests/data/metadata/duplicate-MLST-aggregated_data.tsv")
@@ -829,7 +834,6 @@ nextflow_pipeline {
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            //assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\n")
             assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json

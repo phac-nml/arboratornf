@@ -5,6 +5,7 @@ Merges multiple genomic profiles provided in the sample sheet into one TSV-forma
 process LOCIDEX_MERGE {
     tag 'Merge Profiles'
     label 'process_medium'
+    fair true
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/locidex%3A0.3.0--pyhdfd78af_0' :
