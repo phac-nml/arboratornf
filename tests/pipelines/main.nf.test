@@ -829,7 +829,7 @@ nextflow_pipeline {
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nsample_3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\nsample4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
