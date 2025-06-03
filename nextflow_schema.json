@@ -58,6 +58,19 @@
                 }
             }
         },
+        "locidex": {
+            "title": "Locidex",
+            "type": "object",
+            "description": "An option to run multiple LOCIDEX processes in parallel",
+            "default": "",
+            "properties": {
+                "batch_size": {
+                    "type": "integer",
+                    "description": "Size of batch (number of MLST files) supplied to each LOCIDEX process",
+                    "default": 100
+                }
+            }
+        },
         "metadata": {
             "title": "Metadata",
             "type": "object",
@@ -286,6 +299,9 @@
     "allOf": [
         {
             "$ref": "#/definitions/arborator"
+        },
+        {
+            "$ref": "#/definitions/locidex"
         },
         {
             "$ref": "#/definitions/input_output_options"

@@ -16,12 +16,14 @@ include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
-include { LOCIDEX_MERGE } from '../modules/local/locidex/merge/main'
-include { MAP_TO_TSV    } from '../modules/local/maptotsv/main'
-include { ARBORATOR     } from '../modules/local/arborator/main'
-include { ARBOR_VIEW    } from '../modules/local/arborview/main'
-include { BUILD_CONFIG  } from '../modules/local/buildconfig/main'
-include { INPUT_ASSURE  } from "../modules/local/input_assure/main"
+include { WRITE_METADATA  } from '../modules/local/write/main'
+include { LOCIDEX_MERGE   } from '../modules/local/locidex/merge/main'
+include { LOCIDEX_CONCAT  } from '../modules/local/locidex/concat/main'
+include { COPY_FILE       } from '../modules/local/copyFile/main'
+include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
+include { ARBORATOR       } from '../modules/local/arborator/main'
+include { ARBOR_VIEW      } from '../modules/local/arborview/main'
+include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,6 +35,7 @@ include { INPUT_ASSURE  } from "../modules/local/input_assure/main"
 // MODULE: Installed directly from nf-core/modules
 //
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { loadIridaSampleIds          } from 'plugin/nf-iridanext'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,10 +52,12 @@ workflow CLUSTER_SPLITTER {
 
     // Track processed IDs
     def processedIDs = [] as Set
+    def processedMLST = [] as Set
 
-    input = Channel.fromSamplesheet("input")
+    pre_input = Channel.fromSamplesheet("input")
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
     .map { meta, mlst_file ->
+            uniqueMLST = true
             if (!meta.id) {
                 meta.id = meta.irida_id
             } else {
@@ -63,16 +68,29 @@ workflow CLUSTER_SPLITTER {
             while (processedIDs.contains(meta.id)) {
                 meta.id = "${meta.id}_${meta.irida_id}"
             }
+
+            // Check if the MLST file is unique
+            if (processedMLST.contains(mlst_file.baseName)) {
+                uniqueMLST = false
+            }
             // Add the ID to the set of processed IDs
             processedIDs << meta.id
+            processedMLST << mlst_file.baseName
 
-            tuple(meta, mlst_file)}
+            tuple(meta, mlst_file, uniqueMLST)}.loadIridaSampleIds()
 
 
-    // Make sure the ID in samplesheet / meta.id is the same ID
-    // as the corresponding MLST JSON file:
-    input_assure = INPUT_ASSURE(input)
-    ch_versions = ch_versions.mix(input_assure.versions)
+    // For the MLST files that are not unique, rename them
+    pre_input
+        .branch { meta, mlst_file, uniqueMLST ->
+            keep: uniqueMLST == true // Keep the unique MLST files as is
+            replace: uniqueMLST == false // Rename the non-unique MLST files to avoid collisions
+        }.set {mlst_file_rename}
+    renamed_input = COPY_FILE(mlst_file_rename.replace)
+    unchanged_input = mlst_file_rename.keep
+        .map { meta, mlst_file, uniqueMLST ->
+            tuple(meta, mlst_file) }
+    input = unchanged_input.mix(renamed_input)
 
     // Metadata headers:
     metadata_headers = Channel.value(
@@ -85,18 +103,59 @@ workflow CLUSTER_SPLITTER {
         )
 
     // Metadata rows:
-    metadata_rows = input_assure.result.map{
+    metadata_rows = input.map{
         meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
     }.toList()
+    // Prepare MLST files for LOCIDEX_MERGE
+
+    merged_alleles = input
+    .map { meta, mlst_file ->
+        mlst_file
+    }.collect()
+
+    // Create channels to be used to create a MLST override file (below)
+    SAMPLE_HEADER = "sample"
+    MLST_HEADER   = "mlst_alleles"
+
+    write_metadata_headers = Channel.of(
+        tuple(
+            SAMPLE_HEADER, MLST_HEADER)
+        )
+    write_metadata_rows = input.map{
+        def meta = it[0]
+        def mlst = it[1]
+        tuple(meta.id,mlst)
+    }.toList()
+
+    merge_tsv = WRITE_METADATA (write_metadata_headers, write_metadata_rows).results.first() // MLST override file value channel
+
+    // Merge MLST files into TSV
+
+    // 1A) Divide up inputs into groups for LOCIDEX
+    def batchCounter = 1
+    grouped_ref_files = merged_alleles.flatten() //
+        .buffer( size: params.batch_size, remainder: true )
+                .map { batch ->
+        def index = batchCounter++
+        return tuple(index, batch)
+    }
+    // 1B) Run LOCIDEX
 
     // Merging individual JSON-formatted genomic profile files
     // into one TSV-formatted file:
-    profiles_merged = LOCIDEX_MERGE(input_assure.result.map{
-        meta, alleles -> alleles
-    }.collect())
-    ch_versions = ch_versions.mix(profiles_merged.versions)
+    merged = LOCIDEX_MERGE(grouped_ref_files, merge_tsv)
+    ch_versions = ch_versions.mix(merged.versions)
+
+    // LOCIDEX Step 2:
+    // Combine outputs
+
+    // LOCIDEX Concatenate
+
+    combined_merged = LOCIDEX_CONCAT(merged.combined_profiles.collect(),
+    merged.combined_error_report.collect(),
+    merged.combined_profiles.collect().flatten().count())
 
     // Mapping metadata provided in the sample sheet
     // into a Arborator-compatible TSV-formatted file:
@@ -109,7 +168,7 @@ workflow CLUSTER_SPLITTER {
 
     // Arborator:
     arborator_output = ARBORATOR(
-        merged_profiles=profiles_merged.combined_profiles,
+        merged_profiles=combined_merged.combined_profiles,
         metadata=merged_metadata_path,
         configuration_file=arborator_config,
         id_column=ID_COLUMN,
