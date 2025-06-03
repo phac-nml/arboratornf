@@ -115,4 +115,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.3.5]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.5
 [0.3.6]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.6
 [0.4.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.4.0
-[0.5.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.4.1
+[0.5.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.0
