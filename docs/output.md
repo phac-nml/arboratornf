@@ -19,20 +19,24 @@ The IRIDA Next-compliant JSON output file will be named `iridanext.output.json.g
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [Locidex Merge](#locidex-merge) - Merges multiple genomic profiles provided in the sample sheet into one TSV-formatted file.
+- [Locidex Merge/Concat](#locidex-merge-concat) - Merges MLST profile JSON files into profile files then concatenates them into a single file.
 - [Map to TSV](#map-to-tsv) - Generates a TSV-formatted file containing all metadata in an Arborator-compliant format.
 - [Build Config](#build-config) - Builds an Aborator-compliant config file to facilitate improved readability of Arborator outputs.
 - [Arborator](#arborator) - Runs Arborator to generate cluster and metadata summaries.
 - [ArborView](#arborview) - Generates a visualization of a dendogram alongside metadata.
 - [Pipeline Information](#pipeline-information) - Report metrics generated during the workflow execution.
 
-### Locidex Merge
+### Locidex Merge Concat
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `merged/`
-  - Merged profiles: `profile.tsv`
+  - Merged MLST profiles: `profile_{n}.tsv`
+  - Merged MLST error reports: `MLST_error_report_{n}.csv`
+- `concat/`
+  - Concatenated MLST profiles: `profile_concat.tsv`
+  - Concatenated MLST reports: `MLST_error_report_concat.csv`
 
 </details>
 
