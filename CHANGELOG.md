@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] - 2025-06-04
+
+### `Fix`
+
+- Updated the template ArborView html file `assets/ArborView.html` based on the the commit [046ed92](https://github.com/phac-nml/ArborView/commit/046ed92021fe37016d771c6dc69fdbe8e204a70f) to the `html/table.html` file in ArborView `v.0.1.0` that fixes rendering of plots. [PR #45](https://github.com/phac-nml/arboratornf/pull/45)
+
 ## [0.5.0] - 2025-06-03
 
 ### `Updated`
@@ -116,3 +122,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.3.6]: https://github.com/phac-nml/arboratornf/releases/tag/0.3.6
 [0.4.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.4.0
 [0.5.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.0
+[0.5.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.1
