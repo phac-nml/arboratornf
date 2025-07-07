@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2025-07-07
+
+### `Updated`
+
+- Updated the template ArborView html file `assets/ArborView.html` based on the the commit [a826e1f](https://github.com/phac-nml/ArborView/commit/a826e1f142eec2a6d599a10874f74318530546a2) of the `html/table.html` file in ArborView `v.0.1.1` [release](https://github.com/phac-nml/ArborView/releases/tag/v0.1.1). [PR #48](https://github.com/phac-nml/arboratornf/pull/48)
+
+- Updated the arborator container (build 0 -> 1) which includes an update to the dependency of `profile_dists`. [PR #48](https://github.com/phac-nml/arboratornf/pull/48)
+
 ## [0.5.1] - 2025-06-04
 
 ### `Fix`
@@ -123,3 +131,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.4.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.4.0
 [0.5.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.0
 [0.5.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.1
+[0.5.2]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.2
