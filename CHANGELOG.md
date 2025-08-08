@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] - yyyy/mm/dd
+
+### `Updated`
+
+- Upgraded ArborView to [v.0.1.2](https://github.com/phac-nml/ArborView/releases/tag/v0.1.2). Update `assets/AborView.html` in pipeline with [html/table.html](https://github.com/phac-nml/ArborView/blob/v0.1.2/html/table.html). [PR #36]()
+
 ## [0.5.2] - 2025-07-07
 
 ### `Updated`
@@ -92,7 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2024-10-21
 
 - Added the ability to include a `sample_name` column in the input samplesheet.csv. Allows for compatibility with IRIDA-Next input configuration.
-
   - `sample_name` special characters will be replaced with `"_"`
   - If no `sample_name` is supplied in the column `sample` will be used
   - To avoid repeat values for `sample_name` all `sample_name` values will be suffixed with the unique `sample` value from the input file
@@ -132,3 +137,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.5.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.0
 [0.5.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.1
 [0.5.2]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.2
+[0.5.3]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.3
