@@ -22,14 +22,12 @@
                 "arborator/cluster_summary.tsv",
                 "arborator/metadata.excluded.tsv",
                 "arborator/metadata.included.tsv",
-                "arborator/run.json",
                 "arborator/threshold_map.json",
                 "arborview",
                 "arborview/1_arborview.html",
                 "arborview/2_arborview.html",
                 "build",
                 "build/config.json",
-                "iridanext.output.json",
                 "locidex",
                 "locidex/concat",
                 "locidex/concat/MLST_error_report_concat.csv",
@@ -62,12 +60,10 @@
                 "cluster_summary.tsv:md5,2178627f8fcea63b3c858868fd62e1d4",
                 "metadata.excluded.tsv:md5,9e6f99c7155f3c4a30b3b80235b6af52",
                 "metadata.included.tsv:md5,da1a072c2ed37bdc45c962ced9c01055",
-                "run.json:md5,d816ca3a8a7b46bd87166c443ba58488",
                 "threshold_map.json:md5,cc781d4410fdc58529d1aeb9513e132d",
                 "1_arborview.html:md5,93902625588fedf18cce7b52a3e15912",
                 "2_arborview.html:md5,8f9937555ee1cde31c5c03d961b8cef7",
                 "config.json:md5,d7810954079f9f96c60466340a7c8f6c",
-                "iridanext.output.json:md5,a9a95989d63bd550bfe8349667d15cf5",
                 "MLST_error_report_concat.csv:md5,f6689b46a8f71e85ee04acc80800ad84",
                 "profile_concat.tsv:md5,1612b39148782f37b1e97d14ce72ac71",
                 "MLST_error_report_1.csv:md5,f6689b46a8f71e85ee04acc80800ad84",
@@ -80,6 +76,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-09-04T11:56:23.188880928"
+        "timestamp": "2025-09-04T12:45:27.112752222"
     }
 }
