@@ -3,11 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.4] - 2025-09-03
+## [0.5.4] - 2025-09-05
 
 ### `Updated`
 
 - Upgraded `locidex` to [v.0.4.0](https://github.com/phac-nml/locidex/releases/tag/v0.4.0). [PR #52](https://github.com/phac-nml/arboratornf/pull/52)
+
+### `Added`
+
+- Added a process level `nf-test` for `LOCIDEX_MERGE` to confirm backward compatibility between MLST JSON files with and without a `"manfiest"` key. [PR 33](https://github.com/phac-nml/fastmatchirida/pull/33)
 
 ## [0.5.3] - 2025-08-08
 
