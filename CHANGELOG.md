@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Updated
+
+- arborator to version [1.1.0](https://github.com/phac-nml/arborator/releases/tag/1.1.0). [PR #53](https://github.com/phac-nml/arboratornf/pull/53)
+- Workflow tests to pass after minor arborator changes. [PR #53](https://github.com/phac-nml/arboratornf/pull/53)
+
 ## [0.5.4] - 2025-09-05
 
 ### `Updated`
