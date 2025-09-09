@@ -1,5 +1,5 @@
 repository_type: pipeline
-nf_core_version: "3.2.0"
+nf_core_version: "3.3.2"
 
 lint:
   files_exist:
@@ -41,3 +41,6 @@ lint:
     - params.max_time
   readme:
     - nextflow_badge
+
+template:
+  prefix: phac-nml

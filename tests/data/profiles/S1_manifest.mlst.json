@@ -1,0 +1,26 @@
+{
+  "db_info": {},
+  "parameters": {
+    "mode": "normal",
+    "min_match_ident": 100,
+    "min_match_cov": 100,
+    "max_ambiguous": 0,
+    "max_internal_stops": 0
+  },
+  "data": {
+    "sample_name": "S1",
+    "profile": {
+      "S1": {
+        "locus_1": 1,
+        "locus_2": 1,
+        "locus_3": "1",
+        "locus_4": "1",
+        "locus_5": "1",
+        "locus_6": 1,
+        "locus_7": 1
+      }
+    },
+    "seq_data": {}
+  },
+  "manifest": {}
+}
