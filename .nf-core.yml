@@ -41,3 +41,6 @@ lint:
     - params.max_time
   readme:
     - nextflow_badge
+
+template:
+  prefix: phac-nml
