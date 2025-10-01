@@ -14,50 +14,50 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Full Standard Samplesheet
 
-The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_8`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
+The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_16`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
 An input sample sheet compatible with this workflow would look as follows:
 
 ```console
-sample,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
-S1,S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true
-S2,S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false
-S3,S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true
-S4,S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true
-S5,S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false
-S6,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false
+sample,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8,metadata_9,metadata_10,metadata_11,metadata_12,metadata_13,metadata_14,metadata_15,metadata_16
+S1,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true,s1-meta9,s1-meta10,s1-meta11,s1-meta12,s1-meta13,s1-meta14,s1-meta15,s1-meta16
+S2,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false,s2-meta9,s2-meta10,s2-meta11,s2-meta12,s2-meta13,s2-meta14,s2-meta15,s2-meta16
+S3,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true,s3-meta9,s3-meta10,s3-meta11,s3-meta12,s3-meta13,s3-meta14,s3-meta15,s3-meta16
+S4,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true,s4-meta9,s4-meta10,s4-meta11,s4-meta12,s4-meta13,s4-meta14,s4-meta15,s4-meta16
+S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false,s5-meta9,s5-meta10,s5-meta11,s5-meta12,s5-meta13,s5-meta14,s5-meta15,s5-meta16
+S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16
 ```
 
-| Column                   | Description                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                 | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
-| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
-| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
-| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
+| Column                    | Description                                                                                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                  | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
+| `mlst_alleles`            | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`      | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| `metadata_1..metadata_16` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
 ### IRIDA-Next Optional Samplesheet Configuration
 
-`arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which contain the following columns: `sample`, `sample_name`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_8`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
+`arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which contain the following columns: `sample`, `sample_name`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_16`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
 ```console
-sample,sample_name,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
-S1,sample1,S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true
-S2,sample2,S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false
-S3,sampleQ,S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true
-S4,sampleQ,S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true
-S5,sample#5,S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false
-S6,,S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false
+sample,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8,metadata_9,metadata_10,metadata_11,metadata_12,metadata_13,metadata_14,metadata_15,metadata_16
+S1,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json,1,"Escherichia coli","EHEC/STEC","Canada","O157:H7",21,"2024/05/30","beef",true,s1-meta9,s1-meta10,s1-meta11,s1-meta12,s1-meta13,s1-meta14,s1-meta15,s1-meta16
+S2,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json,1,"Escherichia coli","EHEC/STEC","The United States","O157:H7",55,"2024/05/21","milk",false,s2-meta9,s2-meta10,s2-meta11,s2-meta12,s2-meta13,s2-meta14,s2-meta15,s2-meta16
+S3,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S3.mlst.json,2,"Escherichia coli","EPEC","France","O125",14,"2024/04/30","cheese",true,s3-meta9,s3-meta10,s3-meta11,s3-meta12,s3-meta13,s3-meta14,s3-meta15,s3-meta16
+S4,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S4.mlst.json,2,"Escherichia coli","EPEC","France","O125",35,"2024/04/22","cheese",true,s4-meta9,s4-meta10,s4-meta11,s4-meta12,s4-meta13,s4-meta14,s4-meta15,s4-meta16
+S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false,s5-meta9,s5-meta10,s5-meta11,s5-meta12,s5-meta13,s5-meta14,s5-meta15,s5-meta16
+S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16
 ```
 
-| Column                   | Description                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                 | Custom sample name. Samples should be unique within a samplesheet.                                                                                                              |
-| `sample_name`            | Sample name used in outputs (filenames and sample names)                                                                                                                        |
-| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
-| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
-| `metadata_1..metadata_8` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
+| Column                    | Description                                                                                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                  | Custom sample name. Samples should be unique within a samplesheet.                                                                                                              |
+| `sample_name`             | Sample name used in outputs (filenames and sample names)                                                                                                                        |
+| `mlst_alleles`            | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`      | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| `metadata_1..metadata_16` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../tests/data/samplesheets/samplesheet-samplename.csv) has been provided with the pipeline.
 
@@ -107,6 +107,14 @@ metadata_5_header: "age"
 metadata_6_header: "date"
 metadata_7_header: "source"
 metadata_8_header: "special"
+metadata_9_header: "metadata_9"
+metadata_10_header: "metadata_10"
+metadata_11_header: "metadata_11"
+metadata_12_header: "metadata_12"
+metadata_13_header: "metadata_13"
+metadata_14_header: "metadata_14"
+metadata_15_header: "metadata_15"
+metadata_16_header: "metadata_16"
 <...>
 ```
 

@@ -99,14 +99,20 @@ workflow CLUSTER_SPLITTER {
             params.metadata_1_header, params.metadata_2_header,
             params.metadata_3_header, params.metadata_4_header,
             params.metadata_5_header, params.metadata_6_header,
-            params.metadata_7_header, params.metadata_8_header)
+            params.metadata_7_header, params.metadata_8_header,
+            params.metadata_9_header, params.metadata_10_header,
+            params.metadata_11_header, params.metadata_12_header,
+            params.metadata_13_header, params.metadata_14_header,
+            params.metadata_15_header, params.metadata_16_header)
         )
 
     // Metadata rows:
     metadata_rows = input.map{
         meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
-        meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8)
+        meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
+        meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
+        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16)
     }.toList()
     // Prepare MLST files for LOCIDEX_MERGE
 

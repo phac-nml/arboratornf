@@ -1,0 +1,222 @@
+{
+    "outlier_thresh": "25",
+    "min_cluster_members": 2,
+    "partition_column_name": "outbreak",
+    "id_column_name": "sample_name",
+    "only_report_labeled_columns": "False",
+    "skip_qa": "False",
+    "grouped_metadata_columns": {
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "organism": {
+            "data_type": "None",
+            "label": "Organism",
+            "default": "",
+            "display": "True"
+        },
+        "subtype": {
+            "data_type": "None",
+            "label": "Subtype",
+            "default": "",
+            "display": "True"
+        },
+        "country": {
+            "data_type": "Categorical",
+            "label": "Country of Collection",
+            "default": "",
+            "display": "True"
+        },
+        "serovar": {
+            "data_type": "Categorical",
+            "label": "Serovar",
+            "default": "",
+            "display": "True"
+        },
+        "age": {
+            "data_type": "desc_stats",
+            "label": "Patient Age (years)",
+            "default": "",
+            "display": "True"
+        },
+        "date": {
+            "data_type": "min_max",
+            "label": "Date",
+            "default": "",
+            "display": "True"
+        },
+        "source": {
+            "data_type": "Categorical",
+            "label": "Source Type",
+            "default": "",
+            "display": "True"
+        },
+        "special": {
+            "data_type": "Categorical",
+            "label": "Special",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_9": {
+            "data_type": "None",
+            "label": "metadata_9",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_10": {
+            "data_type": "None",
+            "label": "metadata_10",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_11": {
+            "data_type": "None",
+            "label": "metadata_11",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_12": {
+            "data_type": "None",
+            "label": "metadata_12",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_13": {
+            "data_type": "None",
+            "label": "metadata_13",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_14": {
+            "data_type": "None",
+            "label": "metadata_14",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_15": {
+            "data_type": "None",
+            "label": "metadata_15",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_16": {
+            "data_type": "None",
+            "label": "metadata_16",
+            "default": "",
+            "display": "True"
+        }
+    },
+    "linelist_columns": {
+        "sample_name": {
+            "data_type": "None",
+            "label": "Sample",
+            "default": "",
+            "display": "True"
+        },
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "organism": {
+            "data_type": "None",
+            "label": "Organism",
+            "default": "",
+            "display": "True"
+        },
+        "subtype": {
+            "data_type": "None",
+            "label": "Subtype",
+            "default": "",
+            "display": "True"
+        },
+        "country": {
+            "data_type": "Categorical",
+            "label": "Country of Collection",
+            "default": "",
+            "display": "True"
+        },
+        "serovar": {
+            "data_type": "Categorical",
+            "label": "Serovar",
+            "default": "",
+            "display": "True"
+        },
+        "age": {
+            "data_type": "desc_stats",
+            "label": "Patient Age (years)",
+            "default": "",
+            "display": "True"
+        },
+        "date": {
+            "data_type": "min_max",
+            "label": "Date",
+            "default": "",
+            "display": "True"
+        },
+        "source": {
+            "data_type": "Categorical",
+            "label": "Source Type",
+            "default": "",
+            "display": "True"
+        },
+        "special": {
+            "data_type": "Categorical",
+            "label": "Special",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_9": {
+            "data_type": "None",
+            "label": "metadata_9",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_10": {
+            "data_type": "None",
+            "label": "metadata_10",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_11": {
+            "data_type": "None",
+            "label": "metadata_11",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_12": {
+            "data_type": "None",
+            "label": "metadata_12",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_13": {
+            "data_type": "None",
+            "label": "metadata_13",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_14": {
+            "data_type": "None",
+            "label": "metadata_14",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_15": {
+            "data_type": "None",
+            "label": "metadata_15",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_16": {
+            "data_type": "None",
+            "label": "metadata_16",
+            "default": "",
+            "display": "True"
+        }
+    }
+}
