@@ -28,11 +28,11 @@ S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profile
 S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16
 ```
 
-| Column                   | Description                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                 | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
-| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
-| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| Column                    | Description                                                                                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                  | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
+| `mlst_alleles`            | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`      | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
 | `metadata_1..metadata_16` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
@@ -51,12 +51,12 @@ S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profile
 S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16
 ```
 
-| Column                   | Description                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`                 | Custom sample name. Samples should be unique within a samplesheet.                                                                                                              |
-| `sample_name`            | Sample name used in outputs (filenames and sample names)                                                                                                                        |
-| `mlst_alleles`           | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
-| `metadata_partition`     | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
+| Column                    | Description                                                                                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`                  | Custom sample name. Samples should be unique within a samplesheet.                                                                                                              |
+| `sample_name`             | Sample name used in outputs (filenames and sample names)                                                                                                                        |
+| `mlst_alleles`            | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
+| `metadata_partition`      | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
 | `metadata_1..metadata_16` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
 An [example samplesheet](../tests/data/samplesheets/samplesheet-samplename.csv) has been provided with the pipeline.
