@@ -8,25 +8,25 @@ This [Nextflow](https://www.nextflow.io/) pipeline implements [Arborator](https:
 
 The input to the pipeline is a standard sample sheet (passed as `--input samplesheet.csv`) that looks like:
 
-| sample  | mlst_alleles      | metadata_partition | metadata_1 | metadata_2 | metadata_3 | metadata_4 | metadata_5 | metadata_6 | metadata_7 | metadata_8 |
-| ------- | ----------------- | ------------------ | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-| SampleA | sampleA.mlst.json | partition_meta     | meta_1     | meta_2     | meta_3     | meta_4     | meta_5     | meta_6     | meta_7     | meta_8     |
+| sample  | mlst_alleles      | metadata_partition | metadata_1 | metadata_2 | metadata_3 | metadata_4 | metadata_5 | metadata_6 | metadata_7 | metadata_8 | metadata_9 | metadata_10 | metadata_11 | metadata_12 | metadata_13 | metadata_14 | metadata_15 | metadata_16 |
+| ------- | ----------------- | ------------------ | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| SampleA | sampleA.mlst.json | partition_meta     | meta_1     | meta_2     | meta_3     | meta_4     | meta_5     | meta_6     | meta_7     | meta_8     | meta_9     | meta_10     | meta_11     | meta_12     | meta_13     | meta_14     | meta_15     | meta_16     |
 
 The columns of the samplesheet are defined as follows:
 
 - sample: The sample ID name. This name should not contain spaces.
 - mlst_alleles: A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](tests/data/profiles/S1.mlst.json).
 - metadata_partition: The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. If an individual sample row in the sample sheet is missing the `metadata_partition` entry, that sample will not be included in the analysis and will instead be reported in the `arborator/metadata.excluded.tsv` output file.
-- metadata_1..metadata_8: Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.
+- metadata_1..metadata_16: Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.
 
-The names of each metadata column (metadata_partition, and metadata_1..metadata_8) are provided using the following parameters:
+The names of each metadata column (metadata_partition, and metadata_1..metadata_16) are provided using the following parameters:
 
 - `--metadata_partition_name`: The name of the metadata_partition column (for example: "outbreak").
-- `--metadata_1_header..metadata_8_header`: The name of each individual metadata column (for example: "organism" or "source").
+- `--metadata_1_header..metadata_16_header`: The name of each individual metadata column (for example: "organism" or "source").
 
 Entries in the `metadata_partition` column in the sample sheet, as well as the name provided by the `metadata_partition_name` parameter, must contain only the following characters alphanumeric, `_`, `.`, and `-` characters.
 
-Entries in the metadata columns in the sample sheet (`metadata_1` through `metadata_8`), as well as the name provided by the metadata header parameters (`metadata_1_header` through `metadata_8_header`), may not contain newlines, tabs, `"`, `'`, `\`, `|`, `;`, `>`, or `<` characters.
+Entries in the metadata columns in the sample sheet (`metadata_1` through `metadata_16`), as well as the name provided by the metadata header parameters (`metadata_1_header` through `metadata_16_header`), may not contain newlines, tabs, `"`, `'`, `\`, `|`, `;`, `>`, or `<` characters.
 
 An example of the sample sheet is available in [tests/data/samplesheets/samplesheet.csv](tests/data/samplesheets/samplesheet.csv) and corresponding example metadata headers are available in [assets/parameters.yaml](assets/parameters.yaml).
 
