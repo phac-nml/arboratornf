@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The number of metadata columns in the sample sheet has been increased from 8 to 16. [PR ](https://github.com/phac-nml/arboratornf/pull/)
+- The number of metadata columns in the sample sheet has been increased from 8 to 16. [PR 56](https://github.com/phac-nml/arboratornf/pull/56)
 
 ## [0.6.0] - 2025-09-09
 
