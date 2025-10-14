@@ -1,0 +1,46 @@
+{
+	"outlier_thresh": "50",
+	"method": "average",
+	"thresholds": "50,30,25,20,15,10",
+	"min_members": 2,
+	"partition_col": "genomic_address_name",
+	"id_col": "sample_name",
+	"only_report_labeled_columns": "True",
+
+	"grouped_metadata_columns":{
+		"genomic_address_name":{ "data_type": "none","label":"genomic_address_name","default":"","display":"True"},
+		"fastmatch_result":{ "data_type": "none","label":"provisional_outbreak_code","default":"","display":"True"},
+		"provisional_outbreak_code":{ "data_type": "none","label":"provisional_outbreak_code","default":"","display":"True"},
+		"national_outbreak_code":{ "data_type": "none","label":"national_outbreak_code","default":"","display":"True"},
+		"national_outbreak_status":{ "data_type": "none","label":"national_outbreak_status","display":"True"},
+		"predicted_primary_identification_name":{ "data_type": "none","label":"predicted_identification_name","default":"","display":"True"},
+		"predicted_primary_type_name":{ "data_type": "none","label":"predicted_primary_type_name","default":"","display":"True"},
+		"cnphi_post_date":{ "data_type": "min_max","label":"cnphi_post_date","default":"","display":"False"},
+		"calc_earliest_date":{ "data_type": "min_max","label":"calc_earliest_date","default":"","display":"False"},
+		"geo_loc_name_country":{ "data_type": "Categorical","label":"geo_loc_name_country","default":"","display":"True"},
+		"geo_loc_name_state_province_territory":{ "data_type": "Categorical","label":"geo_loc_name_state_province_territory","default":"","display":"False"}
+	},
+
+	"linelist_columns":{
+		"sample_name":{ "data_type": "none","label":"sample_name","display":"True"},
+		"related_specimen_primary_id":{ "data_type": "none","label":"related_specimen_primary_id","display":"True"},
+		"related_specimen_relationship_type":{ "data_type": "none","label":"related_specimen_primary_id","display":"True"},
+		"predicted_primary_identification_name":{ "data_type": "none","label":"predicted_identification_name","display":"True"},
+		"predicted_primary_type_name":{ "data_type": "none","label":"predicted_primary_type_name","display":"True"},
+		"genomic_address_name":{ "data_type": "none","label":"genomic_address_name","display":"True"},
+		"gas_denovo_cluster_address":{ "data_type": "none","label":"gas_denovo_cluster_address","display":"True"},		
+		"calc_earliest_date":{ "data_type": "min_max","label":"calc_earliest_date","display":"True"},
+		"new_isolates_date":{ "data_type": "min_max","label":"new_isolates_date","display":"True"},
+		"pnc_analysis_date":{ "data_type": "min_max","label":"pnc_analysis_date","display":"True"},
+		"cnphi_post_date":{ "data_type": "min_max","label":"cnphi_post_date","display":"True"},
+		"calc_source_type":{ "data_type": "nones","label":"calc_source_type","display":"True"},
+		"provisional_outbreak_code":{ "data_type": "none","label":"provisional_outbreak_code","default":"","display":"True"},
+		"national_outbreak_code":{ "data_type": "none","label":"national_outbreak_code","display":"True"},
+		"national_outbreak_status":{ "data_type": "none","label":"national_outbreak_code_status","display":"True"},
+		"fastmatch_result":{ "data_type": "none","label":"fastmatch_result","display":"True"},
+		"geo_loc_name_country":{ "data_type": "none","label":"geo_loc_name_country","display":"True"},
+		"geo_loc_name_state_province_territory":{ "data_type": "desc_stats","label":"geo_loc_name_state_province_territory","display":"True"},
+		"sample":{ "data_type": "none","label":"sample","display":"True"}
+	}
+
+}
