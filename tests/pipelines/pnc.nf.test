@@ -1,0 +1,86 @@
+nextflow_pipeline {
+    name "Integration Tests for Arborator pipeline"
+    script "main.nf"
+
+    test("PNC Outbreak Pipeline"){
+        tag "pipeline_pnc"
+        tag "pipeline_pnc_outbreak"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-pnc-outbreak.csv"
+                outdir = "results"
+
+                metadata_partition_name = "genomic_address_name"
+
+                metadata_1_header = "new_isolates_date"
+                metadata_2_header = "predicted_primary_identification_name"
+                metadata_3_header = "predicted_primary_type_name"
+                metadata_4_header = "national_outbreak_code"
+                metadata_5_header = "national_outbreak_status"
+                metadata_6_header = "provisional_outbreak_code"
+                metadata_7_header = "related_specimen_primary_id"
+                metadata_8_header = "related_specimen_relationship_type"
+                metadata_9_header = "calc_source_type"
+                metadata_10_header = "geo_loc_name_country"
+                metadata_11_header = "geo_loc_name_state_province_territory"
+                metadata_12_header = "pnc_analysis_date"
+                metadata_13_header = "cnphi_post_date"
+                metadata_14_header = "calc_earliest_date"
+                metadata_15_header = "fastmatch_result"
+                metadata_16_header = "genomic_address_name"
+
+                ar_thresholds = "50,30,25,20,15,10"
+                ar_config = "$baseDir/tests/data/configs/pnc-outbreak-detection.json"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
+            def expected_profile = "sample_id\tlocus_1\tlocus_2\tlocus_3\tlocus_4\tlocus_5\tlocus_6\n"
+            expected_profile += "A\t1\t1\t1\t1\t1\t1\n"
+            expected_profile += "B\t1\t1\t1\t1\t1\t1\n"
+            expected_profile += "C\t1\t1\t1\t1\t1\t1\n"
+            expected_profile += "D\t1\t1\t1\t1\t1\t1\n"
+            expected_profile += "E\t1\t1\t1\t1\t1\t2\n"
+            expected_profile += "F\t1\t1\t1\t1\t1\t2\n"
+
+            assert actual_profile_tsv.text == expected_profile
+
+            // Check aggregated metadata
+            def actual_metadata_tsv = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = "sample_name\tsample\tnew_isolates_date\tpredicted_primary_identification_name\tpredicted_primary_type_name\tnational_outbreak_code\tnational_outbreak_status\tprovisional_outbreak_code\trelated_specimen_primary_id\trelated_specimen_relationship_type\tcalc_source_type\tgeo_loc_name_country\tgeo_loc_name_state_province_territory\tpnc_analysis_date\tcnphi_post_date\tcalc_earliest_date\tfastmatch_result\tgenomic_address_name\n"
+            expected_metadata += "A\tA\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak1\tclosed\tOutbreak1\tNone\tNone\tHuman\tUnited States\t\t2025-01-06\t2025-01-08\t2024-12-01\tNone\t1.1.1.1.1.1\n"
+            expected_metadata += "B\tB\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak1\tclosed\tOutbreak1\tNone\tNone\tAnimal\tCanada\tQC\t2025-01-06\t2025-01-08\t2024-12-02\tNone\t1.1.1.1.1.1\n"
+            expected_metadata += "C\tC\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak1\tclosed\tOutbreak1\tNone\tNone\tHuman\tCanada\tBC\t2025-01-06\t2025-01-08\t2024-12-03\tNone\t1.1.1.1.1.1\n"
+            expected_metadata += "D\tD\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak1\tclosed\tOutbreak1\tNone\tNone\tAnimal\tCanada\tMB\t2025-01-06\t2025-01-08\t2024-12-04\tNone\t1.1.1.1.1.1\n"
+            expected_metadata += "E\tE\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak2\topen\tOutbreak2\tNone\tNone\tHuman\tCanada\tAB\t2025-01-06\t2025-01-08\t2024-12-05\tNone\t1.1.1.1.1.2\n"
+            expected_metadata += "F\tF\t2025-01-01\tSalmonella enterica\tEnteritidis\tOutbreak2\topen\tOutbreak2\tNone\tNone\tHuman\tCanada\tAB\t2025-01-06\t2025-01-08\t2024-12-05\tNone\t1.1.1.1.1.2\n"
+
+            assert actual_metadata_tsv.text == expected_metadata
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("genomic_address_name\tprovisional_outbreak_code\tprovisional_outbreak_code\tprovisional_outbreak_code\tprovisional_outbreak_code\tnational_outbreak_code\tnational_outbreak_status\tpredicted_identification_name\tpredicted_primary_type_name\tgeo_loc_name_country")
+            assert actual_arborator_summary.text.contains("1.1.1.1.1.1\tnan\tOutbreak1\tnan\tOutbreak1\tOutbreak1\tclosed\tSalmonella enterica\tEnteritidis\tCanada,United States")
+            assert actual_arborator_summary.text.contains("1.1.1.1.1.2\tnan\tOutbreak2\tnan\tOutbreak2\tOutbreak2\topen\tSalmonella enterica\tEnteritidis\tCanada")
+
+            def actual_arborator_meta_included_path = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = "sample_name\trelated_specimen_primary_id\trelated_specimen_relationship_type\tpredicted_identification_name\tpredicted_primary_type_name\tgenomic_address_name\tgas_denovo_cluster_address\tcalc_earliest_date\tnew_isolates_date\tpnc_analysis_date\tcnphi_post_date\tcalc_source_type\tprovisional_outbreak_code\tnational_outbreak_code\tnational_outbreak_code_status\tfastmatch_result\tgeo_loc_name_country\tgeo_loc_name_state_province_territory\tsample\n"
+            expected_arborator_meta_included += "A\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.1\t1.1.1.1.1.1|1.1.1.1.1.1\t2024-12-01\t2025-01-01\t2025-01-06\t2025-01-08\tHuman\tOutbreak1\tOutbreak1\tclosed\t\tUnited States\t\tA\n"
+            expected_arborator_meta_included += "B\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.1\t1.1.1.1.1.1|1.1.1.1.1.1\t2024-12-02\t2025-01-01\t2025-01-06\t2025-01-08\tAnimal\tOutbreak1\tOutbreak1\tclosed\t\tCanada\tQC\tB\n"
+            expected_arborator_meta_included += "C\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.1\t1.1.1.1.1.1|1.1.1.1.1.1\t2024-12-03\t2025-01-01\t2025-01-06\t2025-01-08\tHuman\tOutbreak1\tOutbreak1\tclosed\t\tCanada\tBC\tC\n"
+            expected_arborator_meta_included += "D\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.1\t1.1.1.1.1.1|1.1.1.1.1.1\t2024-12-04\t2025-01-01\t2025-01-06\t2025-01-08\tAnimal\tOutbreak1\tOutbreak1\tclosed\t\tCanada\tMB\tD\n"
+            expected_arborator_meta_included += "E\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.2\t1.1.1.1.1.2|1.1.1.1.1.1\t2024-12-05\t2025-01-01\t2025-01-06\t2025-01-08\tHuman\tOutbreak2\tOutbreak2\topen\t\tCanada\tAB\tE\n"
+            expected_arborator_meta_included += "F\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.2\t1.1.1.1.1.2|1.1.1.1.1.1\t2024-12-05\t2025-01-01\t2025-01-06\t2025-01-08\tHuman\tOutbreak2\tOutbreak2\topen\t\tCanada\tAB\tF\n"
+
+            assert actual_arborator_meta_included_path.text == expected_arborator_meta_included
+        }
+    }
+}

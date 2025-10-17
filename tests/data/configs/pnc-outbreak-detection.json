@@ -24,7 +24,7 @@
 	"linelist_columns":{
 		"sample_name":{ "data_type": "none","label":"sample_name","display":"True"},
 		"related_specimen_primary_id":{ "data_type": "none","label":"related_specimen_primary_id","display":"True"},
-		"related_specimen_relationship_type":{ "data_type": "none","label":"related_specimen_primary_id","display":"True"},
+		"related_specimen_relationship_type":{ "data_type": "none","label":"related_specimen_relationship_type","display":"True"},
 		"predicted_primary_identification_name":{ "data_type": "none","label":"predicted_identification_name","display":"True"},
 		"predicted_primary_type_name":{ "data_type": "none","label":"predicted_primary_type_name","display":"True"},
 		"genomic_address_name":{ "data_type": "none","label":"genomic_address_name","display":"True"},
