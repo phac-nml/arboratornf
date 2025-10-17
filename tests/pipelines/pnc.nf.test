@@ -2,13 +2,13 @@ nextflow_pipeline {
     name "Integration Tests for Arborator pipeline"
     script "main.nf"
 
-    test("PNC Outbreak Pipeline"){
+    test("PNC Outbreak Detection Pipeline"){
         tag "pipeline_pnc"
-        tag "pipeline_pnc_outbreak"
+        tag "pipeline_pnc_outbreak_detection"
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-pnc-outbreak.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-pnc-outbreak-detection.csv"
                 outdir = "results"
 
                 metadata_partition_name = "genomic_address_name"
@@ -81,6 +81,61 @@ nextflow_pipeline {
             expected_arborator_meta_included += "F\t\t\tSalmonella enterica\tEnteritidis\t1.1.1.1.1.2\t1.1.1.1.1.2|1.1.1.1.1.1\t2024-12-05\t2025-01-01\t2025-01-06\t2025-01-08\tHuman\tOutbreak2\tOutbreak2\topen\t\tCanada\tAB\tF\n"
 
             assert actual_arborator_meta_included_path.text == expected_arborator_meta_included
+
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_tree.nwk").text == "(((B:0.000000,A:0.000000):0.0,C:0.000000):0.0,D:0.000000);\n"
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_tree.nwk").text == "(F:0.000000,E:0.000000);\n"
+
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1.1.1.1.1.2_tree.nwk").exists()
+
+            // Check that the ArborView output is created
+            def actual_arborview1 = path("$launchDir/results/arborview/1.1.1.1.1.1_arborview.html")
+            assert actual_arborview1.exists()
+            assert actual_arborview1.text.contains("sample_name\\tsample\\tnew_isolates_date\\tpredicted_primary_identification_name\\tpredicted_primary_type_name\\tnational_outbreak_code\\tnational_outbreak_status\\tprovisional_outbreak_code\\trelated_specimen_primary_id\\trelated_specimen_relationship_type\\tcalc_source_type\\tgeo_loc_name_country\\tgeo_loc_name_state_province_territory\\tpnc_analysis_date\\tcnphi_post_date\\tcalc_earliest_date\\tfastmatch_result\\tgenomic_address_name\\tgas_denovo_cluster_address\\nA\\tA\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak1\\tclosed\\tOutbreak1\\t\\t\\tHuman\\tUnited States\\t\\t2025-01-06\\t2025-01-08\\t2024-12-01\\t\\t1.1.1.1.1.1\\t1.1.1.1.1.1|1.1.1.1.1.1\\nB\\tB\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak1\\tclosed\\tOutbreak1\\t\\t\\tAnimal\\tCanada\\tQC\\t2025-01-06\\t2025-01-08\\t2024-12-02\\t\\t1.1.1.1.1.1\\t1.1.1.1.1.1|1.1.1.1.1.1\\nC\\tC\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak1\\tclosed\\tOutbreak1\\t\\t\\tHuman\\tCanada\\tBC\\t2025-01-06\\t2025-01-08\\t2024-12-03\\t\\t1.1.1.1.1.1\\t1.1.1.1.1.1|1.1.1.1.1.1\\nD\\tD\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak1\\tclosed\\tOutbreak1\\t\\t\\tAnimal\\tCanada\\tMB\\t2025-01-06\\t2025-01-08\\t2024-12-04\\t\\t1.1.1.1.1.1\\t1.1.1.1.1.1|1.1.1.1.1.1")
+
+            def actual_arborview2 = path("$launchDir/results/arborview/1.1.1.1.1.2_arborview.html")
+            assert actual_arborview2.exists()
+            assert actual_arborview2.text.contains("sample_name\\tsample\\tnew_isolates_date\\tpredicted_primary_identification_name\\tpredicted_primary_type_name\\tnational_outbreak_code\\tnational_outbreak_status\\tprovisional_outbreak_code\\trelated_specimen_primary_id\\trelated_specimen_relationship_type\\tcalc_source_type\\tgeo_loc_name_country\\tgeo_loc_name_state_province_territory\\tpnc_analysis_date\\tcnphi_post_date\\tcalc_earliest_date\\tfastmatch_result\\tgenomic_address_name\\tgas_denovo_cluster_address\\nE\\tE\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak2\\topen\\tOutbreak2\\t\\t\\tHuman\\tCanada\\tAB\\t2025-01-06\\t2025-01-08\\t2024-12-05\\t\\t1.1.1.1.1.2\\t1.1.1.1.1.2|1.1.1.1.1.1\\nF\\tF\\t2025-01-01\\tSalmonella enterica\\tEnteritidis\\tOutbreak2\\topen\\tOutbreak2\\t\\t\\tHuman\\tCanada\\tAB\\t2025-01-06\\t2025-01-08\\t2024-12-05\\t\\t1.1.1.1.1.2\\t1.1.1.1.1.2|1.1.1.1.1.1")
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1.1.2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
         }
     }
 }
