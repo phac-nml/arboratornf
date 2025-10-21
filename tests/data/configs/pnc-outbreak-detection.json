@@ -9,7 +9,7 @@
 
 	"grouped_metadata_columns":{
 		"genomic_address_name":{ "data_type": "none","label":"genomic_address_name","default":"","display":"True"},
-		"fastmatch_result":{ "data_type": "none","label":"provisional_outbreak_code","default":"","display":"True"},
+		"fastmatch_result":{ "data_type": "none","label":"fastmatch_result","default":"","display":"True"},
 		"provisional_outbreak_code":{ "data_type": "none","label":"provisional_outbreak_code","default":"","display":"True"},
 		"national_outbreak_code":{ "data_type": "none","label":"national_outbreak_code","default":"","display":"True"},
 		"national_outbreak_status":{ "data_type": "none","label":"national_outbreak_status","display":"True"},
@@ -29,17 +29,17 @@
 		"geo_loc_name_country":{ "data_type": "Categorical","label":"geo_loc_name_country","default":"","display":"True"},
 		"count_geo_loc_name_country_canada":{ "data_type": "Categorical","label":"count_geo_loc_name_country_canada","default":"0","display":"True"},
 		"geo_loc_name_state_province_territory":{ "data_type": "Categorical","label":"geo_loc_name_state_province_territory","default":"","display":"False"},
-		"count_geo_loc_name_state_province_territory_ab":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_ab","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_bc":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_bc","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_mb":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_mb","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_nb":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_nb","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_nl":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_nl","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_ns":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_ns","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_nu":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_nu","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_on":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_on","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_pe":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_pe","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_qc":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_qc","default":"0","display":"True"},
-		"count_geo_loc_name_state_province_territory_sk":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_sk","default":"0","display":"True"}
+		"count_geo_loc_name_state_province_territory_AB":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_AB","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_BC":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_BC","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_MB":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_MB","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_NB":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_NB","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_NL":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_NL","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_NS":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_NS","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_NU":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_NU","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_ON":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_ON","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_PE":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_PE","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_QC":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_QC","default":"0","display":"True"},
+		"count_geo_loc_name_state_province_territory_SK":{ "data_type": "Categorical","label":"count_geo_loc_name_state_province_territory_SK","default":"0","display":"True"}
 	},
 
 	"linelist_columns":{
