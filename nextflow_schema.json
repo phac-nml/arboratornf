@@ -68,12 +68,6 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Puts the ArborView, Arborator and software_versions.yml in a zipped file"
-                },
-                "ar_thresholds": {
-                    "type": "string",
-                    "default": "100,50,25,20,15,10,5,0",
-                    "description": "The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.",
-                    "pattern": "^(\\d+(\\.\\d+)?,)*\\d+(\\.\\d+)?$"
                 }
             }
         },
