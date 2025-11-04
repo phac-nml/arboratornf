@@ -379,6 +379,9 @@
             "$ref": "#/definitions/output"
         },
         {
+            "$ref": "#/definitions/locidex"
+        },
+        {
             "$ref": "#/definitions/institutional_config_options"
         },
         {
