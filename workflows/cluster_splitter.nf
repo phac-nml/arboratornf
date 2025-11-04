@@ -227,11 +227,11 @@ workflow CLUSTER_SPLITTER {
         } else {
             new_name = file_name
         }
-        def renamedFile = file.copyTo(new_name)
+        def renamedFile = file.copyTo("${file.parent}/${new_name}")
         return renamedFile
-    }.view()
+    }.set{test}
     !(params.zip_cluster_results) ?: ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
-        all_arborator_files,
+        test,
         CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
 
 
