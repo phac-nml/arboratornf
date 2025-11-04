@@ -220,7 +220,7 @@ workflow CLUSTER_SPLITTER {
         def cluster_name = elements[-2]
         def file_name = elements[-1]
 
-        repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv"]
+        repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv","outliers.tsv"]
         def new_name
         if (repeated_file_names.contains(file_name)) {
             new_name = cluster_name + "_" + file_name
@@ -229,9 +229,9 @@ workflow CLUSTER_SPLITTER {
         }
         def renamedFile = file.copyTo("${file.parent}/${new_name}")
         return renamedFile
-    }.set{test}
+    }.collect().set{renamed_arborator_files}
     !(params.zip_cluster_results) ?: ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
-        test,
+        renamed_arborator_files,
         CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
 
 

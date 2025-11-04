@@ -8,7 +8,7 @@ process ZIP_OUTPUT {
     stageInMode 'symlink'
     input:
     path arborview_files
-    path arborator_files, stageAs: "?/*"
+    path arborator_files
     path software_version_file
 
     output:
