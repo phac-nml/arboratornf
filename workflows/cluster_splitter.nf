@@ -103,7 +103,24 @@ workflow CLUSTER_SPLITTER {
             params.metadata_9_header, params.metadata_10_header,
             params.metadata_11_header, params.metadata_12_header,
             params.metadata_13_header, params.metadata_14_header,
-            params.metadata_15_header, params.metadata_16_header)
+            params.metadata_15_header, params.metadata_16_header,
+            params.metadata_17_header, params.metadata_18_header,
+            params.metadata_19_header, params.metadata_20_header,
+            params.metadata_21_header, params.metadata_22_header,
+            params.metadata_23_header, params.metadata_24_header,
+            params.metadata_25_header, params.metadata_26_header,
+            params.metadata_27_header, params.metadata_28_header,
+            params.metadata_29_header, params.metadata_30_header,
+            params.metadata_31_header, params.metadata_32_header,
+            params.metadata_33_header, params.metadata_34_header,
+            params.metadata_35_header, params.metadata_36_header,
+            params.metadata_37_header, params.metadata_38_header,
+            params.metadata_39_header, params.metadata_40_header,
+            params.metadata_41_header, params.metadata_42_header,
+            params.metadata_43_header, params.metadata_44_header,
+            params.metadata_45_header, params.metadata_46_header,
+            params.metadata_47_header, params.metadata_48_header,
+            params.metadata_49_header, params.metadata_50_header)
         )
 
     // Metadata rows:
@@ -112,7 +129,16 @@ workflow CLUSTER_SPLITTER {
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
         meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
-        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16)
+        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16,
+        meta.metadata_17, meta.metadata_18, meta.metadata_19, meta.metadata_20,
+        meta.metadata_21, meta.metadata_22, meta.metadata_23, meta.metadata_24,
+        meta.metadata_25, meta.metadata_26, meta.metadata_27, meta.metadata_28,
+        meta.metadata_29, meta.metadata_30, meta.metadata_31, meta.metadata_32,
+        meta.metadata_33, meta.metadata_34, meta.metadata_35, meta.metadata_36,
+        meta.metadata_37, meta.metadata_38, meta.metadata_39, meta.metadata_40,
+        meta.metadata_41, meta.metadata_42, meta.metadata_43, meta.metadata_44,
+        meta.metadata_45, meta.metadata_46, meta.metadata_47, meta.metadata_48,
+        meta.metadata_49, meta.metadata_50)
     }.toList()
     // Prepare MLST files for LOCIDEX_MERGE
 
