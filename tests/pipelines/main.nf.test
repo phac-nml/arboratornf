@@ -1130,61 +1130,29 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
-            // Unzip the file for testing
-            def zipfile = new ZipFile("$launchDir/results/zip/arboratornf.zip")
-
-            // Collect files in arboratornf.zip
-            def fileNames = zipfile.entries()
-                .findAll { !it.isDirectory() } // Shouldn't be directories but just in case
-                .collect { it.name }
-
-            // Expected files in arboratornf.zip
+            // Zip related files
+            def filename = "$launchDir/results/zip/arboratornf.zip"
             def expectedFiles = ['1_arborview.html','1_clusters.tsv', '1_loci.summary.tsv', '1_matrix.tsv', '1_metadata.tsv', '1_outliers.tsv', '1_profile.tsv', '1_tree.nwk', '2_arborview.html', '2_clusters.tsv', '2_loci.summary.tsv', '2_matrix.tsv', '2_metadata.tsv', '2_outliers.tsv', '2_profile.tsv', '2_tree.nwk', 'cluster_summary.tsv', 'metadata.excluded.tsv', 'metadata.included.tsv', 'run.json', 'software_versions.yml', 'threshold_map.json']
-            // Assert that all expected files are present
-            expectedFiles.each { expected ->
-                assert fileNames.contains(expected)
-            }
 
-            // Assert that all files are in expected list
-            fileNames.each { file ->
-                assert expectedFiles.contains(file)
-            }
+            assert zip(filename).isValid()
+            assert zip(filename).getNumberOfFiles() == expectedFiles.size()
 
-            // Check the arborator files
-            def actual_zip_arborator_tree_1 = zipfile.getEntry("1_tree.nwk")
-            def actual_zip_arborator_tree_1_content
-            zipfile.getInputStream(actual_zip_arborator_tree_1).withReader('UTF-8') { reader ->
-            actual_zip_arborator_tree_1_content = reader.text
+            // Check all files are present
+            def zipfile = zip(filename).extractAll()
+            def zip_filenames = zipfile.collect { path ->
+                path.fileName.toString()
             }
-            def expected_arborator_tree_1 = path("$baseDir/tests/data/arborator/1/tree.nwk")
-            assert actual_zip_arborator_tree_1_content == expected_arborator_tree_1.text
+            assert zip_filenames.sort() == expectedFiles.sort()
 
-            def actual_zip_arborator_tree_2 = zipfile.getEntry("2_tree.nwk")
-            def actual_zip_arborator_tree_2_content
-            zipfile.getInputStream(actual_zip_arborator_tree_2).withReader('UTF-8') { reader ->
-            actual_zip_arborator_tree_2_content = reader.text
-            }
-            def expected_arborator_tree_2 = path("$baseDir/tests/data/arborator/2/tree.nwk")
-            assert actual_zip_arborator_tree_2_content == expected_arborator_tree_2.text
+            // Check the content of files
+            assert zip(filename).extract("1_tree.nwk").text == path("$baseDir/tests/data/arborator/1/tree.nwk").text
+            assert zip(filename).extract("2_tree.nwk").text == path("$baseDir/tests/data/arborator/2/tree.nwk").text
+            assert zip(filename).extract("1_arborview.html").text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\t1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\t1|1.1.1.1.1.1.1.1.2.2\\n")
+            assert zip(filename).extract("2_arborview.html").text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
 
-            // Check that the ArborView content
-            def arborview_zip_1 = zipfile.getEntry("1_arborview.html")
-            def actual_arborview_zip_1_content
-            zipfile.getInputStream(arborview_zip_1).withReader('UTF-8') { reader ->
-            actual_arborview_zip_1_content = reader.text
-            }
-            assert actual_arborview_zip_1_content.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\tTrue\\t1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tFalse\\t1|1.1.1.1.1.1.1.1.2.2\\n")
-
-            def arborview_zip_2 = zipfile.getEntry("2_arborview.html")
-            def actual_arborview_zip_2_content
-            zipfile.getInputStream(arborview_zip_2).withReader('UTF-8') { reader ->
-            actual_arborview_zip_2_content = reader.text
-            }
-            assert actual_arborview_zip_2_content.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\tTrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
             def iridanext_global = iridanext_json.files.global
-
             // Confirm arborator.zip file taken by iridanext.output.json
             assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 1
 
