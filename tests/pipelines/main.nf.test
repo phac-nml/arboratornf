@@ -112,6 +112,8 @@ nextflow_pipeline {
 
             assert iridanext_samples.isEmpty()
             assert iridanext_metadata.isEmpty()
+
+            assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 0 // Zip should only be produced when zip_cluster_results is set to true
         }
     }
 
