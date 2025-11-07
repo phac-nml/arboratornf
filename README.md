@@ -59,6 +59,10 @@ The optional parameters are as follows:
 
 When large samplesheets are provided to LOCIDEX, they are split-up, into batches (default batch size: 100), to allow for `LOCIDEX_MERGE` to be run in parallel. To modify the size of batches use the parameter `--batch_size n`
 
+### Zip
+
+- `--zip_cluster_results`: Zips files from `aborview`,`arborator` and `software_versions.yml` into `arboratornf.zip` (default: false)
+
 Further parameters (defaults from nf-core) are defined in [nextflow_schema.json](nextflow_schema.json).
 
 # Running
@@ -108,6 +112,8 @@ An example of the what the contents of the IRIDA Next JSON-formatted file looks 
     }
 }
 ```
+
+Note: If zip is run, then only `arboratornf.zip` is included.
 
 Within the `files` section of this JSON-formatted file, all of the output paths are relative to the `outdir`. Therefore, `"path": "arborator/cluster_summary.tsv"` refers to a file located within `outdir/arborator/cluster_summary.tsv`.
 

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The number of metadata columns in the sample sheet has been increased from 16 to 50. [PR 59](https://github.com/phac-nml/arboratornf/pull/59)
 
+### Added
+
+- A module for zipping files from `aborview`,`arborator` and `software_versions.yml` when a new parameter `zip_cluster_results` is true. [PR #58](https://github.com/phac-nml/arboratornf/pull/58)
+
+
 ## [0.7.0] - 2025-10-01
 
 ### Changed

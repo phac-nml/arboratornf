@@ -28,7 +28,7 @@ process ARBORATOR {
     path("${prefix}/*/outliers.tsv"), emit: outliers, optional: true
     path("${prefix}/*/profile.tsv"), emit: profiles, optional: true
     path("${prefix}/cluster_summary.tsv"), emit: cluster_summary
-    path("${prefix}/metadata.excluded.tsv"), emit: metadata_exluded
+    path("${prefix}/metadata.excluded.tsv"), emit: metadata_excluded
     path("${prefix}/metadata.included.tsv"), emit: metadata_included
     path("${prefix}/threshold_map.json"), emit: threshold_map
     path("${prefix}/run.json"), emit: run_json

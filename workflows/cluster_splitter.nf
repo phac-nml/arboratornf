@@ -24,6 +24,7 @@ include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
 include { ARBORATOR       } from '../modules/local/arborator/main'
 include { ARBOR_VIEW      } from '../modules/local/arborview/main'
 include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
+include { ZIP_OUTPUT      } from '../modules/local/zippy/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,6 +228,49 @@ workflow CLUSTER_SPLITTER {
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
+    // Zip outputs of arborator, ArborView, and software_version.yml if parameter 'true'
+    if (params.zip_cluster_results) {
+
+        // Pass all (except the version.yml) for the process into one channel
+        all_arborator_files = arborator_output.trees
+            .combine(arborator_output.metadata)
+            .combine(arborator_output.clusters_tsv)
+            .combine(arborator_output.loci_summary)
+            .combine(arborator_output.matrix_tsv)
+            .combine(arborator_output.outliers)
+            .combine(arborator_output.profiles)
+            .combine(arborator_output.cluster_summary)
+            .combine(arborator_output.metadata_excluded)
+            .combine(arborator_output.metadata_included)
+            .combine(arborator_output.threshold_map)
+            .combine(arborator_output.run_json)
+
+        // Renaming files to use the cluster (parent directory) of files
+        // Follows the same renaming process as used in outdir (via conf/modules.confg)
+        // Where the parent_directory for cluster files is prefixed to the name
+        // Makes copy of file with new name in work-directory not produced by process
+        all_arborator_files.flatten().map {
+            file ->
+            def elements = file.toString().tokenize(File.separator)
+            def cluster_name = elements[-2]
+            def file_name = elements[-1]
+
+            repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv","outliers.tsv"]
+            def new_name
+            if (repeated_file_names.contains(file_name)) {
+                new_name = cluster_name + "_" + file_name
+            } else {
+                new_name = file_name
+            }
+            def renamedFile = file.copyTo("${file.parent}/${new_name}")
+            return renamedFile
+        }.collect().set{renamed_arborator_files}
+
+        ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
+            renamed_arborator_files,
+            CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
+    }
+
 }
 
 
