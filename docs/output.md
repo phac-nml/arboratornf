@@ -12,6 +12,7 @@ The directories listed below will be created in the results directory after the 
 - merged: Contains a file with all genomic profiles provided in the input sample sheet merged into one TSV-formatted file.
 - metadata: Contains a file with all metadata assocated with each genomic profile provided in the input sample sheet merged into one TSV-formatted file.
 - pipeline_info: Information about the pipeline's execution.
+- zip: Zips output from arborator, arborview and software_versions.yml
 
 The IRIDA Next-compliant JSON output file will be named `iridanext.output.json.gz` and will be written to the top-level of the results directory. This file is compressed using GZIP and conforms to the [IRIDA Next JSON output specifications](https://github.com/phac-nml/pipeline-standards#42-irida-next-json).
 
@@ -25,6 +26,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Arborator](#arborator) - Runs Arborator to generate cluster and metadata summaries.
 - [ArborView](#arborview) - Generates a visualization of a dendogram alongside metadata.
 - [Pipeline Information](#pipeline-information) - Report metrics generated during the workflow execution.
+- [Zip](#zip) - Zips output
 
 ### Locidex Merge Concat
 
@@ -96,6 +98,15 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - Reformatted samplesheet files used as input to the pipeline: `samplesheet.valid.csv`.
   - Parameters used by the pipeline run: `params.json`.
 
+</details>
+
+### Zip
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `arboratornf.zip`.
+- A collection of all the `ArborView`, `arborator`, and `software_versions.yml` files in a zipped folder.
 </details>
 
 [Nextflow](https://www.nextflow.io/docs/latest/tracing.html) provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.

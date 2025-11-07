@@ -58,6 +58,19 @@
                 }
             }
         },
+        "output": {
+            "title": "Output",
+            "type": "object",
+            "description": "Output formatting",
+            "default": "",
+            "properties": {
+                "zip_cluster_results": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Puts the ArborView, Arborator and software_versions.yml in a zipped file"
+                }
+            }
+        },
         "locidex": {
             "title": "Locidex",
             "type": "object",
@@ -357,13 +370,16 @@
             "$ref": "#/definitions/arborator"
         },
         {
-            "$ref": "#/definitions/locidex"
-        },
-        {
             "$ref": "#/definitions/input_output_options"
         },
         {
             "$ref": "#/definitions/metadata"
+        },
+        {
+            "$ref": "#/definitions/output"
+        },
+        {
+            "$ref": "#/definitions/locidex"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
