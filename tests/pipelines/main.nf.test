@@ -1,3 +1,6 @@
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 nextflow_pipeline {
     name "Integration Tests for Arborator pipeline"
     script "main.nf"
@@ -1327,6 +1330,97 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 0
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 0
+
+        }
+    }
+    test("Test prefix parameter: output_prefix"){
+        tag "output_prefix"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                output_prefix     = "test"
+            }
+        }
+
+        then {
+
+            def date = LocalDate.now()
+            def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            def prefix_date = date.format(formatter)
+
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check some of the files are renamed (iridanext.output.json file)
+
+            // Arborator files
+
+            def cluster1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_clusters.tsv"
+            assert path(cluster1).exists()
+
+            def cluster2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_clusters.tsv"
+            assert path(cluster2).exists()
+
+            def loci_summary1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_loci.summary.tsv"
+            assert path(loci_summary1).exists()
+
+            def loci_summary2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_loci.summary.tsv"
+            assert path(loci_summary2).exists()
+
+            def matrix1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_matrix.tsv"
+            assert path(matrix1).exists()
+
+            def matrix2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_matrix.tsv"
+            assert path(matrix2).exists()
+
+            def metadata1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_metadata.tsv"
+            assert path(metadata1).exists()
+
+            def metadata2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_metadata.tsv"
+            assert path(metadata2).exists()
+
+            def outliers1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_outliers.tsv"
+            assert path(outliers1).exists()
+
+            def outliers2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_outliers.tsv"
+            assert path(outliers2).exists()
+
+            def profile1 = "$launchDir/results/arborator/test_" + prefix_date + "_1_profile.tsv"
+            assert path(profile1).exists()
+
+            def profile2 = "$launchDir/results/arborator/test_" + prefix_date + "_2_profile.tsv"
+            assert path(profile2).exists()
+
+            def cluster_summary = "$launchDir/results/arborator/test_" + prefix_date + "_cluster_summary.tsv"
+            assert path(cluster_summary).exists()
+
+            def metadata_included = "$launchDir/results/arborator/test_" + prefix_date + "_metadata.included.tsv"
+            assert path(metadata_included).exists()
+
+            // Arborview Files
+
+            def arborview1 = "$launchDir/results/arborview/test_" + prefix_date + "_1_arborview.html"
+            assert path(arborview1).exists()
+
+            def arborview2 = "$launchDir/results/arborview/test_" + prefix_date + "_2_arborview.html"
+            assert path(arborview2).exists()
+
+            // Misc. files
+
+            def metadata = "$launchDir/results/metadata/test_" + prefix_date + "_aggregated_data.tsv"
+            assert path(metadata).exists()
 
         }
     }
