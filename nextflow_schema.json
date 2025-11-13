@@ -72,7 +72,12 @@
                 "output_prefix": {
                     "type": "string",
                     "default": null,
-                    "description": "Adds a prefix to output files: {output_prefix}_{YYYY-MM-DD}"
+                    "description": "Adds a prefix to output files: {output_prefix}_"
+                },
+                "prefix_include_date": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Adds date to prefix to output files: {YYYY-MM-DD}_"
                 }
             }
         },
