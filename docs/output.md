@@ -28,6 +28,12 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Pipeline Information](#pipeline-information) - Report metrics generated during the workflow execution.
 - [Zip](#zip) - Zips output
 
+## Parameters
+
+`--zip_cluster_results`: Zips output from arborator and arborview into a zip file.
+
+`--output_prefix`: Renaming files with a prefix `"${output_prefix}_{YYYY-MM-DD}"`.
+
 ### Locidex Merge Concat
 
 <details markdown="1">

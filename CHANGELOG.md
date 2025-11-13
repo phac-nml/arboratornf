@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A module for zipping files from `aborview`,`arborator` and `software_versions.yml` when a new parameter `zip_cluster_results` is true. [PR #58](https://github.com/phac-nml/arboratornf/pull/58)
+- A parameter `--output_prefix` for renaming files with a prefix `"${output_prefix}_{YYYY-MM-DD}"` (Default: null). [PR #60](https://github.com/phac-nml/arboratornf/pull/60)
 
 ## [0.7.0] - 2025-10-01
 
