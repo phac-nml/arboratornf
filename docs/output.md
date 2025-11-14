@@ -34,6 +34,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 `--output_prefix`: Renaming files with a prefix `"${output_prefix}_{YYYY-MM-DD}"`.
 
+`--prefix_include_date`: Renaming files with a prefix date `"{YYYY-MM-DD}_"`.
+
 ### Locidex Merge Concat
 
 <details markdown="1">
