@@ -1330,4 +1330,274 @@ nextflow_pipeline {
 
         }
     }
+
+    test("Test prefix parameter: output_prefix with date"){
+        tag "output_prefix_with_date"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                output_prefix              = "test"
+                prefix_include_date        = true
+            }
+        }
+
+        then {
+
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check some of the files are renamed (iridanext.output.json file)
+
+            // Arborator files
+            def arboratorFiles = path("$launchDir/results/arborator/").list()
+
+            def cluster1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_clusters\.tsv/ }.toString()
+            assert path(cluster1).exists()
+
+            def cluster2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_clusters\.tsv/ }.toString()
+            assert path(cluster2).exists()
+
+            def loci_summary1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary1).exists()
+
+            def loci_summary2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary2).exists()
+
+            def matrix1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_matrix\.tsv/ }.toString()
+            assert path(matrix1).exists()
+
+            def matrix2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_matrix\.tsv/ }.toString()
+            assert path(matrix2).exists()
+
+            def metadata1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_metadata\.tsv/ }.toString()
+            assert path(metadata1).exists()
+
+            def metadata2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_metadata\.tsv/ }.toString()
+            assert path(metadata2).exists()
+
+            def outliers1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_outliers\.tsv/ }.toString()
+            assert path(outliers1).exists()
+
+            def outliers2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_outliers\.tsv/ }.toString()
+            assert path(outliers2).exists()
+
+            def profile1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_profile\.tsv/ }.toString()
+            assert path(profile1).exists()
+
+            def profile2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_profile\.tsv/ }.toString()
+            assert path(profile2).exists()
+
+            def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
+            assert path(cluster_summary).exists()
+
+            def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
+            assert path(metadata_included).exists()
+
+            // Arborview Files
+            def arborViewFiles = path("$launchDir/results/arborview/").list()
+            def arborview1 = arborViewFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_1_arborview\.html/ }.toString()
+            assert path(arborview1).exists()
+
+            def arborview2 = arborViewFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_2_arborview\.html/ }.toString()
+            assert path(arborview2).exists()
+
+            // Misc. files
+            def metadataFiles = path("$launchDir/results/metadata/").list()
+            def metadata = metadataFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_aggregated_data\.tsv/ }.toString()
+            assert path(metadata).exists()
+
+        }
+    }
+
+    test("Test prefix parameter: output_prefix no date"){
+        tag "output_prefix_no_date"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                output_prefix              = "test"
+                prefix_include_date        = false
+            }
+        }
+
+        then {
+
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check some of the files are renamed (iridanext.output.json file)
+
+            // Arborator files
+            def arboratorFiles = path("$launchDir/results/arborator/").list()
+
+            def cluster1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_clusters\.tsv/ }.toString()
+            assert path(cluster1).exists()
+
+            def cluster2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_clusters\.tsv/ }.toString()
+            assert path(cluster2).exists()
+
+            def loci_summary1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary1).exists()
+
+            def loci_summary2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary2).exists()
+
+            def matrix1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_matrix\.tsv/ }.toString()
+            assert path(matrix1).exists()
+
+            def matrix2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_matrix\.tsv/ }.toString()
+            assert path(matrix2).exists()
+
+            def metadata1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_metadata\.tsv/ }.toString()
+            assert path(metadata1).exists()
+
+            def metadata2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_metadata\.tsv/ }.toString()
+            assert path(metadata2).exists()
+
+            def outliers1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_outliers\.tsv/ }.toString()
+            assert path(outliers1).exists()
+
+            def outliers2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_outliers\.tsv/ }.toString()
+            assert path(outliers2).exists()
+
+            def profile1 = arboratorFiles.find { it.getFileName().toString() ==~ /test_1_profile\.tsv/ }.toString()
+            assert path(profile1).exists()
+
+            def profile2 = arboratorFiles.find { it.getFileName().toString() ==~ /test_2_profile\.tsv/ }.toString()
+            assert path(profile2).exists()
+
+            def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.tsv/ }.toString()
+            assert path(cluster_summary).exists()
+
+            def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.included\.tsv/ }.toString()
+            assert path(metadata_included).exists()
+
+            // Arborview Files
+            def arborViewFiles = path("$launchDir/results/arborview/").list()
+            def arborview1 = arborViewFiles.find { it.getFileName().toString() ==~ /test_1_arborview\.html/ }.toString()
+            assert path(arborview1).exists()
+
+            def arborview2 = arborViewFiles.find { it.getFileName().toString() ==~ /test_2_arborview\.html/ }.toString()
+            assert path(arborview2).exists()
+
+            // Misc. files
+            def metadataFiles = path("$launchDir/results/metadata/").list()
+            def metadata = metadataFiles.find { it.getFileName().toString() ==~ /test_aggregated_data\.tsv/ }.toString()
+            assert path(metadata).exists()
+
+        }
+    }
+
+    test("Test prefix parameter: prefix just date"){
+        tag "output_prefix_just_date"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                output_prefix              = null
+                prefix_include_date        = true
+            }
+        }
+
+        then {
+
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check some of the files are renamed (iridanext.output.json file)
+
+            // Arborator files
+            def arboratorFiles = path("$launchDir/results/arborator/").list()
+
+            def cluster1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_clusters\.tsv/ }.toString()
+            assert path(cluster1).exists()
+
+            def cluster2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_clusters\.tsv/ }.toString()
+            assert path(cluster2).exists()
+
+            def loci_summary1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary1).exists()
+
+            def loci_summary2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_loci\.summary\.tsv/ }.toString()
+            assert path(loci_summary2).exists()
+
+            def matrix1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_matrix\.tsv/ }.toString()
+            assert path(matrix1).exists()
+
+            def matrix2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_matrix\.tsv/ }.toString()
+            assert path(matrix2).exists()
+
+            def metadata1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_metadata\.tsv/ }.toString()
+            assert path(metadata1).exists()
+
+            def metadata2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_metadata\.tsv/ }.toString()
+            assert path(metadata2).exists()
+
+            def outliers1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_outliers\.tsv/ }.toString()
+            assert path(outliers1).exists()
+
+            def outliers2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_outliers\.tsv/ }.toString()
+            assert path(outliers2).exists()
+
+            def profile1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_profile\.tsv/ }.toString()
+            assert path(profile1).exists()
+
+            def profile2 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_profile\.tsv/ }.toString()
+            assert path(profile2).exists()
+
+            def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
+            assert path(cluster_summary).exists()
+
+            def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
+            assert path(metadata_included).exists()
+
+            // Arborview Files
+            def arborViewFiles = path("$launchDir/results/arborview/").list()
+            def arborview1 = arborViewFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_arborview\.html/ }.toString()
+            assert path(arborview1).exists()
+
+            def arborview2 = arborViewFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_2_arborview\.html/ }.toString()
+            assert path(arborview2).exists()
+
+            // Misc. files
+            def metadataFiles = path("$launchDir/results/metadata/").list()
+            def metadata = metadataFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_aggregated_data\.tsv/ }.toString()
+            assert path(metadata).exists()
+
+        }
+    }
 }

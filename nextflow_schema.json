@@ -68,6 +68,16 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Puts the ArborView, Arborator and software_versions.yml in a zipped file"
+                },
+                "output_prefix": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Adds a prefix to output files: {output_prefix}_"
+                },
+                "prefix_include_date": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Adds date to prefix to output files: {YYYY-MM-DD}_"
                 }
             }
         },
