@@ -18,6 +18,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -115,6 +117,121 @@ nextflow_pipeline {
         }
     }
 
+    test("Small-scale test of full pipeline (patristic)"){
+        tag "pipeline_small_patristic"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "patristic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
+            def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
+            assert actual_profile_tsv.text == expected_profile_tsv.text
+
+            // Check aggregated metadata
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = path("$baseDir/tests/data/metadata/expected_merged_data.tsv")
+            assert actual_metadata.text == expected_metadata.text
+
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_samplesheet.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def expected_arborator_meta_included = path("$baseDir/tests/data/arborator/basic/metadata.included.tsv")
+            assert actual_arborator_meta_included.text == expected_arborator_meta_included.text
+
+            def actual_arborator_tree_1 = path("$launchDir/results/arborator/1_tree.nwk")
+            def expected_arborator_tree_1 = path("$baseDir/tests/data/arborator/1/patristic.tree.nwk")
+            assert actual_arborator_tree_1.text == expected_arborator_tree_1.text
+
+            def actual_arborator_tree_2 = path("$launchDir/results/arborator/2_tree.nwk")
+            def expected_arborator_tree_2 = path("$baseDir/tests/data/arborator/2/patristic.tree.nwk")
+            assert actual_arborator_tree_2.text == expected_arborator_tree_2.text
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+            // Check that the ArborView output is created
+            def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
+            assert actual_arborview1.exists()
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n")
+
+            def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
+            assert actual_arborview2.exists()
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
+
+            assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 0 // Zip should only be produced when zip_cluster_results is set to true
+        }
+    }
+
     test("Small-scale test of full pipeline with all samples same partition, tree comparison"){
         tag "pipeline"
         tag "pipeline_all"
@@ -132,6 +249,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -217,6 +336,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -320,6 +441,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -345,6 +468,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -370,6 +495,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "spe>cial"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -395,6 +522,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -420,6 +549,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -445,6 +576,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -471,6 +604,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -574,6 +709,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -680,6 +817,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -755,6 +894,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
 
                 batch_size = 1
             }
@@ -886,6 +1027,8 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
                 batch_size = 10
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1010,6 +1153,8 @@ nextflow_pipeline {
                 metadata_14_header = "metadata_14"
                 metadata_15_header = "metadata_15"
                 metadata_16_header = "metadata_16"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1163,6 +1308,8 @@ nextflow_pipeline {
                 metadata_48_header = "metadata_48"
                 metadata_49_header = "metadata_49"
                 metadata_50_header = "metadata_50"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1276,6 +1423,8 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
                 metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1350,6 +1499,8 @@ nextflow_pipeline {
 
                 output_prefix              = "test"
                 prefix_include_date        = true
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1440,6 +1591,8 @@ nextflow_pipeline {
 
                 output_prefix              = "test"
                 prefix_include_date        = false
+
+                tree_distances = "cophenetic"
             }
         }
 
@@ -1530,6 +1683,8 @@ nextflow_pipeline {
 
                 output_prefix              = null
                 prefix_include_date        = true
+
+                tree_distances = "cophenetic"
             }
         }
 
