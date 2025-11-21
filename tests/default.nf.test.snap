@@ -44,25 +44,25 @@
             ],
             [
                 "1_clusters.tsv:md5,d0e181df4d84b0bc7f774d098004e429",
-                "1_loci.summary.tsv:md5,d4241e1324dddaab2a56adf2f2d04f22",
+                "1_loci.summary.tsv:md5,72c06a0e534815e09cd8d8e39385a15b",
                 "1_matrix.tsv:md5,450180a83f957d6660bdc4d4ca976097",
-                "1_metadata.tsv:md5,da5ce3baf646490be90c6181506c2f46",
+                "1_metadata.tsv:md5,b9a1b3fffa4c0d6fe16c8775cc6ebf43",
                 "1_outliers.tsv:md5,c768621c9a61352f70fa9c26891e2c5a",
-                "1_profile.tsv:md5,9ad1241e7131f6ab570d2f9efb85ed55",
-                "1_tree.nwk:md5,d3b3527574f1d1dec01b5b4978f65002",
+                "1_profile.tsv:md5,ab3e21271e0eec98d0aefb4d272a0c14",
+                "1_tree.nwk:md5,b2a76e2a93f7b178e0a572150f4da849",
                 "2_clusters.tsv:md5,055490c0e91d8eb50a2a367af92983dd",
-                "2_loci.summary.tsv:md5,399ba4bd5afa213413b7eb261910f9f2",
+                "2_loci.summary.tsv:md5,f32cc17221a4482255b492debb2f51c4",
                 "2_matrix.tsv:md5,076f61db93ffdef096525a00a10133f0",
-                "2_metadata.tsv:md5,24d68425c0d5a8576387ab9ff7a8c7ca",
+                "2_metadata.tsv:md5,52df37c5790eb73e854cad2a682ecfc8",
                 "2_outliers.tsv:md5,c768621c9a61352f70fa9c26891e2c5a",
-                "2_profile.tsv:md5,41e92b4c54357b063fa5b10d35bb93b5",
-                "2_tree.nwk:md5,fd4b70c4ad5c77f8047435678928fa97",
-                "cluster_summary.tsv:md5,2178627f8fcea63b3c858868fd62e1d4",
+                "2_profile.tsv:md5,4af30a3585ea7b453f5ba976f2a89c85",
+                "2_tree.nwk:md5,c43edf6012f8a5ef1b87d13540acbfd7",
+                "cluster_summary.tsv:md5,d1517d89e0ca35e3c935de50d6dfcbd4",
                 "metadata.excluded.tsv:md5,9e6f99c7155f3c4a30b3b80235b6af52",
-                "metadata.included.tsv:md5,da1a072c2ed37bdc45c962ced9c01055",
+                "metadata.included.tsv:md5,b2c82577e00acfc41b7f6e7ebdc80e11",
                 "threshold_map.json:md5,cc781d4410fdc58529d1aeb9513e132d",
-                "1_arborview.html:md5,93902625588fedf18cce7b52a3e15912",
-                "2_arborview.html:md5,8f9937555ee1cde31c5c03d961b8cef7",
+                "1_arborview.html:md5,0ee41c190f7491c135ad72cdec0a874c",
+                "2_arborview.html:md5,df91f2b4f075126c9f027d8faaa153a9",
                 "config.json:md5,d7810954079f9f96c60466340a7c8f6c",
                 "MLST_error_report_concat.csv:md5,f6689b46a8f71e85ee04acc80800ad84",
                 "profile_concat.tsv:md5,1612b39148782f37b1e97d14ce72ac71",
@@ -73,9 +73,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
         },
-        "timestamp": "2025-09-04T12:45:27.112752222"
+        "timestamp": "2025-11-21T12:18:52.244978992"
     }
 }
