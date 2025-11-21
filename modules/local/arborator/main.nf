@@ -18,6 +18,7 @@ process ARBORATOR {
     val id_column // Primary key aligning merged profiles and metadata
     val partition_column // Column to split samples on
     val thresholds // String of thresholds e.g. 10,9,8,7,6,5,4,3,2,1
+    val tree_distances // "patristic" or "cophenetic"
 
     output:
     path("${prefix}/*/tree.nwk"), emit: trees, optional: true
@@ -35,15 +36,13 @@ process ARBORATOR {
     path "versions.yml", emit: versions
 
     script:
-    def args = task.ext.args ?: ''
     prefix = "output_folder"
     """
     arborator \\
-    $args \\
     --profile $merged_profiles --metadata $metadata \\
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
-    --thresholds $thresholds
+    --thresholds $thresholds --tree_distances $tree_distances
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

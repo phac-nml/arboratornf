@@ -55,6 +55,15 @@
                     "default": "100,50,25,20,15,10,5,0",
                     "description": "The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers.",
                     "pattern": "^(\\d+(\\.\\d+)?,)*\\d+(\\.\\d+)?$"
+                },
+                "tree_distances": {
+                    "type": "string",
+                    "default": "cophenetic",
+                    "description": "Defines how distances in distance matrices are interpretted by GAS and represented in the output tree (Newick file).",
+                    "enum": [
+                        "cophenetic",
+                        "patristic"
+                    ]
                 }
             }
         },
@@ -66,17 +75,14 @@
             "properties": {
                 "zip_cluster_results": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Puts the ArborView, Arborator and software_versions.yml in a zipped file"
                 },
                 "output_prefix": {
                     "type": "string",
-                    "default": null,
                     "description": "Adds a prefix to output files: {output_prefix}_"
                 },
                 "prefix_include_date": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Adds date to prefix to output files: {YYYY-MM-DD}_"
                 }
             }
