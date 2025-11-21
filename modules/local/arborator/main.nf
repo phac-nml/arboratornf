@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.1.0--pyhdfd78af_0' :
-    'biocontainers/arborator:1.1.0--pyhdfd78af_0' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.0--pyhdfd78af_1' :
+    'biocontainers/arborator:1.2.0--pyhdfd78af_1' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -31,6 +31,8 @@ process ARBORATOR {
     path("${prefix}/metadata.excluded.tsv"), emit: metadata_excluded
     path("${prefix}/metadata.included.tsv"), emit: metadata_included
     path("${prefix}/threshold_map.json"), emit: threshold_map
+    path("${prefix}/metadata.linelist.xlsx"), emit: linelist
+    path("${prefix}/cluster_summary.xlsx"), emit: cluster_summary_excel
     path("${prefix}/run.json"), emit: run_json
     path "versions.yml", emit: versions
 
@@ -41,6 +43,8 @@ process ARBORATOR {
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
     --thresholds $thresholds
+
+    mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
