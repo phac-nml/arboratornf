@@ -1555,13 +1555,13 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
-            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.xlsx/ }.toString()
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.xlsx/ }.toString()
             assert path(cluster_excel_summary).exists()
 
-            def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.included\.tsv/ }.toString()
+            def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
             assert path(metadata_included).exists()
 
-            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.linelist\.xlsx/ }.toString()
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.linelist\.xlsx/ }.toString()
             assert path(metadata_excel_included).exists()
 
             // Arborview Files
