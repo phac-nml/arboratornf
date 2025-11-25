@@ -1457,6 +1457,8 @@ nextflow_pipeline {
             def iridanext_global = iridanext_json.files.global
             // Confirm arborator.zip file taken by iridanext.output.json
             assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.xlsx" }.size() == 1
 
             // And not the individual files, included when "zip_cluster_results = false" in default config file
             assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 0
@@ -1553,8 +1555,14 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_excel_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
             assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.linelist\.xlsx/ }.toString()
+            assert path(metadata_excel_included).exists()
 
             // Arborview Files
             def arborViewFiles = path("$launchDir/results/arborview/").list()
@@ -1645,8 +1653,14 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_excel_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.included\.tsv/ }.toString()
             assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.linelist\.xlsx/ }.toString()
+            assert path(metadata_excel_included).exists()
 
             // Arborview Files
             def arborViewFiles = path("$launchDir/results/arborview/").list()
@@ -1737,7 +1751,13 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
+            assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_metadata\.linelist\.xlsx/ }.toString()
             assert path(metadata_included).exists()
 
             // Arborview Files

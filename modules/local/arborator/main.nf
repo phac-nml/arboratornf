@@ -32,6 +32,8 @@ process ARBORATOR {
     path("${prefix}/metadata.excluded.tsv"), emit: metadata_excluded
     path("${prefix}/metadata.included.tsv"), emit: metadata_included
     path("${prefix}/threshold_map.json"), emit: threshold_map
+    path("${prefix}/metadata.linelist.xlsx"), emit: linelist
+    path("${prefix}/cluster_summary.xlsx"), emit: cluster_summary_excel
     path("${prefix}/run.json"), emit: run_json
     path "versions.yml", emit: versions
 
@@ -43,6 +45,8 @@ process ARBORATOR {
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
     --thresholds $thresholds --tree_distances $tree_distances
+
+    mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

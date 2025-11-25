@@ -20,8 +20,10 @@
                 "arborator/2_profile.tsv",
                 "arborator/2_tree.nwk",
                 "arborator/cluster_summary.tsv",
+                "arborator/cluster_summary.xlsx",
                 "arborator/metadata.excluded.tsv",
                 "arborator/metadata.included.tsv",
+                "arborator/metadata.linelist.xlsx",
                 "arborator/threshold_map.json",
                 "arborview",
                 "arborview/1_arborview.html",
@@ -73,9 +75,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.10.0"
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-11-21T12:18:52.244978992"
+        "timestamp": "2025-11-24T17:41:59.04629088"
     }
 }
