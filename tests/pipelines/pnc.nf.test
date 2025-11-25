@@ -1,0 +1,25 @@
+nextflow_pipeline {
+    name "PNC Tests for Arborator Pipeline"
+    script "main.nf"
+
+    test("Outbreak Detection"){
+        tag "pipeline_small"
+        config "$baseDir/tests/data/pnc/outbreak/pnc-outbreak-detection.config"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/pnc/outbreak/pnc-outbreak-detection.csv"
+                outdir = "results"
+
+                ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak/pnc-outbreak-detection.arborator.config.json"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+        }
+    }
+}
