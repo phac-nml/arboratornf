@@ -12,6 +12,7 @@ nextflow_pipeline {
                 outdir = "results"
 
                 ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak/pnc-outbreak-detection.arborator.config.json"
+                ar_thresholds = "30,25,20,15,10,5"
 
                 tree_distances = "cophenetic"
             }

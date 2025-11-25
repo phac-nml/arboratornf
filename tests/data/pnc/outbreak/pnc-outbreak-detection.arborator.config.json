@@ -1,12 +1,11 @@
 {
         "outlier_thresh": "100",
-        "clustering_method": "average",
-        "clustering_threshold": "30,25,20,15,10,5",
-        "min_cluster_members": "2",
-        "partition_column_name": "genomic_address_name",
-        "id_column_name": "sample_name",
+        "method": "average",
+        "thresholds": "30,25,20,15,10,5",
+        "min_members": "2",
+        "partition_col": "genomic_address_name",
+        "id_col": "sample_name",
         "only_report_labeled_columns": "True",
-        "skip_qa": "False",
 
 	"grouped_metadata_columns":{
         "genomic_address_name": { "data_type": "None","label":"genomic_address_name","display":"True"},
