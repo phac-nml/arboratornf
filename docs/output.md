@@ -78,7 +78,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `arborator/`
   - Numbered directories containing information about each cluster: `[N/]`
   - Cluster summary: `cluster_summary.tsv` and `cluster_summary.xlsx`
-  - Line list summarizes metadata of excluded profiles: `metadata.excluded.tsv` and `linelinsmetadata.linelist.xlsx`
+  - Line list summarizes metadata of excluded profiles: `metadata.excluded.tsv` and `metadata.linelist.xlsx`
   - Line list summarizes metadata of included profiles: `metadata.included.tsv`
   - Summary of clustering thresholds used: `threshold_map.json`
   - Directory containing information about unassociated clusters: `unassociated`
