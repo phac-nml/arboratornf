@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Modified
 
-- Arborator `1.2.0` output excel file `metadata.included.xlsx` is modified to `metadata.linelist.xlsx`. [PR #61](https://github.com/phac-nml/arboratornf/pull/61)
+- Arborator `1.2.0` output excel file `metadata.included.xlsx` is renamed to `metadata.linelist.xlsx`. [PR #61](https://github.com/phac-nml/arboratornf/pull/61)
 
 ## [0.7.0] - 2025-10-01
 
