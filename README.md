@@ -54,6 +54,7 @@ The optional parameters are as follows:
 
 - `--ar_config`: The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output.
 - `--ar_thresholds`: The clustering thresholds used by Arborator. These thresholds must be provided as a list of integers (default: 100,50,25,20,15,10,5,0).
+- `tree_distances`: Instructs genomic address service to interpret distance matrices distances as either cophenetic (the distance at which two clusters or leaves cluster together) or patristic (the sum of branch lengths between clusters or leaves).
 
 ### LOCIDEX
 
@@ -117,7 +118,7 @@ Note: If zip is run, then only `arboratornf.zip` is included.
 
 Within the `files` section of this JSON-formatted file, all of the output paths are relative to the `outdir`. Therefore, `"path": "arborator/cluster_summary.tsv"` refers to a file located within `outdir/arborator/cluster_summary.tsv`.
 
-The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file.
+The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file. The excel version of `arborator/metadata.included.xlsx` is named `arborator/metadata.linelist.xlsx`.
 
 Additional details on output files are found in [docs/output.md](docs/output.md).
 
