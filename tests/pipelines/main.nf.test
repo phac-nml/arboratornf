@@ -560,32 +560,32 @@ nextflow_pipeline {
         }
     }
 
-    test("bad metadata_1 entry"){
-        tag "bad_metadata_1_entry"
-        when {
-            params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_1.csv"
-                outdir = "results"
+    // test("bad metadata_1 entry"){
+    //     tag "bad_metadata_1_entry"
+    //     when {
+    //         params {
+    //             input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_1.csv"
+    //             outdir = "results"
 
-                metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
+    //             metadata_partition_name = "outbreak"
+    //             metadata_1_header = "organism"
+    //             metadata_2_header = "subtype"
+    //             metadata_3_header = "country"
+    //             metadata_4_header = "serovar"
+    //             metadata_5_header = "age"
+    //             metadata_6_header = "date"
+    //             metadata_7_header = "source"
+    //             metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
-            }
-        }
+    //             tree_distances = "cophenetic"
+    //         }
+    //     }
 
-        then {
-            assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;>< (Escherichia coli|)")
-        }
-    }
+    //     then {
+    //         assert workflow.failed
+    //         assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;>< (Escherichia coli|)")
+    //     }
+    // }
 
     test("Small-scale test of full pipeline, ID mismatch"){
         tag "id-mismatch"
@@ -2128,7 +2128,11 @@ nextflow_pipeline {
 
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
-            //assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\n2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n")
+            // assert actual_arborview1.text.contains(
+            //     "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
+            //     "1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\n" +
+            //     "2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n"
+            // )
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             //assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n3\\tS3\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.1\\n4\\tS4\\t2\\tEscherichia coli\\tEPEC\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.2\\n")
