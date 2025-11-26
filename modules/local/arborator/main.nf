@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.1.0--pyhdfd78af_0' :
-    'biocontainers/arborator:1.1.0--pyhdfd78af_0' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.0--pyhdfd78af_1' :
+    'biocontainers/arborator:1.2.0--pyhdfd78af_1' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -18,6 +18,7 @@ process ARBORATOR {
     val id_column // Primary key aligning merged profiles and metadata
     val partition_column // Column to split samples on
     val thresholds // String of thresholds e.g. 10,9,8,7,6,5,4,3,2,1
+    val tree_distances // "patristic" or "cophenetic"
 
     output:
     path("${prefix}/*/tree.nwk"), emit: trees, optional: true
@@ -28,19 +29,24 @@ process ARBORATOR {
     path("${prefix}/*/outliers.tsv"), emit: outliers, optional: true
     path("${prefix}/*/profile.tsv"), emit: profiles, optional: true
     path("${prefix}/cluster_summary.tsv"), emit: cluster_summary
-    path("${prefix}/metadata.excluded.tsv"), emit: metadata_exluded
+    path("${prefix}/metadata.excluded.tsv"), emit: metadata_excluded
     path("${prefix}/metadata.included.tsv"), emit: metadata_included
     path("${prefix}/threshold_map.json"), emit: threshold_map
+    path("${prefix}/metadata.linelist.xlsx"), emit: linelist
+    path("${prefix}/cluster_summary.xlsx"), emit: cluster_summary_excel
     path("${prefix}/run.json"), emit: run_json
     path "versions.yml", emit: versions
 
     script:
     prefix = "output_folder"
     """
-    arborator --profile $merged_profiles --metadata $metadata \\
+    arborator \\
+    --profile $merged_profiles --metadata $metadata \\
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
-    --thresholds $thresholds
+    --thresholds $thresholds --tree_distances $tree_distances
+
+    mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

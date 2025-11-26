@@ -1,0 +1,630 @@
+{
+    "outlier_thresh": "25",
+    "min_cluster_members": 2,
+    "partition_column_name": "outbreak",
+    "id_column_name": "sample_name",
+    "only_report_labeled_columns": "False",
+    "skip_qa": "False",
+    "grouped_metadata_columns": {
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "organism": {
+            "data_type": "None",
+            "label": "Organism",
+            "default": "",
+            "display": "True"
+        },
+        "subtype": {
+            "data_type": "None",
+            "label": "Subtype",
+            "default": "",
+            "display": "True"
+        },
+        "country": {
+            "data_type": "Categorical",
+            "label": "Country of Collection",
+            "default": "",
+            "display": "True"
+        },
+        "serovar": {
+            "data_type": "Categorical",
+            "label": "Serovar",
+            "default": "",
+            "display": "True"
+        },
+        "age": {
+            "data_type": "desc_stats",
+            "label": "Patient Age (years)",
+            "default": "",
+            "display": "True"
+        },
+        "date": {
+            "data_type": "min_max",
+            "label": "Date",
+            "default": "",
+            "display": "True"
+        },
+        "source": {
+            "data_type": "Categorical",
+            "label": "Source Type",
+            "default": "",
+            "display": "True"
+        },
+        "special": {
+            "data_type": "Categorical",
+            "label": "Special",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_9": {
+            "data_type": "None",
+            "label": "metadata_9",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_10": {
+            "data_type": "None",
+            "label": "metadata_10",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_11": {
+            "data_type": "None",
+            "label": "metadata_11",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_12": {
+            "data_type": "None",
+            "label": "metadata_12",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_13": {
+            "data_type": "None",
+            "label": "metadata_13",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_14": {
+            "data_type": "None",
+            "label": "metadata_14",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_15": {
+            "data_type": "None",
+            "label": "metadata_15",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_16": {
+            "data_type": "None",
+            "label": "metadata_16",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_17": {
+            "data_type": "None",
+            "label": "metadata_17",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_18": {
+            "data_type": "None",
+            "label": "metadata_18",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_19": {
+            "data_type": "None",
+            "label": "metadata_19",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_20": {
+            "data_type": "None",
+            "label": "metadata_20",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_21": {
+            "data_type": "None",
+            "label": "metadata_21",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_22": {
+            "data_type": "None",
+            "label": "metadata_22",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_23": {
+            "data_type": "None",
+            "label": "metadata_23",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_24": {
+            "data_type": "None",
+            "label": "metadata_24",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_25": {
+            "data_type": "None",
+            "label": "metadata_25",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_26": {
+            "data_type": "None",
+            "label": "metadata_26",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_27": {
+            "data_type": "None",
+            "label": "metadata_27",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_28": {
+            "data_type": "None",
+            "label": "metadata_28",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_29": {
+            "data_type": "None",
+            "label": "metadata_29",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_30": {
+            "data_type": "None",
+            "label": "metadata_30",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_31": {
+            "data_type": "None",
+            "label": "metadata_31",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_32": {
+            "data_type": "None",
+            "label": "metadata_32",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_33": {
+            "data_type": "None",
+            "label": "metadata_33",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_34": {
+            "data_type": "None",
+            "label": "metadata_34",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_35": {
+            "data_type": "None",
+            "label": "metadata_35",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_36": {
+            "data_type": "None",
+            "label": "metadata_36",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_37": {
+            "data_type": "None",
+            "label": "metadata_37",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_38": {
+            "data_type": "None",
+            "label": "metadata_38",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_39": {
+            "data_type": "None",
+            "label": "metadata_39",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_40": {
+            "data_type": "None",
+            "label": "metadata_40",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_41": {
+            "data_type": "None",
+            "label": "metadata_41",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_42": {
+            "data_type": "None",
+            "label": "metadata_42",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_43": {
+            "data_type": "None",
+            "label": "metadata_43",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_44": {
+            "data_type": "None",
+            "label": "metadata_44",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_45": {
+            "data_type": "None",
+            "label": "metadata_45",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_46": {
+            "data_type": "None",
+            "label": "metadata_46",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_47": {
+            "data_type": "None",
+            "label": "metadata_47",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_48": {
+            "data_type": "None",
+            "label": "metadata_48",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_49": {
+            "data_type": "None",
+            "label": "metadata_49",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_50": {
+            "data_type": "None",
+            "label": "metadata_50",
+            "default": "",
+            "display": "True"
+        }
+    },
+    "linelist_columns": {
+        "sample_name": {
+            "data_type": "None",
+            "label": "Sample",
+            "default": "",
+            "display": "True"
+        },
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "organism": {
+            "data_type": "None",
+            "label": "Organism",
+            "default": "",
+            "display": "True"
+        },
+        "subtype": {
+            "data_type": "None",
+            "label": "Subtype",
+            "default": "",
+            "display": "True"
+        },
+        "country": {
+            "data_type": "Categorical",
+            "label": "Country of Collection",
+            "default": "",
+            "display": "True"
+        },
+        "serovar": {
+            "data_type": "Categorical",
+            "label": "Serovar",
+            "default": "",
+            "display": "True"
+        },
+        "age": {
+            "data_type": "desc_stats",
+            "label": "Patient Age (years)",
+            "default": "",
+            "display": "True"
+        },
+        "date": {
+            "data_type": "min_max",
+            "label": "Date",
+            "default": "",
+            "display": "True"
+        },
+        "source": {
+            "data_type": "Categorical",
+            "label": "Source Type",
+            "default": "",
+            "display": "True"
+        },
+        "special": {
+            "data_type": "Categorical",
+            "label": "Special",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_9": {
+            "data_type": "None",
+            "label": "metadata_9",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_10": {
+            "data_type": "None",
+            "label": "metadata_10",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_11": {
+            "data_type": "None",
+            "label": "metadata_11",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_12": {
+            "data_type": "None",
+            "label": "metadata_12",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_13": {
+            "data_type": "None",
+            "label": "metadata_13",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_14": {
+            "data_type": "None",
+            "label": "metadata_14",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_15": {
+            "data_type": "None",
+            "label": "metadata_15",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_16": {
+            "data_type": "None",
+            "label": "metadata_16",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_17": {
+            "data_type": "None",
+            "label": "metadata_17",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_18": {
+            "data_type": "None",
+            "label": "metadata_18",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_19": {
+            "data_type": "None",
+            "label": "metadata_19",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_20": {
+            "data_type": "None",
+            "label": "metadata_20",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_21": {
+            "data_type": "None",
+            "label": "metadata_21",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_22": {
+            "data_type": "None",
+            "label": "metadata_22",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_23": {
+            "data_type": "None",
+            "label": "metadata_23",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_24": {
+            "data_type": "None",
+            "label": "metadata_24",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_25": {
+            "data_type": "None",
+            "label": "metadata_25",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_26": {
+            "data_type": "None",
+            "label": "metadata_26",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_27": {
+            "data_type": "None",
+            "label": "metadata_27",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_28": {
+            "data_type": "None",
+            "label": "metadata_28",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_29": {
+            "data_type": "None",
+            "label": "metadata_29",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_30": {
+            "data_type": "None",
+            "label": "metadata_30",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_31": {
+            "data_type": "None",
+            "label": "metadata_31",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_32": {
+            "data_type": "None",
+            "label": "metadata_32",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_33": {
+            "data_type": "None",
+            "label": "metadata_33",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_34": {
+            "data_type": "None",
+            "label": "metadata_34",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_35": {
+            "data_type": "None",
+            "label": "metadata_35",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_36": {
+            "data_type": "None",
+            "label": "metadata_36",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_37": {
+            "data_type": "None",
+            "label": "metadata_37",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_38": {
+            "data_type": "None",
+            "label": "metadata_38",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_39": {
+            "data_type": "None",
+            "label": "metadata_39",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_40": {
+            "data_type": "None",
+            "label": "metadata_40",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_41": {
+            "data_type": "None",
+            "label": "metadata_41",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_42": {
+            "data_type": "None",
+            "label": "metadata_42",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_43": {
+            "data_type": "None",
+            "label": "metadata_43",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_44": {
+            "data_type": "None",
+            "label": "metadata_44",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_45": {
+            "data_type": "None",
+            "label": "metadata_45",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_46": {
+            "data_type": "None",
+            "label": "metadata_46",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_47": {
+            "data_type": "None",
+            "label": "metadata_47",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_48": {
+            "data_type": "None",
+            "label": "metadata_48",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_49": {
+            "data_type": "None",
+            "label": "metadata_49",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_50": {
+            "data_type": "None",
+            "label": "metadata_50",
+            "default": "",
+            "display": "True"
+        }
+    }
+}

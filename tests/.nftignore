@@ -11,3 +11,5 @@ fastqc/*_fastqc.{html,zip}
 pipeline_info/*.{html,json,txt,yml}
 arborator/run.json
 iridanext.output.json
+arborator/cluster_summary.xlsx
+arborator/metadata.linelist.xlsx

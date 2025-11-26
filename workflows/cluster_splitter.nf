@@ -24,6 +24,7 @@ include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
 include { ARBORATOR       } from '../modules/local/arborator/main'
 include { ARBOR_VIEW      } from '../modules/local/arborview/main'
 include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
+include { ZIP_OUTPUT      } from '../modules/local/zippy/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,7 +104,24 @@ workflow CLUSTER_SPLITTER {
             params.metadata_9_header, params.metadata_10_header,
             params.metadata_11_header, params.metadata_12_header,
             params.metadata_13_header, params.metadata_14_header,
-            params.metadata_15_header, params.metadata_16_header)
+            params.metadata_15_header, params.metadata_16_header,
+            params.metadata_17_header, params.metadata_18_header,
+            params.metadata_19_header, params.metadata_20_header,
+            params.metadata_21_header, params.metadata_22_header,
+            params.metadata_23_header, params.metadata_24_header,
+            params.metadata_25_header, params.metadata_26_header,
+            params.metadata_27_header, params.metadata_28_header,
+            params.metadata_29_header, params.metadata_30_header,
+            params.metadata_31_header, params.metadata_32_header,
+            params.metadata_33_header, params.metadata_34_header,
+            params.metadata_35_header, params.metadata_36_header,
+            params.metadata_37_header, params.metadata_38_header,
+            params.metadata_39_header, params.metadata_40_header,
+            params.metadata_41_header, params.metadata_42_header,
+            params.metadata_43_header, params.metadata_44_header,
+            params.metadata_45_header, params.metadata_46_header,
+            params.metadata_47_header, params.metadata_48_header,
+            params.metadata_49_header, params.metadata_50_header)
         )
 
     // Metadata rows:
@@ -112,7 +130,16 @@ workflow CLUSTER_SPLITTER {
         meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
         meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
         meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
-        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16)
+        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16,
+        meta.metadata_17, meta.metadata_18, meta.metadata_19, meta.metadata_20,
+        meta.metadata_21, meta.metadata_22, meta.metadata_23, meta.metadata_24,
+        meta.metadata_25, meta.metadata_26, meta.metadata_27, meta.metadata_28,
+        meta.metadata_29, meta.metadata_30, meta.metadata_31, meta.metadata_32,
+        meta.metadata_33, meta.metadata_34, meta.metadata_35, meta.metadata_36,
+        meta.metadata_37, meta.metadata_38, meta.metadata_39, meta.metadata_40,
+        meta.metadata_41, meta.metadata_42, meta.metadata_43, meta.metadata_44,
+        meta.metadata_45, meta.metadata_46, meta.metadata_47, meta.metadata_48,
+        meta.metadata_49, meta.metadata_50)
     }.toList()
     // Prepare MLST files for LOCIDEX_MERGE
 
@@ -179,7 +206,8 @@ workflow CLUSTER_SPLITTER {
         configuration_file=arborator_config,
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
-        thresholds=params.ar_thresholds)
+        thresholds=params.ar_thresholds,
+        tree_distances=params.tree_distances)
 
     ch_versions = ch_versions.mix(arborator_output.versions)
 
@@ -201,6 +229,49 @@ workflow CLUSTER_SPLITTER {
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
+    // Zip outputs of arborator, ArborView, and software_version.yml if parameter 'true'
+    if (params.zip_cluster_results) {
+
+        // Pass all (except the version.yml) for the process into one channel
+        all_arborator_files = arborator_output.trees
+            .combine(arborator_output.metadata)
+            .combine(arborator_output.clusters_tsv)
+            .combine(arborator_output.loci_summary)
+            .combine(arborator_output.matrix_tsv)
+            .combine(arborator_output.outliers)
+            .combine(arborator_output.profiles)
+            .combine(arborator_output.cluster_summary)
+            .combine(arborator_output.metadata_excluded)
+            .combine(arborator_output.metadata_included)
+            .combine(arborator_output.threshold_map)
+            .combine(arborator_output.run_json)
+
+        // Renaming files to use the cluster (parent directory) of files
+        // Follows the same renaming process as used in outdir (via conf/modules.confg)
+        // Where the parent_directory for cluster files is prefixed to the name
+        // Makes copy of file with new name in work-directory not produced by process
+        all_arborator_files.flatten().map {
+            file ->
+            def elements = file.toString().tokenize(File.separator)
+            def cluster_name = elements[-2]
+            def file_name = elements[-1]
+
+            repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv","outliers.tsv"]
+            def new_name
+            if (repeated_file_names.contains(file_name)) {
+                new_name = cluster_name + "_" + file_name
+            } else {
+                new_name = file_name
+            }
+            def renamedFile = file.copyTo("${file.parent}/${new_name}")
+            return renamedFile
+        }.collect().set{renamed_arborator_files}
+
+        ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
+            renamed_arborator_files,
+            CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
+    }
+
 }
 
 
