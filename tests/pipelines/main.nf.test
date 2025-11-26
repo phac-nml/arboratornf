@@ -2074,8 +2074,10 @@ nextflow_pipeline {
             assert actual_metadata.text.contains("SN2\tS2\t1\t;|'<>&\tEHEC/STEC\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
             assert actual_metadata.text.contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\tEPEC\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
             assert actual_metadata.text.contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\tEPEC\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue")
-            assert actual_metadata.text.contains("SN5\tS5\t3\tEscherichia coli èéÇàâ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
-            assert actual_metadata.text.contains("SN6\tS6\tunassociated\tEscherichia coli\tEAEC\tCanada\tO111:H21\t43\t2011/12/25\tfruit\tfalse")
+
+            // French diacritics/ligatures from https://en.wikipedia.org/wiki/French_orthography#Alphabet
+            assert actual_metadata.text.contains("SN5\tS5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
+            assert actual_metadata.text.contains("SN6\tS6\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
 
             // Check auto-built config file:
             def actual_config = path("$launchDir/results/build/config.json")
