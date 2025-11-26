@@ -2092,6 +2092,8 @@ nextflow_pipeline {
             with(path("$launchDir/results/arborator/cluster_summary.tsv").text) {
                 assert contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
                 assert contains("1\t;|'<>&\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+                assert contains("2\tEscherichia coli ;|'<>&\tEPEC\tFrance\tO125\t14,35\t2024/04/22,2024/04/30\tcheese\ttrue")
+                assert contains("3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
             }
 
             with(path("$launchDir/results/arborator/metadata.included.tsv").text) {
