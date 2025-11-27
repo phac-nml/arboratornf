@@ -583,7 +583,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes(Escherichia\tcoli)")
+            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes (Escherichia\tcoli)")
         }
     }
 
