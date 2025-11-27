@@ -4,11 +4,11 @@ nextflow_pipeline {
 
     test("Outbreak Detection"){
         tag "pipeline_small"
-        config "$baseDir/tests/data/pnc/outbreak/pnc-outbreak-detection.config"
+        config "$baseDir/tests/data/pnc/outbreak-detection/pnc-outbreak-detection.config"
 
         when {
             params {
-                input = "$baseDir/tests/data/pnc/outbreak/pnc-outbreak-detection.csv"
+                input = "$baseDir/tests/data/pnc/outbreak-detection/pnc-outbreak-detection.csv"
                 outdir = "results"
 
                 ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak/pnc-outbreak-detection.arborator.config.json"
