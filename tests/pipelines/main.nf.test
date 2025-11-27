@@ -561,10 +561,10 @@ nextflow_pipeline {
     }
 
     test("bad metadata_1 entry"){
-        tag "bad_metadata_1_entry"
+        tag "bad_metadata_tab"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_1.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.csv"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -583,7 +583,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;>< (Escherichia\tcoli)")
+            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, or double quotes (Escherichia\tcoli)")
         }
     }
 
@@ -2087,8 +2087,6 @@ nextflow_pipeline {
             assert actual_config.text == expected_config.text
 
             // Arborator outputs:
-            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
-            // so it's not possible to compare the entire output.
             with(path("$launchDir/results/arborator/cluster_summary.tsv").text) {
                 assert contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
                 assert contains("1\t;|'<>&\tRobert'); DROP TABLE Students;--,Robert'); DROP TABLE Students;-\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
