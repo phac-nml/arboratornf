@@ -560,11 +560,11 @@ nextflow_pipeline {
         }
     }
 
-    test("bad metadata_1 entry"){
-        tag "bad_metadata_1_entry"
+    test("bad metadata_1 tab"){
+        tag "bad_metadata_1_tab"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_1.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.csv"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -583,7 +583,88 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, quotes, apostrophes, or any of the following characters: |;>< (Escherichia coli|)")
+            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes (Escherichia\tcoli)")
+        }
+    }
+
+    test("bad metadata_1 double quote (\")"){
+        tag "bad_metadata_1_double_quote"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-double-quote.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.join("\n").contains("ERROR ~ Invalid CSV value -- offending line: \"Escherichia \"the name\" coli\"")
+        }
+    }
+
+    test("bad metadata_1 newline (\\n)"){
+        tag "bad_metadata_1_newline"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-newline.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.join("\n").contains("ERROR ~ Missing double-quote termination in CSV value -- offending line: \"Escherichia")
+        }
+    }
+    
+    test("bad metadata_1 escape (\\)"){
+        tag "bad_metadata_1_escape"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-escape.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stderr.join("\n").contains("Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes (Escherichia\\t coli)")
         }
     }
 
@@ -1457,6 +1538,8 @@ nextflow_pipeline {
             def iridanext_global = iridanext_json.files.global
             // Confirm arborator.zip file taken by iridanext.output.json
             assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.xlsx" }.size() == 1
 
             // And not the individual files, included when "zip_cluster_results = false" in default config file
             assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 0
@@ -1553,8 +1636,14 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_excel_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
             assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_\d{4}-\d{2}-\d{2}_metadata\.linelist\.xlsx/ }.toString()
+            assert path(metadata_excel_included).exists()
 
             // Arborview Files
             def arborViewFiles = path("$launchDir/results/arborview/").list()
@@ -1645,8 +1734,14 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /test_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_excel_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.included\.tsv/ }.toString()
             assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /test_metadata\.linelist\.xlsx/ }.toString()
+            assert path(metadata_excel_included).exists()
 
             // Arborview Files
             def arborViewFiles = path("$launchDir/results/arborview/").list()
@@ -1737,7 +1832,13 @@ nextflow_pipeline {
             def cluster_summary = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_cluster_summary\.tsv/ }.toString()
             assert path(cluster_summary).exists()
 
+            def cluster_excel_summary = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_cluster_summary\.xlsx/ }.toString()
+            assert path(cluster_summary).exists()
+
             def metadata_included = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_metadata\.included\.tsv/ }.toString()
+            assert path(metadata_included).exists()
+
+            def metadata_excel_included = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_metadata\.linelist\.xlsx/ }.toString()
             assert path(metadata_included).exists()
 
             // Arborview Files
@@ -2009,6 +2110,180 @@ nextflow_pipeline {
             assert iridanext_metadata.isEmpty()
 
             assert iridanext_global.findAll { it.path == "zip/arboratornf.zip" }.size() == 0 // Zip should only be produced when zip_cluster_results is set to true
+        }
+    }
+
+    test("Special characters in metadata") {
+        tag "special_metadata"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-special-characters.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles
+            with(path("$launchDir/results/locidex/merged/profile_1.tsv").text) {
+                assert contains("sample_id\tlocus_1\tlocus_2\tlocus_3\tlocus_4\tlocus_5\tlocus_6\tlocus_7")
+                assert contains("SN1\t1\t1\t1\t1\t1\t1\t1")
+                assert contains("SN2\t1\t1\t2\t2\t?\t4\t1")
+                assert contains("SN3\t1\t2\t2\t2\t1\t5\t1")
+                assert contains("SN4\t1\t2\t3\t2\t1\t6\t1")
+                assert contains("SN5\t1\t2\t?\t2\t1\t8\t1")
+                assert contains("SN6\t2\t3\t3\t-\t?\t9\t0")
+            }
+
+            // Check aggregated metadata
+            with(path("$launchDir/results/metadata/aggregated_data.tsv").text) {
+                assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
+                assert contains("SN1\tS1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
+                assert contains("SN2\tS2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
+                assert contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
+                assert contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue")
+
+                // French diacritics/ligatures from https://en.wikipedia.org/wiki/French_orthography#Alphabet
+                assert contains("SN5\tS5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
+                assert contains("SN6\tS6\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
+            }
+
+            // Check auto-built config file:
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_samplesheet.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            with(path("$launchDir/results/arborator/cluster_summary.tsv").text) {
+                assert contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+                assert contains("1\t;|'<>&\tRobert'); DROP TABLE Students;--,Robert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+                assert contains("2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14,35\t2024/04/22,2024/04/30\tcheese\ttrue")
+                assert contains("3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
+            }
+
+            with(path("$launchDir/results/arborator/metadata.included.tsv").text) {
+                assert contains("Sample\tOutbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tgas_denovo_cluster_address")
+                assert contains("SN1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue\t1|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse\t1|1.1.1.1.1.1.1.1.2.2")
+                assert contains("SN3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.2")
+                assert contains("SN5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN6\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.2.2")
+            }
+
+            def actual_arborator_tree_1 = path("$launchDir/results/arborator/1_tree.nwk")
+            assert actual_arborator_tree_1.text.contains("(SN1:3.0,SN2:3.0);")
+
+            def actual_arborator_tree_2 = path("$launchDir/results/arborator/2_tree.nwk")
+            assert actual_arborator_tree_2.text.contains("(SN3:2.0,SN4:2.0);")
+
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+
+            with(path("$launchDir/results/arborator/1_metadata.tsv").text) {
+                assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial\tgas_denovo_cluster_address")
+                assert contains("SN1\tS1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue\t1|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN2\tS2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse\t1|1.1.1.1.1.1.1.1.2.2")
+            }
+
+            assert path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+            with(path("$launchDir/results/arborator/2_metadata.tsv").text) {
+                assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial\tgas_denovo_cluster_address")
+                assert contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.2")
+            }
+
+            assert path("$launchDir/results/arborator/3_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/3_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/3_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/3_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/3_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/3_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/3_tree.nwk").exists()
+
+            with(path("$launchDir/results/arborator/3_metadata.tsv").text) {
+                assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial\tgas_denovo_cluster_address")
+                assert contains("SN5\tS5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN6\tS6\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.2.2")
+            }
+
+            // Check that the ArborView output is created
+            with(path("$launchDir/results/arborview/1_arborview.html").text) {
+                assert contains(
+                    "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
+                    "SN1\\tS1\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;--\\t<html>Canada</html>\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\n" +
+                    "SN2\\tS2\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;-\\t<html>Canada</html>\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n"
+                )
+            }
+
+            with(path("$launchDir/results/arborview/2_arborview.html").text) {
+                assert contains(
+                    "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
+                    "SN3\\tS3\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.1\\n" +
+                    "SN4\\tS4\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.2\\n"
+                )
+            }
+
+            with(path("$launchDir/results/arborview/3_arborview.html").text) {
+                assert contains(
+                    "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
+                    "SN5\\tS5\\t3\\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\\tEAEC\\tCanada\\tO126:H27\\t61\\t2012/09/01\\tmilk\\tfalse\\t3|1.1.1.1.1.1.1.1.1.1\\n" +
+                    "SN6\\tS6\\t3\\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\\tEAEC\\tCanada\\tO126:H27\\t61\\t2012/09/01\\tmilk\\tfalse\\t3|1.1.1.1.1.1.1.1.2.2\\n"
+                )
+            }
+
+            // compare IRIDA Next JSON output
+            def iridanext_json = path("$launchDir/results/iridanext.output.json").json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+ 
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+
+            assert iridanext_samples.isEmpty()
+            assert iridanext_metadata.isEmpty()
         }
     }
 }

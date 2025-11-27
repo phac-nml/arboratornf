@@ -3,7 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Unreleased
+## [0.8.1] - 2025-12-05
+
+### Changed
+
+- Changed restrictions on input metadata so only `\n`, `\t`, `"`, and `\` are disallowed and added test cases for special characters. [PR 65](https://github.com/phac-nml/arboratornf/pull/65)
+
+## [0.8.0] - 2025-11-25
 
 ### Changed
 
@@ -14,6 +20,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A module for zipping files from `aborview`,`arborator` and `software_versions.yml` when a new parameter `zip_cluster_results` is true. [PR #58](https://github.com/phac-nml/arboratornf/pull/58)
 - A parameter `--output_prefix` for renaming files with a prefix `"${output_prefix}_"` (Default: null). [PR #60](https://github.com/phac-nml/arboratornf/pull/60)
 - A parameter `--prefix_include_date` for renaming files with a prefix date `"{YYYY-MM-DD}_"`. [PR #60](https://github.com/phac-nml/arboratornf/pull/60)
+
+### Modified
+
+- Arborator `1.2.0` output excel file `metadata.included.xlsx` is renamed to `metadata.linelist.xlsx`. [PR #61](https://github.com/phac-nml/arboratornf/pull/61)
+
+### Updated
+
+- Arborator version to [1.2.0](https://github.com/phac-nml/arborator/releases/tag/1.2.0). [PR #62](https://github.com/phac-nml/arboratornf/pull/62)
+  - Includes an additional XLSX-formatted output files for the `cluster_summary.tsv` and `metadata.included.tsv` files.
+  - Includes a parameter `tree_distances` which instructs GAS to interpret distance matrices distances as either `cophenetic` (the distance at which two clusters or leaves cluster together) or `patristic` (the sum of branch lengths between clusters or leaves).
 
 ## [0.7.0] - 2025-10-01
 
@@ -177,3 +193,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.5.4]: https://github.com/phac-nml/arboratornf/releases/tag/0.5.4
 [0.6.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.6.0
 [0.7.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.7.0
+[0.8.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.0
