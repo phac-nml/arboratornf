@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed restrictions on input metadata so only `\n`, `\t`, and `"` are disallowed and added test cases for special characters. [PR 65](https://github.com/phac-nml/arboratornf/pull/65)
+- Changed restrictions on input metadata so only `\n`, `\t`, `"`, and `\` are disallowed and added test cases for special characters. [PR 65](https://github.com/phac-nml/arboratornf/pull/65)
 
 ## [0.8.0] - 2025-11-25
 
