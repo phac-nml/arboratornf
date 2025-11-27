@@ -4,14 +4,14 @@ nextflow_pipeline {
 
     test("Outbreak Detection"){
         tag "pipeline_small"
-        config "$baseDir/tests/data/pnc/outbreak-detection/pnc-outbreak-detection.config"
+        config "$baseDir/tests/data/pnc/outbreak-detection/nextflow.config"
 
         when {
             params {
-                input = "$baseDir/tests/data/pnc/outbreak-detection/pnc-outbreak-detection.csv"
+                input = "$baseDir/tests/data/pnc/outbreak-detection/samplesheet.csv"
                 outdir = "results"
 
-                ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak/pnc-outbreak-detection.arborator.config.json"
+                ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak/arborator.config.json"
                 ar_thresholds = "30,25,20,15,10,5"
 
                 tree_distances = "cophenetic"
