@@ -1,11 +1,11 @@
 {
-        "outlier_thresh": "100",
-        "method": "average",
-        "thresholds": "30,25,20,15,10,5",
-        "min_members": "2",
-        "partition_col": "national_outbreak_code",
-        "id_col": "sample_name",
-        "only_report_labeled_columns": "True",
+    "outlier_thresh": "100",
+    "method": "average",
+    "thresholds": "30,25,20,15,10,5",
+    "min_members": "2",
+    "partition_col": "national_outbreak_code",
+    "id_col": "sample_name",
+    "only_report_labeled_columns": "True",
 
     "grouped_metadata_columns": {
         "national_outbreak_code": { "data_type": "None","label":"national_outbreak_code","display":"True"},
@@ -94,6 +94,5 @@
         "genomic_address_name": { "data_type": "Categorical","label":"genomic_address_name","display":"True", "default":""},
         "gas_denovo_cluster_address": { "data_type": "Categorical","label":"gas_denovo_cluster_address","display":"True", "default": ""},
         "sample_puid": { "data_type": "Categorical","label":"sample_puid","display":"True", "default": ""}
-}
-
+    }
 }
