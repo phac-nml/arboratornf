@@ -2128,8 +2128,8 @@ nextflow_pipeline {
                 assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
                 assert contains("SN1\tS1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
                 assert contains("SN2\tS2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
-                assert contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\t\\t\t\\\\t\t\\t\t\\\\t\t\\'\t\\\\'")
-                assert contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\t\\t\t\\\\t\t\\t\t\\\\t\t\\'\t\\\\'")
+                assert contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
+                assert contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue")
 
                 // French diacritics/ligatures from https://en.wikipedia.org/wiki/French_orthography#Alphabet
                 assert contains("SN5\tS5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
@@ -2145,7 +2145,7 @@ nextflow_pipeline {
             with(path("$launchDir/results/arborator/cluster_summary.tsv").text) {
                 assert contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
                 assert contains("1\t;|'<>&\tRobert'); DROP TABLE Students;--,Robert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
-                assert contains("2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\t\\t\t\\\\t\t\\t\t\\\\t\t\\'\t\\\\'")
+                assert contains("2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14,35\t2024/04/22,2024/04/30\tcheese\ttrue")
                 assert contains("3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
             }
 
@@ -2153,8 +2153,8 @@ nextflow_pipeline {
                 assert contains("Sample\tOutbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tgas_denovo_cluster_address")
                 assert contains("SN1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue\t1|1.1.1.1.1.1.1.1.1.1")
                 assert contains("SN2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse\t1|1.1.1.1.1.1.1.1.2.2")
-                assert contains("SN3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\t\\t\t\\\\t\t\\t\t\\\\t\t\\'\t\\\\'\t2|1.1.1.1.1.1.1.1.1.1")
-                assert contains("SN4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\t\\t\t\\\\t\t\\t\t\\\\t\t\\'\t\\\\'\t2|1.1.1.1.1.1.1.1.1.2")
+                assert contains("SN3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.2")
                 assert contains("SN5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.1.1")
                 assert contains("SN6\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.2.2")
             }
@@ -2201,8 +2201,8 @@ nextflow_pipeline {
             with(path("$launchDir/results/arborview/2_arborview.html").text) {
                 assert contains(
                     "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
-                    "SN3\\tS3\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\t\\\\t\\t\\\\\\\\t\\t\\\\t\\t\\\\\\\\t\\t\\\\'\\t\\\\\\\\'\\t2|1.1.1.1.1.1.1.1.1.1\\n" +
-                    "SN4\\tS4\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\t\\\\t\\t\\\\\\\\t\\t\\\\t\\t\\\\\\\\t\\t\\\\'\\t\\\\\\\\'\\t2|1.1.1.1.1.1.1.1.1.2\\n"
+                    "SN3\\tS3\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\tFrance\\tO125\\t14\\t2024/04/30\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.1\\n" +
+                    "SN4\\tS4\\t2\\tEscherichia coli ;|'<>&\\t' && echo 'Hello World'\\tFrance\\tO125\\t35\\t2024/04/22\\tcheese\\ttrue\\t2|1.1.1.1.1.1.1.1.1.2\\n"
                 )
             }
 
