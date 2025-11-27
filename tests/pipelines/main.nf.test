@@ -2126,8 +2126,8 @@ nextflow_pipeline {
             // Check aggregated metadata
             with(path("$launchDir/results/metadata/aggregated_data.tsv").text) {
                 assert contains("sample_name\tsample\toutbreak\torganism\tsubtype\tcountry\tserovar\tage\tdate\tsource\tspecial")
-                assert contains("SN1\tS1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
-                assert contains("SN2\tS2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
+                assert contains("SN1\tS1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue")
+                assert contains("SN2\tS2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse")
                 assert contains("SN3\tS3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue")
                 assert contains("SN4\tS4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue")
 
@@ -2144,15 +2144,15 @@ nextflow_pipeline {
             // Arborator outputs:
             with(path("$launchDir/results/arborator/cluster_summary.tsv").text) {
                 assert contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
-                assert contains("1\t;|'<>&\tRobert'); DROP TABLE Students;--,Robert'); DROP TABLE Students;-\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+                assert contains("1\t;|'<>&\tRobert'); DROP TABLE Students;--,Robert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
                 assert contains("2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14,35\t2024/04/22,2024/04/30\tcheese\ttrue")
                 assert contains("3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse")
             }
 
             with(path("$launchDir/results/arborator/metadata.included.tsv").text) {
                 assert contains("Sample\tOutbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tgas_denovo_cluster_address")
-                assert contains("SN1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\tCanada\tO157:H7\t21\t2024/05/30\tbeef\ttrue\t1|1.1.1.1.1.1.1.1.1.1")
-                assert contains("SN2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\tThe United States\tO157:H7\t55\t2024/05/21\tmilk\tfalse\t1|1.1.1.1.1.1.1.1.2.2")
+                assert contains("SN1\t1\t;|'<>&\tRobert'); DROP TABLE Students;--\t<html>Canada</html>\tO157:H7\t21\t2024/05/30\tbeef\ttrue\t1|1.1.1.1.1.1.1.1.1.1")
+                assert contains("SN2\t1\t;|'<>&\tRobert'); DROP TABLE Students;-\t<html>Canada</html>\tO157:H7\t55\t2024/05/21\tmilk\tfalse\t1|1.1.1.1.1.1.1.1.2.2")
                 assert contains("SN3\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t14\t2024/04/30\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.1")
                 assert contains("SN4\t2\tEscherichia coli ;|'<>&\t' && echo 'Hello World'\tFrance\tO125\t35\t2024/04/22\tcheese\ttrue\t2|1.1.1.1.1.1.1.1.1.2")
                 assert contains("SN5\t3\tFrench diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t3|1.1.1.1.1.1.1.1.1.1")
@@ -2181,12 +2181,20 @@ nextflow_pipeline {
             assert path("$launchDir/results/arborator/2_profile.tsv").exists()
             assert path("$launchDir/results/arborator/2_tree.nwk").exists()
 
+            assert path("$launchDir/results/arborator/3_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/3_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/3_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/3_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/3_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/3_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/3_tree.nwk").exists()
+
             // Check that the ArborView output is created
             with(path("$launchDir/results/arborview/1_arborview.html").text) {
                 assert contains(
                     "sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\n" +
-                    "SN1\\tS1\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;--\\tCanada\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\n" +
-                    "SN2\\tS2\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;-\\tThe United States\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n"
+                    "SN1\\tS1\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;--\\t<html>Canada</html>\\tO157:H7\\t21\\t2024/05/30\\tbeef\\ttrue\\t1|1.1.1.1.1.1.1.1.1.1\\n" +
+                    "SN2\\tS2\\t1\\t;|'<>&\\tRobert'); DROP TABLE Students;-\\t<html>Canada</html>\\tO157:H7\\t55\\t2024/05/21\\tmilk\\tfalse\\t1|1.1.1.1.1.1.1.1.2.2\\n"
                 )
             }
 

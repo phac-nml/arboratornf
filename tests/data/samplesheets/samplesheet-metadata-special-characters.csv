@@ -1,6 +1,6 @@
 sample,sample_name,mlst_alleles,metadata_partition,metadata_1,metadata_2,metadata_3,metadata_4,metadata_5,metadata_6,metadata_7,metadata_8
-S1,SN1,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json,1,";|'<>&","Robert'); DROP TABLE Students;--","Canada","O157:H7",21,"2024/05/30","beef",true
-S2,SN2,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json,1,";|'<>&","Robert'); DROP TABLE Students;-","The United States","O157:H7",55,"2024/05/21","milk",false
+S1,SN1,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json,1,";|'<>&","Robert'); DROP TABLE Students;--","<html>Canada</html>","O157:H7",21,"2024/05/30","beef",true
+S2,SN2,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json,1,";|'<>&","Robert'); DROP TABLE Students;-","<html>Canada</html>","O157:H7",55,"2024/05/21","milk",false
 S3,SN3,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S3.mlst.json,2,"Escherichia coli ;|'<>&","' && echo 'Hello World'","France","O125",14,"2024/04/30","cheese",true
 S4,SN4,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S4.mlst.json,2,"Escherichia coli ;|'<>&","' && echo 'Hello World'","France","O125",35,"2024/04/22","cheese",true
 S5,SN5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json,3,"French diacritics/ligatures ÀàÂâÆæÇçÉéÈèÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿñ","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false
