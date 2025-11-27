@@ -560,8 +560,8 @@ nextflow_pipeline {
         }
     }
 
-    test("bad metadata_1 entry"){
-        tag "bad_metadata_tab"
+    test("bad metadata_1 tab"){
+        tag "bad_metadata_1_tab"
         when {
             params {
                 input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.csv"
@@ -586,6 +586,34 @@ nextflow_pipeline {
             assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, or double quotes (Escherichia\tcoli)")
         }
     }
+
+    test("bad metadata_1 double quote (\")"){
+        tag "bad_metadata_1_double_quote"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-double-quote.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.join("\n").contains("ERROR ~ Invalid CSV value -- offending line: \"Escherichia \"the name\" coli\"")
+        }
+    }
+
 
     test("Small-scale test of full pipeline, ID mismatch"){
         tag "id-mismatch"
