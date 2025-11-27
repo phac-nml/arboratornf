@@ -614,6 +614,33 @@ nextflow_pipeline {
         }
     }
 
+    test("bad metadata_1 newline (\\n)"){
+        tag "bad_metadata_1_newline"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-newline.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.join("\n").contains("ERROR ~ Missing double-quote termination in CSV value -- offending line: \"Escherichia")
+        }
+    }
+
 
     test("Small-scale test of full pipeline, ID mismatch"){
         tag "id-mismatch"
