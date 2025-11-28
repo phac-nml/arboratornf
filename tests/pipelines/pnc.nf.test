@@ -1148,6 +1148,77 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
+
+            // Check Clusters
+            arborator_2501STWGS_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2501STWGS_01_clusters.text.contains("0_ingroup_0\t2501STWGS-01|1.1.1.2.3.4")
+            arborator_2501STWGS_01_clusters.text.contains("0_ingroup_1\t2501STWGS-01|1.1.1.2.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("0_ingroup_2\t2501STWGS-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("0_ingroup_3\t2501STWGS-01|1.1.1.2.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("0_ingroup_4\t2501STWGS-01|1.1.1.1.1.2")
+
+            arborator_2502SEWGS_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2502SEWGS_01_clusters.text.contains("1_ingroup_10\t2502SEWGS-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("1_ingroup_11\t2502SEWGS-01|1.1.1.1.3.4")
+            arborator_2501STWGS_01_clusters.text.contains("1_ingroup_12\t2502SEWGS-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("1_ingroup_13\t2502SEWGS-01|1.1.1.1.4.5")
+            arborator_2501STWGS_01_clusters.text.contains("1_ingroup_14\t2502SEWGS-01|1.1.1.1.1.2")
+
+            arborator_2503SHWGS_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2503SHWGS_01_clusters.text.contains("2_ingroup_20\t2503SHWGS-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("2_ingroup_21\t2503SHWGS-01|1.1.1.2.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("2_ingroup_22\t2503SHWGS-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("2_ingroup_23\t2503SHWGS-01|1.1.1.2.2.4")
+            arborator_2501STWGS_01_clusters.text.contains("2_ingroup_24\t2503SHWGS-01|1.1.1.2.2.5")
+
+            arborator_2504SAL_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2504SAL_01_clusters.text.contains("3_ingroup_30\t2504SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("3_ingroup_31\t2504SAL-01|1.1.1.2.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("3_ingroup_32\t2504SAL-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("3_ingroup_33\t2504SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("3_ingroup_34\t2504SAL-01|1.1.1.2.3.4")
+
+            arborator_2505SAL_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2505SAL_01_clusters.text.contains("4_ingroup_40\t2505SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("4_ingroup_41\t2505SAL-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("4_ingroup_42\t2505SAL-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("4_ingroup_43\t2505SAL-01|1.1.1.1.2.4")
+            arborator_2501STWGS_01_clusters.text.contains("4_ingroup_44\t2505SAL-01|1.1.1.1.1.1")
+
+            arborator_2506SAL_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2506SAL_01_clusters.text.contains("5_ingroup_50\t2506SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("5_ingroup_51\t2506SAL-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("5_ingroup_52\t2506SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("5_ingroup_53\t2506SAL-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("5_ingroup_54\t2506SAL-01|1.1.1.1.2.4")
+
+            arborator_2507monoSTWGS_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2507monoSTWGS_01_clusters.text.contains("6_ingroup_60\t2507monoSTWGS-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("6_ingroup_61\t2507monoSTWGS-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("6_ingroup_62\t2507monoSTWGS-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("6_ingroup_63\t2507monoSTWGS-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("6_ingroup_64\t2507monoSTWGS-01|1.1.1.1.3.4")
+
+            arborator_2509SAL_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2509SAL_01_clusters.text.contains("7_ingroup_70\t2509SAL-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("7_ingroup_71\t2509SAL-01|1.1.1.1.1.2")
+            arborator_2501STWGS_01_clusters.text.contains("7_ingroup_72\t2509SAL-01|1.1.1.1.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("7_ingroup_73\t2509SAL-01|1.1.1.1.2.4")
+            arborator_2501STWGS_01_clusters.text.contains("7_ingroup_74\t2509SAL-01|1.1.1.1.1.1")
+
+            arborator_2509SAL_02_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2509SAL_02_clusters.text.contains("8_ingroup_80\t2509SAL-02|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("8_ingroup_81\t2509SAL-02|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("8_ingroup_82\t2509SAL-02|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("8_ingroup_83\t2509SAL-02|1.1.1.1.1.3")
+            arborator_2501STWGS_01_clusters.text.contains("8_ingroup_84\t2509SAL-02|1.1.1.1.1.2")
+
+            arborator_2511InfantisWGS_01_clusters.text.contains("sample_name\tgas_denovo_cluster_address")
+            arborator_2511InfantisWGS_01_clusters.text.contains("9_ingroup_90\t2511InfantisWGS-01|1.1.1.1.1.1")
+            arborator_2501STWGS_01_clusters.text.contains("9_ingroup_91\t2511InfantisWGS-01|1.1.1.2.2.5")
+            arborator_2501STWGS_01_clusters.text.contains("9_ingroup_92\t2511InfantisWGS-01|1.1.1.2.2.3")
+            arborator_2501STWGS_01_clusters.text.contains("9_ingroup_93\t2511InfantisWGS-01|1.1.1.2.2.4")
+            arborator_2501STWGS_01_clusters.text.contains("9_ingroup_94\t2511InfantisWGS-01|1.1.1.1.1.2")
         }
     }
 }
