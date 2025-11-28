@@ -457,7 +457,9 @@ nextflow_pipeline {
     }
 
     test("Outbreak Reporting"){
-        tag "pipeline_small"
+        tag "pnc"
+        tag "pnc_outbreak_reporting"
+
         config "$baseDir/tests/data/pnc/outbreak-reporting/nextflow.config"
 
         when {
@@ -475,6 +477,209 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            // Check that files exist:
+            def arborator_2501STWGS_01_clusters = path("$launchDir/results/arborator/2501STWGS-01_clusters.tsv")
+            def arborator_2501STWGS_01_loci = path("$launchDir/results/arborator/2501STWGS-01_loci.summary.tsv")
+            def arborator_2501STWGS_01_matrix = path("$launchDir/results/arborator/2501STWGS-01_matrix.tsv")
+            def arborator_2501STWGS_01_metadata = path("$launchDir/results/arborator/2501STWGS-01_metadata.tsv")
+            def arborator_2501STWGS_01_outliers = path("$launchDir/results/arborator/2501STWGS-01_outliers.tsv")
+            def arborator_2501STWGS_01_profile = path("$launchDir/results/arborator/2501STWGS-01_profile.tsv")
+            def arborator_2501STWGS_01_tree = path("$launchDir/results/arborator/2501STWGS-01_tree.nwk")
+
+            assert arborator_2501STWGS_01_clusters.exists()
+            assert arborator_2501STWGS_01_loci.exists()
+            assert arborator_2501STWGS_01_matrix.exists()
+            assert arborator_2501STWGS_01_metadata.exists()
+            assert arborator_2501STWGS_01_outliers.exists()
+            assert arborator_2501STWGS_01_profile.exists()
+            assert arborator_2501STWGS_01_tree.exists()
+
+            def arborator_2502SEWGS_01_clusters = path("$launchDir/results/arborator/2502SEWGS-01_clusters.tsv")
+            def arborator_2502SEWGS_01_loci = path("$launchDir/results/arborator/2502SEWGS-01_loci.summary.tsv")
+            def arborator_2502SEWGS_01_matrix = path("$launchDir/results/arborator/2502SEWGS-01_matrix.tsv")
+            def arborator_2502SEWGS_01_metadata = path("$launchDir/results/arborator/2502SEWGS-01_metadata.tsv")
+            def arborator_2502SEWGS_01_outliers = path("$launchDir/results/arborator/2502SEWGS-01_outliers.tsv")
+            def arborator_2502SEWGS_01_profile = path("$launchDir/results/arborator/2502SEWGS-01_profile.tsv")
+            def arborator_2502SEWGS_01_tree = path("$launchDir/results/arborator/2502SEWGS-01_tree.nwk")
+
+            assert arborator_2502SEWGS_01_clusters.exists()
+            assert arborator_2502SEWGS_01_loci.exists()
+            assert arborator_2502SEWGS_01_matrix.exists()
+            assert arborator_2502SEWGS_01_metadata.exists()
+            assert arborator_2502SEWGS_01_outliers.exists()
+            assert arborator_2502SEWGS_01_profile.exists()
+            assert arborator_2502SEWGS_01_tree.exists()
+
+            def arborator_2503SHWGS_01_clusters = path("$launchDir/results/arborator/2503SHWGS-01_clusters.tsv")
+            def arborator_2503SHWGS_01_loci = path("$launchDir/results/arborator/2503SHWGS-01_loci.summary.tsv")
+            def arborator_2503SHWGS_01_matrix = path("$launchDir/results/arborator/2503SHWGS-01_matrix.tsv")
+            def arborator_2503SHWGS_01_metadata = path("$launchDir/results/arborator/2503SHWGS-01_metadata.tsv")
+            def arborator_2503SHWGS_01_outliers = path("$launchDir/results/arborator/2503SHWGS-01_outliers.tsv")
+            def arborator_2503SHWGS_01_profile = path("$launchDir/results/arborator/2503SHWGS-01_profile.tsv")
+            def arborator_2503SHWGS_01_tree = path("$launchDir/results/arborator/2503SHWGS-01_tree.nwk")
+
+            assert arborator_2503SHWGS_01_clusters.exists()
+            assert arborator_2503SHWGS_01_loci.exists()
+            assert arborator_2503SHWGS_01_matrix.exists()
+            assert arborator_2503SHWGS_01_metadata.exists()
+            assert arborator_2503SHWGS_01_outliers.exists()
+            assert arborator_2503SHWGS_01_profile.exists()
+            assert arborator_2503SHWGS_01_tree.exists()
+
+            def arborator_2504SAL_01_clusters = path("$launchDir/results/arborator/2504SAL-01_clusters.tsv")
+            def arborator_2504SAL_01_loci = path("$launchDir/results/arborator/2504SAL-01_loci.summary.tsv")
+            def arborator_2504SAL_01_matrix = path("$launchDir/results/arborator/2504SAL-01_matrix.tsv")
+            def arborator_2504SAL_01_metadata = path("$launchDir/results/arborator/2504SAL-01_metadata.tsv")
+            def arborator_2504SAL_01_outliers = path("$launchDir/results/arborator/2504SAL-01_outliers.tsv")
+            def arborator_2504SAL_01_profile = path("$launchDir/results/arborator/2504SAL-01_profile.tsv")
+            def arborator_2504SAL_01_tree = path("$launchDir/results/arborator/2504SAL-01_tree.nwk")
+
+            assert arborator_2504SAL_01_clusters.exists()
+            assert arborator_2504SAL_01_loci.exists()
+            assert arborator_2504SAL_01_matrix.exists()
+            assert arborator_2504SAL_01_metadata.exists()
+            assert arborator_2504SAL_01_outliers.exists()
+            assert arborator_2504SAL_01_profile.exists()
+            assert arborator_2504SAL_01_tree.exists()
+
+            def arborator_2505SAL_01_clusters = path("$launchDir/results/arborator/2505SAL-01_clusters.tsv")
+            def arborator_2505SAL_01_loci = path("$launchDir/results/arborator/2505SAL-01_loci.summary.tsv")
+            def arborator_2505SAL_01_matrix = path("$launchDir/results/arborator/2505SAL-01_matrix.tsv")
+            def arborator_2505SAL_01_metadata = path("$launchDir/results/arborator/2505SAL-01_metadata.tsv")
+            def arborator_2505SAL_01_outliers = path("$launchDir/results/arborator/2505SAL-01_outliers.tsv")
+            def arborator_2505SAL_01_profile = path("$launchDir/results/arborator/2505SAL-01_profile.tsv")
+            def arborator_2505SAL_01_tree = path("$launchDir/results/arborator/2505SAL-01_tree.nwk")
+
+            assert arborator_2505SAL_01_clusters.exists()
+            assert arborator_2505SAL_01_loci.exists()
+            assert arborator_2505SAL_01_matrix.exists()
+            assert arborator_2505SAL_01_metadata.exists()
+            assert arborator_2505SAL_01_outliers.exists()
+            assert arborator_2505SAL_01_profile.exists()
+            assert arborator_2505SAL_01_tree.exists()
+
+            def arborator_2506SAL_01_clusters = path("$launchDir/results/arborator/2506SAL-01_clusters.tsv")
+            def arborator_2506SAL_01_loci = path("$launchDir/results/arborator/2506SAL-01_loci.summary.tsv")
+            def arborator_2506SAL_01_matrix = path("$launchDir/results/arborator/2506SAL-01_matrix.tsv")
+            def arborator_2506SAL_01_metadata = path("$launchDir/results/arborator/2506SAL-01_metadata.tsv")
+            def arborator_2506SAL_01_outliers = path("$launchDir/results/arborator/2506SAL-01_outliers.tsv")
+            def arborator_2506SAL_01_profile = path("$launchDir/results/arborator/2506SAL-01_profile.tsv")
+            def arborator_2506SAL_01_tree = path("$launchDir/results/arborator/2506SAL-01_tree.nwk")
+
+            assert arborator_2506SAL_01_clusters.exists()
+            assert arborator_2506SAL_01_loci.exists()
+            assert arborator_2506SAL_01_matrix.exists()
+            assert arborator_2506SAL_01_metadata.exists()
+            assert arborator_2506SAL_01_outliers.exists()
+            assert arborator_2506SAL_01_profile.exists()
+            assert arborator_2506SAL_01_tree.exists()
+
+            def arborator_2507monoSTWGS_01_clusters = path("$launchDir/results/arborator/2507monoSTWGS-01_clusters.tsv")
+            def arborator_2507monoSTWGS_01_loci = path("$launchDir/results/arborator/2507monoSTWGS-01_loci.summary.tsv")
+            def arborator_2507monoSTWGS_01_matrix = path("$launchDir/results/arborator/2507monoSTWGS-01_matrix.tsv")
+            def arborator_2507monoSTWGS_01_metadata = path("$launchDir/results/arborator/2507monoSTWGS-01_metadata.tsv")
+            def arborator_2507monoSTWGS_01_outliers = path("$launchDir/results/arborator/2507monoSTWGS-01_outliers.tsv")
+            def arborator_2507monoSTWGS_01_profile = path("$launchDir/results/arborator/2507monoSTWGS-01_profile.tsv")
+            def arborator_2507monoSTWGS_01_tree = path("$launchDir/results/arborator/2507monoSTWGS-01_tree.nwk")
+
+            assert arborator_2507monoSTWGS_01_clusters.exists()
+            assert arborator_2507monoSTWGS_01_loci.exists()
+            assert arborator_2507monoSTWGS_01_matrix.exists()
+            assert arborator_2507monoSTWGS_01_metadata.exists()
+            assert arborator_2507monoSTWGS_01_outliers.exists()
+            assert arborator_2507monoSTWGS_01_profile.exists()
+            assert arborator_2507monoSTWGS_01_tree.exists()
+
+            def arborator_2509SAL_01_clusters = path("$launchDir/results/arborator/2509SAL-01_clusters.tsv")
+            def arborator_2509SAL_01_loci = path("$launchDir/results/arborator/2509SAL-01_loci.summary.tsv")
+            def arborator_2509SAL_01_matrix = path("$launchDir/results/arborator/2509SAL-01_matrix.tsv")
+            def arborator_2509SAL_01_metadata = path("$launchDir/results/arborator/2509SAL-01_metadata.tsv")
+            def arborator_2509SAL_01_outliers = path("$launchDir/results/arborator/2509SAL-01_outliers.tsv")
+            def arborator_2509SAL_01_profile = path("$launchDir/results/arborator/2509SAL-01_profile.tsv")
+            def arborator_2509SAL_01_tree = path("$launchDir/results/arborator/2509SAL-01_tree.nwk")
+
+            assert arborator_2509SAL_01_clusters.exists()
+            assert arborator_2509SAL_01_loci.exists()
+            assert arborator_2509SAL_01_matrix.exists()
+            assert arborator_2509SAL_01_metadata.exists()
+            assert arborator_2509SAL_01_outliers.exists()
+            assert arborator_2509SAL_01_profile.exists()
+            assert arborator_2509SAL_01_tree.exists()
+
+            def arborator_2509SAL_02_clusters = path("$launchDir/results/arborator/2509SAL-02_clusters.tsv")
+            def arborator_2509SAL_02_loci = path("$launchDir/results/arborator/2509SAL-02_loci.summary.tsv")
+            def arborator_2509SAL_02_matrix = path("$launchDir/results/arborator/2509SAL-02_matrix.tsv")
+            def arborator_2509SAL_02_metadata = path("$launchDir/results/arborator/2509SAL-02_metadata.tsv")
+            def arborator_2509SAL_02_outliers = path("$launchDir/results/arborator/2509SAL-02_outliers.tsv")
+            def arborator_2509SAL_02_profile = path("$launchDir/results/arborator/2509SAL-02_profile.tsv")
+            def arborator_2509SAL_02_tree = path("$launchDir/results/arborator/2509SAL-02_tree.nwk")
+
+            assert arborator_2509SAL_02_clusters.exists()
+            assert arborator_2509SAL_02_loci.exists()
+            assert arborator_2509SAL_02_matrix.exists()
+            assert arborator_2509SAL_02_metadata.exists()
+            assert arborator_2509SAL_02_outliers.exists()
+            assert arborator_2509SAL_02_profile.exists()
+            assert arborator_2509SAL_02_tree.exists()
+
+            def arborator_2511InfantisWGS_01_clusters = path("$launchDir/results/arborator/2511InfantisWGS-01_clusters.tsv")
+            def arborator_2511InfantisWGS_01_loci = path("$launchDir/results/arborator/2511InfantisWGS-01_loci.summary.tsv")
+            def arborator_2511InfantisWGS_01_matrix = path("$launchDir/results/arborator/2511InfantisWGS-01_matrix.tsv")
+            def arborator_2511InfantisWGS_01_metadata = path("$launchDir/results/arborator/2511InfantisWGS-01_metadata.tsv")
+            def arborator_2511InfantisWGS_01_outliers = path("$launchDir/results/arborator/2511InfantisWGS-01_outliers.tsv")
+            def arborator_2511InfantisWGS_01_profile = path("$launchDir/results/arborator/2511InfantisWGS-01_profile.tsv")
+            def arborator_2511InfantisWGS_01_tree = path("$launchDir/results/arborator/2511InfantisWGS-01_tree.nwk")
+
+            assert arborator_2511InfantisWGS_01_clusters.exists()
+            assert arborator_2511InfantisWGS_01_loci.exists()
+            assert arborator_2511InfantisWGS_01_matrix.exists()
+            assert arborator_2511InfantisWGS_01_metadata.exists()
+            assert arborator_2511InfantisWGS_01_outliers.exists()
+            assert arborator_2511InfantisWGS_01_profile.exists()
+            assert arborator_2511InfantisWGS_01_tree.exists()
+
+            def cluster_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            def cluster_summary_xlsx = path("$launchDir/results/arborator/cluster_summary.xlsx")
+            def metadata_excluded = path("$launchDir/results/arborator/metadata.excluded.tsv")
+            def metadata_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def metadata_linelist = path("$launchDir/results/arborator/metadata.linelist.xlsx")
+            def run_json = path("$launchDir/results/arborator/run.json")
+            def threshold_map = path("$launchDir/results/arborator/threshold_map.json")
+
+            assert cluster_summary.exists()
+            assert cluster_summary_xlsx.exists()
+            assert metadata_excluded.exists()
+            assert metadata_included.exists()
+            assert metadata_linelist.exists()
+            assert run_json.exists()
+            assert threshold_map.exists()
+
+            def arborview_2501STWGS_01 = path("$launchDir/results/arborview/2501STWGS-01_arborview.html")
+            def arborview_2502SEWGS_01 = path("$launchDir/results/arborview/2502SEWGS-01_arborview.html")
+            def arborview_2503SHWGS_01 = path("$launchDir/results/arborview/2503SHWGS-01_arborview.html")
+            def arborview_2504SAL_01 = path("$launchDir/results/arborview/2504SAL-01_arborview.html")
+            def arborview_2505SAL_01 = path("$launchDir/results/arborview/2505SAL-01_arborview.html")
+            def arborview_2506SAL_01 = path("$launchDir/results/arborview/2506SAL-01_arborview.html")
+            def arborview_2507monoSTWGS_01 = path("$launchDir/results/arborview/2507monoSTWGS-01_arborview.html")
+            def arborview_2509SAL_01 = path("$launchDir/results/arborview/2509SAL-01_arborview.html")
+            def arborview_2509SAL_02 = path("$launchDir/results/arborview/2509SAL-02_arborview.html")
+            def arborview_2511InfantisWGS_01 = path("$launchDir/results/arborview/2511InfantisWGS-01_arborview.html")
+
+            assert arborview_2501STWGS_01.exists()
+            assert arborview_2502SEWGS_01.exists()
+            assert arborview_2503SHWGS_01.exists()
+            assert arborview_2504SAL_01.exists()
+            assert arborview_2505SAL_01.exists()
+            assert arborview_2506SAL_01.exists()
+            assert arborview_2507monoSTWGS_01.exists()
+            assert arborview_2509SAL_01.exists()
+            assert arborview_2509SAL_02.exists()
+            assert arborview_2511InfantisWGS_01.exists()
+
+            def iridanext_output = path("$launchDir/results/iridanext.output.json")
+
+            assert iridanext_output.exists()
         }
     }
 }
