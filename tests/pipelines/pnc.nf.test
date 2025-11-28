@@ -230,7 +230,9 @@ nextflow_pipeline {
     }
 
     test("Outbreak Detection"){
-        tag "pipeline_small"
+        tag "pnc"
+        tag "pnc_outbreak_detection"
+
         config "$baseDir/tests/data/pnc/outbreak-detection/nextflow.config"
 
         when {
@@ -248,6 +250,209 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            // Check that files exist:
+            def arborator_1_1_1_1_clusters = path("$launchDir/results/arborator/1.1.1.1_clusters.tsv")
+            def arborator_1_1_1_1_loci = path("$launchDir/results/arborator/1.1.1.1_loci.summary.tsv")
+            def arborator_1_1_1_1_matrix = path("$launchDir/results/arborator/1.1.1.1_matrix.tsv")
+            def arborator_1_1_1_1_metadata = path("$launchDir/results/arborator/1.1.1.1_metadata.tsv")
+            def arborator_1_1_1_1_outliers = path("$launchDir/results/arborator/1.1.1.1_outliers.tsv")
+            def arborator_1_1_1_1_profile = path("$launchDir/results/arborator/1.1.1.1_profile.tsv")
+            def arborator_1_1_1_1_tree = path("$launchDir/results/arborator/1.1.1.1_tree.nwk")
+
+            assert arborator_1_1_1_1_clusters.exists()
+            assert arborator_1_1_1_1_loci.exists()
+            assert arborator_1_1_1_1_matrix.exists()
+            assert arborator_1_1_1_1_metadata.exists()
+            assert arborator_1_1_1_1_outliers.exists()
+            assert arborator_1_1_1_1_profile.exists()
+            assert arborator_1_1_1_1_tree.exists()
+
+            def arborator_1_1_2_2_clusters = path("$launchDir/results/arborator/1.1.2.2_clusters.tsv")
+            def arborator_1_1_2_2_loci = path("$launchDir/results/arborator/1.1.2.2_loci.summary.tsv")
+            def arborator_1_1_2_2_matrix = path("$launchDir/results/arborator/1.1.2.2_matrix.tsv")
+            def arborator_1_1_2_2_metadata = path("$launchDir/results/arborator/1.1.2.2_metadata.tsv")
+            def arborator_1_1_2_2_outliers = path("$launchDir/results/arborator/1.1.2.2_outliers.tsv")
+            def arborator_1_1_2_2_profile = path("$launchDir/results/arborator/1.1.2.2_profile.tsv")
+            def arborator_1_1_2_2_tree = path("$launchDir/results/arborator/1.1.2.2_tree.nwk")
+
+            assert arborator_1_1_2_2_clusters.exists()
+            assert arborator_1_1_2_2_loci.exists()
+            assert arborator_1_1_2_2_matrix.exists()
+            assert arborator_1_1_2_2_metadata.exists()
+            assert arborator_1_1_2_2_outliers.exists()
+            assert arborator_1_1_2_2_profile.exists()
+            assert arborator_1_1_2_2_tree.exists()
+
+            def arborator_1_3_3_3_clusters = path("$launchDir/results/arborator/1.3.3.3_clusters.tsv")
+            def arborator_1_3_3_3_loci = path("$launchDir/results/arborator/1.3.3.3_loci.summary.tsv")
+            def arborator_1_3_3_3_matrix = path("$launchDir/results/arborator/1.3.3.3_matrix.tsv")
+            def arborator_1_3_3_3_metadata = path("$launchDir/results/arborator/1.3.3.3_metadata.tsv")
+            def arborator_1_3_3_3_outliers = path("$launchDir/results/arborator/1.3.3.3_outliers.tsv")
+            def arborator_1_3_3_3_profile = path("$launchDir/results/arborator/1.3.3.3_profile.tsv")
+            def arborator_1_3_3_3_tree = path("$launchDir/results/arborator/1.3.3.3_tree.nwk")
+
+            assert arborator_1_3_3_3_clusters.exists()
+            assert arborator_1_3_3_3_loci.exists()
+            assert arborator_1_3_3_3_matrix.exists()
+            assert arborator_1_3_3_3_metadata.exists()
+            assert arborator_1_3_3_3_outliers.exists()
+            assert arborator_1_3_3_3_profile.exists()
+            assert arborator_1_3_3_3_tree.exists()
+
+            def arborator_2_4_4_4_clusters = path("$launchDir/results/arborator/2.4.4.4_clusters.tsv")
+            def arborator_2_4_4_4_loci = path("$launchDir/results/arborator/2.4.4.4_loci.summary.tsv")
+            def arborator_2_4_4_4_matrix = path("$launchDir/results/arborator/2.4.4.4_matrix.tsv")
+            def arborator_2_4_4_4_metadata = path("$launchDir/results/arborator/2.4.4.4_metadata.tsv")
+            def arborator_2_4_4_4_outliers = path("$launchDir/results/arborator/2.4.4.4_outliers.tsv")
+            def arborator_2_4_4_4_profile = path("$launchDir/results/arborator/2.4.4.4_profile.tsv")
+            def arborator_2_4_4_4_tree = path("$launchDir/results/arborator/2.4.4.4_tree.nwk")
+
+            assert arborator_2_4_4_4_clusters.exists()
+            assert arborator_2_4_4_4_loci.exists()
+            assert arborator_2_4_4_4_matrix.exists()
+            assert arborator_2_4_4_4_metadata.exists()
+            assert arborator_2_4_4_4_outliers.exists()
+            assert arborator_2_4_4_4_profile.exists()
+            assert arborator_2_4_4_4_tree.exists()
+
+            def arborator_5_5_5_21000_clusters = path("$launchDir/results/arborator/5.5.5.21000_clusters.tsv")
+            def arborator_5_5_5_21000_loci = path("$launchDir/results/arborator/5.5.5.21000_loci.summary.tsv")
+            def arborator_5_5_5_21000_matrix = path("$launchDir/results/arborator/5.5.5.21000_matrix.tsv")
+            def arborator_5_5_5_21000_metadata = path("$launchDir/results/arborator/5.5.5.21000_metadata.tsv")
+            def arborator_5_5_5_21000_outliers = path("$launchDir/results/arborator/5.5.5.21000_outliers.tsv")
+            def arborator_5_5_5_21000_profile = path("$launchDir/results/arborator/5.5.5.21000_profile.tsv")
+            def arborator_5_5_5_21000_tree = path("$launchDir/results/arborator/5.5.5.21000_tree.nwk")
+
+            assert arborator_5_5_5_21000_clusters.exists()
+            assert arborator_5_5_5_21000_loci.exists()
+            assert arborator_5_5_5_21000_matrix.exists()
+            assert arborator_5_5_5_21000_metadata.exists()
+            assert arborator_5_5_5_21000_outliers.exists()
+            assert arborator_5_5_5_21000_profile.exists()
+            assert arborator_5_5_5_21000_tree.exists()
+
+            def arborator_10_10_10_10_clusters = path("$launchDir/results/arborator/10.10.10.10_clusters.tsv")
+            def arborator_10_10_10_10_loci = path("$launchDir/results/arborator/10.10.10.10_loci.summary.tsv")
+            def arborator_10_10_10_10_matrix = path("$launchDir/results/arborator/10.10.10.10_matrix.tsv")
+            def arborator_10_10_10_10_metadata = path("$launchDir/results/arborator/10.10.10.10_metadata.tsv")
+            def arborator_10_10_10_10_outliers = path("$launchDir/results/arborator/10.10.10.10_outliers.tsv")
+            def arborator_10_10_10_10_profile = path("$launchDir/results/arborator/10.10.10.10_profile.tsv")
+            def arborator_10_10_10_10_tree = path("$launchDir/results/arborator/10.10.10.10_tree.nwk")
+
+            assert arborator_10_10_10_10_clusters.exists()
+            assert arborator_10_10_10_10_loci.exists()
+            assert arborator_10_10_10_10_matrix.exists()
+            assert arborator_10_10_10_10_metadata.exists()
+            assert arborator_10_10_10_10_outliers.exists()
+            assert arborator_10_10_10_10_profile.exists()
+            assert arborator_10_10_10_10_tree.exists()
+
+            def arborator_70_70_90_110_clusters = path("$launchDir/results/arborator/70.70.90.110_clusters.tsv")
+            def arborator_70_70_90_110_loci = path("$launchDir/results/arborator/70.70.90.110_loci.summary.tsv")
+            def arborator_70_70_90_110_matrix = path("$launchDir/results/arborator/70.70.90.110_matrix.tsv")
+            def arborator_70_70_90_110_metadata = path("$launchDir/results/arborator/70.70.90.110_metadata.tsv")
+            def arborator_70_70_90_110_outliers = path("$launchDir/results/arborator/70.70.90.110_outliers.tsv")
+            def arborator_70_70_90_110_profile = path("$launchDir/results/arborator/70.70.90.110_profile.tsv")
+            def arborator_70_70_90_110_tree = path("$launchDir/results/arborator/70.70.90.110_tree.nwk")
+
+            assert arborator_70_70_90_110_clusters.exists()
+            assert arborator_70_70_90_110_loci.exists()
+            assert arborator_70_70_90_110_matrix.exists()
+            assert arborator_70_70_90_110_metadata.exists()
+            assert arborator_70_70_90_110_outliers.exists()
+            assert arborator_70_70_90_110_profile.exists()
+            assert arborator_70_70_90_110_tree.exists()
+
+            def arborator_100_200_300_400_clusters = path("$launchDir/results/arborator/100.200.300.400_clusters.tsv")
+            def arborator_100_200_300_400_loci = path("$launchDir/results/arborator/100.200.300.400_loci.summary.tsv")
+            def arborator_100_200_300_400_matrix = path("$launchDir/results/arborator/100.200.300.400_matrix.tsv")
+            def arborator_100_200_300_400_metadata = path("$launchDir/results/arborator/100.200.300.400_metadata.tsv")
+            def arborator_100_200_300_400_outliers = path("$launchDir/results/arborator/100.200.300.400_outliers.tsv")
+            def arborator_100_200_300_400_profile = path("$launchDir/results/arborator/100.200.300.400_profile.tsv")
+            def arborator_100_200_300_400_tree = path("$launchDir/results/arborator/100.200.300.400_tree.nwk")
+
+            assert arborator_100_200_300_400_clusters.exists()
+            assert arborator_100_200_300_400_loci.exists()
+            assert arborator_100_200_300_400_matrix.exists()
+            assert arborator_100_200_300_400_metadata.exists()
+            assert arborator_100_200_300_400_outliers.exists()
+            assert arborator_100_200_300_400_profile.exists()
+            assert arborator_100_200_300_400_tree.exists()
+
+            def arborator_999_1000_1000_5000_clusters = path("$launchDir/results/arborator/999.1000.1000.5000_clusters.tsv")
+            def arborator_999_1000_1000_5000_loci = path("$launchDir/results/arborator/999.1000.1000.5000_loci.summary.tsv")
+            def arborator_999_1000_1000_5000_matrix = path("$launchDir/results/arborator/999.1000.1000.5000_matrix.tsv")
+            def arborator_999_1000_1000_5000_metadata = path("$launchDir/results/arborator/999.1000.1000.5000_metadata.tsv")
+            def arborator_999_1000_1000_5000_outliers = path("$launchDir/results/arborator/999.1000.1000.5000_outliers.tsv")
+            def arborator_999_1000_1000_5000_profile = path("$launchDir/results/arborator/999.1000.1000.5000_profile.tsv")
+            def arborator_999_1000_1000_5000_tree = path("$launchDir/results/arborator/999.1000.1000.5000_tree.nwk")
+
+            assert arborator_999_1000_1000_5000_clusters.exists()
+            assert arborator_999_1000_1000_5000_loci.exists()
+            assert arborator_999_1000_1000_5000_matrix.exists()
+            assert arborator_999_1000_1000_5000_metadata.exists()
+            assert arborator_999_1000_1000_5000_outliers.exists()
+            assert arborator_999_1000_1000_5000_profile.exists()
+            assert arborator_999_1000_1000_5000_tree.exists()
+
+            def arborator_5000_5000_5000_10000_clusters = path("$launchDir/results/arborator/5000.5000.5000.10000_clusters.tsv")
+            def arborator_5000_5000_5000_10000_loci = path("$launchDir/results/arborator/5000.5000.5000.10000_loci.summary.tsv")
+            def arborator_5000_5000_5000_10000_matrix = path("$launchDir/results/arborator/5000.5000.5000.10000_matrix.tsv")
+            def arborator_5000_5000_5000_10000_metadata = path("$launchDir/results/arborator/5000.5000.5000.10000_metadata.tsv")
+            def arborator_5000_5000_5000_10000_outliers = path("$launchDir/results/arborator/5000.5000.5000.10000_outliers.tsv")
+            def arborator_5000_5000_5000_10000_profile = path("$launchDir/results/arborator/5000.5000.5000.10000_profile.tsv")
+            def arborator_5000_5000_5000_10000_tree = path("$launchDir/results/arborator/5000.5000.5000.10000_tree.nwk")
+
+            assert arborator_5000_5000_5000_10000_clusters.exists()
+            assert arborator_5000_5000_5000_10000_loci.exists()
+            assert arborator_5000_5000_5000_10000_matrix.exists()
+            assert arborator_5000_5000_5000_10000_metadata.exists()
+            assert arborator_5000_5000_5000_10000_outliers.exists()
+            assert arborator_5000_5000_5000_10000_profile.exists()
+            assert arborator_5000_5000_5000_10000_tree.exists()
+
+            def cluster_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            def cluster_summary_xlsx = path("$launchDir/results/arborator/cluster_summary.xlsx")
+            def metadata_excluded = path("$launchDir/results/arborator/metadata.excluded.tsv")
+            def metadata_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            def metadata_linelist = path("$launchDir/results/arborator/metadata.linelist.xlsx")
+            def run_json = path("$launchDir/results/arborator/run.json")
+            def threshold_map = path("$launchDir/results/arborator/threshold_map.json")
+
+            assert cluster_summary.exists()
+            assert cluster_summary_xlsx.exists()
+            assert metadata_excluded.exists()
+            assert metadata_included.exists()
+            assert metadata_linelist.exists()
+            assert run_json.exists()
+            assert threshold_map.exists()
+
+            def arborview_1_1_1_1 = path("$launchDir/results/arborview/1.1.1.1_arborview.html")
+            def arborview_1_1_2_2 = path("$launchDir/results/arborview/1.1.2.2_arborview.html")
+            def arborview_1_3_3_3 = path("$launchDir/results/arborview/1.3.3.3_arborview.html")
+            def arborview_2_4_4_4 = path("$launchDir/results/arborview/2.4.4.4_arborview.html")
+            def arborview_5_5_5_21000 = path("$launchDir/results/arborview/5.5.5.21000_arborview.html")
+            def arborview_10_10_10_10 = path("$launchDir/results/arborview/10.10.10.10_arborview.html")
+            def arborview_70_70_90_110 = path("$launchDir/results/arborview/70.70.90.110_arborview.html")
+            def arborview_100_200_300_400 = path("$launchDir/results/arborview/100.200.300.400_arborview.html")
+            def arborview_999_1000_1000_5000 = path("$launchDir/results/arborview/999.1000.1000.5000_arborview.html")
+            def arborview_5000_5000_5000_10000 = path("$launchDir/results/arborview/5000.5000.5000.10000_arborview.html")
+
+            assert arborview_1_1_1_1.exists()
+            assert arborview_1_1_2_2.exists()
+            assert arborview_1_3_3_3.exists()
+            assert arborview_2_4_4_4.exists()
+            assert arborview_5_5_5_21000.exists()
+            assert arborview_10_10_10_10.exists()
+            assert arborview_70_70_90_110.exists()
+            assert arborview_100_200_300_400.exists()
+            assert arborview_999_1000_1000_5000.exists()
+            assert arborview_5000_5000_5000_10000.exists()
+
+            def iridanext_output = path("$launchDir/results/iridanext.output.json")
+
+            assert iridanext_output.exists()
         }
     }
 
