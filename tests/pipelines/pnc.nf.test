@@ -314,8 +314,10 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/10_tree.nwk" }.size() == 1
 
             assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.xlsx" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
         }
     }
 
@@ -631,8 +633,10 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_tree.nwk" }.size() == 1
 
             assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.xlsx" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
         }
     }
 
@@ -948,8 +952,10 @@ nextflow_pipeline {
             assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_tree.nwk" }.size() == 1
 
             assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.xlsx" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.linelist.xlsx" }.size() == 1
         }
     }
 }
