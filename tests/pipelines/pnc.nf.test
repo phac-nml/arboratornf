@@ -2,6 +2,28 @@ nextflow_pipeline {
     name "PNC Tests for Arborator Pipeline"
     script "main.nf"
 
+    test("Outbreak Confirmation"){
+        tag "pipeline_small"
+        config "$baseDir/tests/data/pnc/outbreak-confirmation/nextflow.config"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/pnc/outbreak-confirmation/samplesheet.csv"
+                outdir = "results"
+
+                ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak-confirmation/arborator.config.json"
+                ar_thresholds = "30,25,20,15,10,5"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+        }
+    }
+
     test("Outbreak Detection"){
         tag "pipeline_small"
         config "$baseDir/tests/data/pnc/outbreak-detection/nextflow.config"
@@ -12,6 +34,28 @@ nextflow_pipeline {
                 outdir = "results"
 
                 ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak-detection/arborator.config.json"
+                ar_thresholds = "30,25,20,15,10,5"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+        }
+    }
+
+    test("Outbreak Reporting"){
+        tag "pipeline_small"
+        config "$baseDir/tests/data/pnc/outbreak-reporting/nextflow.config"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/pnc/outbreak-reporting/samplesheet.csv"
+                outdir = "results"
+
+                ar_config = "https://raw.githubusercontent.com/phac-nml/arboratornf/refs/heads/test_pnc/tests/data/pnc/outbreak-reporting/arborator.config.json"
                 ar_thresholds = "30,25,20,15,10,5"
 
                 tree_distances = "cophenetic"
