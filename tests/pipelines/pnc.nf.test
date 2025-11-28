@@ -226,6 +226,96 @@ nextflow_pipeline {
             def iridanext_output = path("$launchDir/results/iridanext.output.json")
 
             assert iridanext_output.exists()
+
+            // Irida Next Output:
+            def iridanext_json = iridanext_output.json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/3_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/3_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/4_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/4_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/5_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/6_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/6_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/7_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/7_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/8_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/8_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/9_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/9_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/10_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
         }
     }
 
@@ -453,6 +543,96 @@ nextflow_pipeline {
             def iridanext_output = path("$launchDir/results/iridanext.output.json")
 
             assert iridanext_output.exists()
+
+            // Irida Next Output:
+            def iridanext_json = iridanext_output.json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.1.1_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.1.2.2_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/1.3.3.3_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2.4.4.4_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5.5.5.21000_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/10.10.10.10_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/70.70.90.110_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/100.200.300.400_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/999.1000.1000.5000_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/5000.5000.5000.10000_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
         }
     }
 
@@ -680,6 +860,96 @@ nextflow_pipeline {
             def iridanext_output = path("$launchDir/results/iridanext.output.json")
 
             assert iridanext_output.exists()
+
+            // Irida Next Output:
+            def iridanext_json = iridanext_output.json
+            def iridanext_global = iridanext_json.files.global
+            def iridanext_samples = iridanext_json.files.samples
+            def iridanext_metadata = iridanext_json.metadata.samples
+
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2501STWGS-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2502SEWGS-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2503SHWGS-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2504SAL-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2505SAL-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2506SAL-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2507monoSTWGS-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2509SAL-02_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_clusters.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_loci.summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_matrix.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_metadata.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_outliers.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_profile.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/2511InfantisWGS-01_tree.nwk" }.size() == 1
+
+            assert iridanext_global.findAll { it.path == "arborator/cluster_summary.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.excluded.tsv" }.size() == 1
+            assert iridanext_global.findAll { it.path == "arborator/metadata.included.tsv" }.size() == 1
         }
     }
 }
