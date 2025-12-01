@@ -103,7 +103,7 @@
             "description": "The column header names of the metadata columns.",
             "default": "",
             "properties": {
-                "metadata_partition_name": {
+                "metadata_partition_header": {
                     "type": "string",
                     "default": "outbreak",
                     "description": "The column used to partition clusters. All samples with the same value in this column will be partitioned into the same group.",
