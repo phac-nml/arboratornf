@@ -1,7 +1,6 @@
 {
     "outlier_thresh": "30",
     "method": "average",
-    "thresholds": "30,25,20,15,10,5",
     "min_members": "2",
     "partition_col": "provisional_outbreak_code",
     "id_col": "sample_name",
