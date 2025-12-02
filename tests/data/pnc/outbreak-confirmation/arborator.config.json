@@ -75,6 +75,6 @@
         "fastmatch_result": { "data_type": "None","label":"fastmatch_result","display":"True", "default": ""},
         "cnphi_post_date": { "data_type": "min_max","label":"cnphi_post_date","display":"True", "default": ""},
         "genomic_address_name": { "data_type": "Categorical","label":"genomic_address_name","display":"True", "default": ""},
-        "sample_puid": { "data_type": "Categorical","label":"sample_puid","display":"True", "default": ""}
+        "sample": { "data_type": "Categorical","label":"sample_puid","display":"True", "default": ""}
     }
 }

@@ -92,6 +92,6 @@
         "fastmatch_result": { "data_type": "None","label":"fastmatch_result","display":"True", "default": ""},
         "genomic_address_name": { "data_type": "Categorical","label":"genomic_address_name","display":"True", "default":""},
         "gas_denovo_cluster_address": { "data_type": "Categorical","label":"gas_denovo_cluster_address","display":"True", "default": ""},
-        "sample_puid": { "data_type": "Categorical","label":"sample_puid","display":"True", "default": ""}
+        "sample": { "data_type": "Categorical","label":"sample_puid","display":"True", "default": ""}
     }
 }
