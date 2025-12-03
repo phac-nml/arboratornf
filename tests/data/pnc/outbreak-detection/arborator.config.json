@@ -55,7 +55,7 @@
         "provisional_outbreak_code": { "data_type": "None","label":"provisional_outbreak_code","display":"True", "default": ""},
         "national_outbreak_code": { "data_type": "None","label":"national_outbreak_code","display":"True", "default": ""},
         "national_outbreak_status": { "data_type": "None","label":"national_outbreak_status","display":"True", "default": ""},
-        "national_outbreak_date_assigned": { "data_type": "min_max","label":"national_outbreak_code_date_assigned","display":"True", "default": ""},
+        "national_outbreak_date_assigned": { "data_type": "min_max","label":"national_outbreak_date_assigned","display":"True", "default": ""},
         "alternative_isolate_id": { "data_type": "Categorical","label":"alternative_isolate_id","display":"True", "default": ""},
         "geo_loc_name_state_province_territory": { "data_type": "Categorical","label":"geo_loc_name_state_province_territory","display":"True", "default": ""},
         "predicted_identification_name": { "data_type": "Categorical","label":"predicted_identification_name","display":"True", "default": ""},
