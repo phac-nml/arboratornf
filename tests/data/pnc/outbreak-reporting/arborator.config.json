@@ -23,7 +23,7 @@
         "calc_earliest": { "data_type": "min_max","label":"calc_earliest_date_min_values","display":"False"},
         "calc_earliest_date_min_value": { "data_type": "None","label":"calc_earliest_date_min_value","display":"True"},
         "calc_earliest_date_max_value": { "data_type": "None","label":"calc_earliest_date_max_value","display":"True"},
-        "count_calc_source_type": { "data_type": "Categorical","label":"count_calc_source_type_values","display":"True"},
+        "calc_source_type": { "data_type": "Categorical","label":"calc_source_type_values","display":"True"},
         "count_calc_source_type_Animal": { "data_type": "None","label":"count_calc_source_type_Animal","display":"True"},
         "count_calc_source_type_Environmental": { "data_type": "None","label":"count_calc_source_type_Environmental","display":"True"},
         "count_calc_source_type_Food": { "data_type": "None","label":"count_calc_source_type_Food","display":"True"},
