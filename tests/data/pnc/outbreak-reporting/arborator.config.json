@@ -9,7 +9,6 @@
     "grouped_metadata_columns": {
         "national_outbreak_code": { "data_type": "None","label":"national_outbreak_code","display":"True"},
         "national_outbreak_status": { "data_type": "None","label":"national_outbreak_status_values","display":"True"},
-        "oicc": { "data_type": "Categorical","label":"oicc_values","display":"True"},
         "cnphi_post_date": { "data_type": "min_max","label":"cnphi_post_date_min_values","display":"False"},
         "cnphi_post_date_min_value": { "data_type": "None","label":"cnphi_post_date_min_value","display":"True"},
         "cnphi_post_date_max_value": { "data_type": "None","label":"cnphi_post_date_max_value","display":"True"},
