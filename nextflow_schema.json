@@ -76,7 +76,8 @@
                 },
                 "output_prefix": {
                     "type": "string",
-                    "description": "Adds a prefix to output files: {output_prefix}_"
+                    "description": "Adds a prefix to output files: {output_prefix}_",
+                    "pattern": "^[a-zA-Z0-9_.-]+$"
                 },
                 "prefix_include_date": {
                     "type": "boolean",

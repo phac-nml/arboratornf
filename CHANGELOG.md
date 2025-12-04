@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2025-12-04
+
+### Changed
+
+- Changed restrictions on input metadata so only `\n`, `\t`, `"`, and `\` are disallowed and added test cases for special characters. [PR 65](https://github.com/phac-nml/arboratornf/pull/65)
+
+### Added
+
+- Numerous PNC-specific configured tests. [PR 67](https://github.com/phac-nml/arboratornf/pull/67) [PR 69](https://github.com/phac-nml/arboratornf/pull/69)
+
 ## [0.8.0] - 2025-11-25
 
 ### Changed
@@ -188,3 +198,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.6.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.6.0
 [0.7.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.7.0
 [0.8.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.0
+[0.8.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.1
