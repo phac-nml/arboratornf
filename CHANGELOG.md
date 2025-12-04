@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Numerous PNC-specific configured tests. [PR 67](https://github.com/phac-nml/arboratornf/pull/67)
+- Numerous PNC-specific configured tests. [PR 67](https://github.com/phac-nml/arboratornf/pull/67) [PR 69](https://github.com/phac-nml/arboratornf/pull/69)
 
 ## [0.8.0] - 2025-11-25
 
