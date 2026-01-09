@@ -390,11 +390,11 @@ nextflow_pipeline {
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1_arborview.html")
             assert actual_arborview1.exists()
-            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tgas_denovo_cluster_address\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\t1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\t1|1.1.1.1.1.1.1.1.2.2\\n")
+            assert actual_arborview1.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS1\\tS1\\t1\\tEscherichia coli\\tEHEC/STEC\\t\\t\\t\\t\\t\\t\\t1|1.1.1.1.1.1.1.1.1.1\\nS2\\tS2\\t1\\tEscherichia coli\\tEHEC/STEC\\t\\t\\t\\t\\t\\t\\t1|1.1.1.1.1.1.1.1.2.2\\n")
 
             def actual_arborview2 = path("$launchDir/results/arborview/2_arborview.html")
             assert actual_arborview2.exists()
-            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tgas_denovo_cluster_address\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\t2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\t2|1.1.1.1.1.1.1.1.1.2\\n")
+            assert actual_arborview2.text.contains("sample_name\\tsample\\toutbreak\\torganism\\tsubtype\\tcountry\\tserovar\\tage\\tdate\\tsource\\tspecial\\tgas_denovo_cluster_address\\nS3\\tS3\\t2\\tEscherichia coli\\tEPEC\\t\\t\\t\\t\\t\\t\\t2|1.1.1.1.1.1.1.1.1.1\\nS4\\tS4\\t2\\tEscherichia coli\\tEPEC\\t\\t\\t\\t\\t\\t\\t2|1.1.1.1.1.1.1.1.1.2\\n")
 
             // compare IRIDA Next JSON output
             def iridanext_json = path("$launchDir/results/iridanext.output.json").json
@@ -640,7 +640,7 @@ nextflow_pipeline {
             assert workflow.stdout.join("\n").contains("ERROR ~ Missing double-quote termination in CSV value -- offending line: \"Escherichia")
         }
     }
-    
+
     test("bad metadata_1 escape (\\)"){
         tag "bad_metadata_1_escape"
         when {
@@ -2291,7 +2291,7 @@ nextflow_pipeline {
             def iridanext_global = iridanext_json.files.global
             def iridanext_samples = iridanext_json.files.samples
             def iridanext_metadata = iridanext_json.metadata.samples
- 
+
             assert iridanext_global.findAll { it.path == "arborator/1_clusters.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_loci.summary.tsv" }.size() == 1
             assert iridanext_global.findAll { it.path == "arborator/1_matrix.tsv" }.size() == 1

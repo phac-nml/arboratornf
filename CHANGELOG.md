@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Modified `MAP_TO_TSV` to keep columns when custom metadata headers are provided. [PR 71](https://github.com/phac-nml/arboratornf/pull/71)
+
 ## [0.8.1] - 2025-12-04
 
 ### Changed
