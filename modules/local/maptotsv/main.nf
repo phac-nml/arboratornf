@@ -36,19 +36,19 @@ process MAP_TO_TSV {
     metadata = metadata.transpose()
 
     for (int i in (metadata.size()-1)..0) {
-    // Working in reverse order, remove all columns that contain no entries,
-    // excluding the header itself.
-    if (metadata[i][1..-1].every {it == "" || it == null}) {
-        // Remove if the header matches the default metadata column pattern:
-        if ((metadata[i][0] ==~ /metadata_([1-9]|[1-4][0-9]|50)/) || metadata[i][0] == '' || metadata[i][0] == null) {
-            metadata.removeAt(i)
+        // Working in reverse order, remove all columns that contain no entries,
+        // excluding the header itself.
+        if (metadata[i][1..-1].every {it == "" || it == null}) {
+            // Remove if the header matches the default metadata column pattern:
+            if ((metadata[i][0] ==~ /metadata_([1-9]|[1-4][0-9]|50)/) || metadata[i][0] == '' || metadata[i][0] == null) {
+                metadata.removeAt(i)
+            }
         }
-    }
-    // If the column is not removed, replace any null headers to prevent issues:
-    // https://github.com/askimed/nf-test/issues/226
-    else if(metadata[i][0] == null) {
-        metadata[i][0] = ""
-    }
+        // If the column is not removed, replace any null headers to prevent issues:
+        // https://github.com/askimed/nf-test/issues/226
+        else if(metadata[i][0] == null) {
+            metadata[i][0] = ""
+        }
     }
 
     metadata = metadata.transpose()
