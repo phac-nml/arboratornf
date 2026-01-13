@@ -197,7 +197,7 @@ workflow CLUSTER_SPLITTER {
     nonempty_column_headers = merged_metadata_output.nonempty_column_headers
 
     // Build an Arborator config file is none was provided:
-    arborator_config = params.ar_config ? params.ar_config : BUILD_CONFIG(nonempty_column_headers).config
+    arborator_config = params.ar_config ? file(params.ar_config) : BUILD_CONFIG(nonempty_column_headers).config
 
     // Arborator:
     arborator_output = ARBORATOR(
@@ -207,7 +207,8 @@ workflow CLUSTER_SPLITTER {
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
         thresholds=params.ar_thresholds,
-        tree_distances=params.tree_distances)
+        tree_distances=params.tree_distances,
+        sort_matrix=params.sort_matrix)
 
     ch_versions = ch_versions.mix(arborator_output.versions)
 
