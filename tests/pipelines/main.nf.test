@@ -2390,4 +2390,47 @@ nextflow_pipeline {
             assert metadata_included_text.contains("A\tunassociated\tEscherichia coli\tEAEC\tCanada\tO111:H21\t43\t2011/12/25\tfruit\tfalse\t")
         }
     }
+
+    test("Outliers - all"){
+        tag "outlier"
+        tag "outlier_all"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+                ar_config = "$baseDir/tests/data/configs/low_outlier_threshold.json"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Arborator outputs:
+            def cluster_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
+            assert cluster_summary_text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tage_max_value\tage_mean_value\tage_median_value\tage_min_value\tcount_country_Canada\tcount_country_France\tcount_country_The United States\tcount_members\tcount_outliers\tcount_sample_S1\tcount_sample_S2\tcount_sample_S3\tcount_sample_S4\tcount_sample_S5\tcount_sample_S6\tcount_serovar_O111:H21\tcount_serovar_O125\tcount_serovar_O126:H27\tcount_serovar_O157:H7\tcount_source_beef\tcount_source_cheese\tcount_source_fruit\tcount_source_milk\tcount_special_false\tcount_special_true\tdate_max_value\tdate_min_value\tmax_dist\tmean_dist\tmedian_dist\tmin_dist\toutlier_ids\tsample")
+            assert cluster_summary_text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true\t55.0\t38.0\t38.0\t21.0\t1\t0\t1\t2\t2\t1\t1\t0\t0\t0\t0\t0\t0\t0\t2\t1\t0\t0\t1\t1\t1\t55.0\t21.0\t3.0\t3.0\t3.0\t3.0\tS1,S2\tS1,S2")
+            assert cluster_summary_text.contains("2\tEscherichia coli\tEPEC\tFrance\tO125\t14,35\t2024/04/22,2024/04/30\tcheese\ttrue\t35.0\t24.5\t24.5\t14.0\t0\t2\t0\t2\t2\t0\t0\t1\t1\t0\t0\t0\t2\t0\t0\t0\t2\t0\t0\t0\t2\t35.0\t14.0\t2.0\t2.0\t2.0\t2.0\tS3,S4\tS3,S4")
+            assert cluster_summary_text.contains("3\tEscherichia coli\tEAEC\tCanada\tO126:H27\t61\t2012/09/01\tmilk\tfalse\t61.0\t61.0\t61.0\t61.0\t1\t0\t0\t1\t0\t0\t0\t0\t0\t1\t0\t0\t0\t1\t0\t0\t0\t0\t1\t1\t0\t61.0\t61.0\t0\t0\t0\t0\t\tS5")
+            assert cluster_summary_text.contains("unassociated\tEscherichia coli\tEAEC\tCanada\tO111:H21\t43\t2011/12/25\tfruit\tfalse\t43.0\t43.0\t43.0\t43.0\t1\t0\t0\t1\t0\t0\t0\t0\t0\t0\t1\t1\t0\t0\t0\t0\t0\t1\t0\t1\t0\t43.0\t43.0\t0\t0\t0\t0\t\tS6")
+
+            def outliers_1_text = path("$launchDir/results/arborator/1_outliers.tsv").text
+            assert outliers_1_text.contains("S1\tS2\t3.0")
+
+            def outliers_2_text = path("$launchDir/results/arborator/2_outliers.tsv").text
+            assert outliers_2_text.contains("S3\tS4\t2.0")
+        }
+    }
 }
