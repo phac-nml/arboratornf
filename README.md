@@ -119,7 +119,7 @@ Note: If zip is run, then only `arboratornf.zip` is included.
 
 Within the `files` section of this JSON-formatted file, all of the output paths are relative to the `outdir`. Therefore, `"path": "arborator/cluster_summary.tsv"` refers to a file located within `outdir/arborator/cluster_summary.tsv`.
 
-The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file. However, if a column is empty for all samples, the column will still be retained in the output. The excel version of `arborator/metadata.included.xlsx` is named `arborator/metadata.linelist.xlsx`.
+The `arborator/metadata.included.tsv` and `arborator/metadata.excluded.tsv` output files summarize which samples were analyzed and which were not. Samples that contain missing data for the `metadata_partition` column will not be included in analysis and will be reported in the `arborator/metadata.excluded.tsv` output file. If a default column (ex: `metadata_1`) hasn't been renamed and is empty for all samples, then the column will be removed from the output. However, if the column has been renamed, then it will be retained in the output even if it is empty for all samples. The excel version of `arborator/metadata.included.xlsx` is named `arborator/metadata.linelist.xlsx`.
 
 Additional details on output files are found in [docs/output.md](docs/output.md).
 
