@@ -61,7 +61,7 @@ The optional parameters are as follows:
 
 ### LOCIDEX
 
-- `--batch_size n`: Modifies the size of LOCIDEX_MERGE batch sizes (default: 100).
+- `--batch_size`: Modifies the size of LOCIDEX_MERGE batch sizes (default: 100).
 
 ### Zip
 

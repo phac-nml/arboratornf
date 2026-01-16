@@ -135,7 +135,7 @@ The optional parameters are as follows:
 
 #### Locidex
 
-- `--batch_size n`: Modifies the size of LOCIDEX_MERGE batch sizes. When large samplesheets are provided to Locidex, they are split-up, into batches (default batch size: 100), to allow for `LOCIDEX_MERGE` to be run in parallel (default: 100).
+- `--batch_size`: Modifies the size of LOCIDEX_MERGE batch sizes. When large samplesheets are provided to Locidex, they are split-up, into batches (default batch size: 100), to allow for `LOCIDEX_MERGE` to be run in parallel (default: 100).
 
 #### Zip
 
