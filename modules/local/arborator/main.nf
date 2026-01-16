@@ -19,7 +19,6 @@ process ARBORATOR {
     val partition_column // Column to split samples on
     val thresholds // String of thresholds e.g. 10,9,8,7,6,5,4,3,2,1
     val tree_distances // "patristic" or "cophenetic"
-    val sort_matrix // Whether or not to sort the GAS distance matrix (true or false)
 
     output:
     path("${prefix}/*/tree.nwk"), emit: trees, optional: true
@@ -40,7 +39,7 @@ process ARBORATOR {
 
     script:
     prefix = "output_folder"
-    sort_matrix_argument = sort_matrix ? "--sort_matrix" : ""
+    def args = task.ext.args ?: ''
 
     """
     arborator \\
@@ -48,7 +47,7 @@ process ARBORATOR {
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
     --thresholds $thresholds --tree_distances $tree_distances \\
-    $sort_matrix_argument
+    ${args}
 
     mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 
