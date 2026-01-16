@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `--sort_matrix`: An option to sort input samples alphabetically before processing them. The order of samples has an effect on the assigned cluster labels and rarely the clustering itself. Sorting samples ensures that the same inputs always generate the same outputs, even when they're re-arranged. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
+- `--sort_matrix`: An option to sort input samples alphabetically before processing them. The order of samples has an effect on the assigned cluster labels and rarely the clustering itself. In particular, the arbitrary label assigned to each cluster is determined by the order of the samples. However, tie-breaking in the hierarchical clustering procedure is resolved by sample order, and this can create differences in the actual cluster and not just the labels assigned to those clusters. Sorting samples ensures that the same inputs always generate the same outputs, even when they're re-arranged. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
 
 ### Changed
 
