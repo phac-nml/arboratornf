@@ -2481,15 +2481,6 @@ nextflow_pipeline {
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
-
                 tree_distances = "cophenetic"
             }
         }
@@ -2527,6 +2518,15 @@ nextflow_pipeline {
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
                 tree_distances = "cophenetic"
             }
         }
@@ -2534,6 +2534,61 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            // Arborator outputs:
+            // TODO: Add cluster_summary tests after fixing "nan" issue.
+            // def actual_arborator_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
+            // assert actual_arborator_summary_text.contains("")
+
+            def metadata_included_text = path("$launchDir/results/arborator/metadata.included.tsv").text
+            assert metadata_included_text.contains("Sample\tOutbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tgas_denovo_cluster_address")
+            assert metadata_included_text.contains("S1\t1\t\t\t\t\t\t\t\t\t1|1.1.1.1.1.1.1.1.1.1")
+            assert metadata_included_text.contains("S2\t1\t\t\t\t\t\t\t\t\t1|1.1.1.1.1.1.1.1.2.2")
+            assert metadata_included_text.contains("S3\t2\t\t\t\t\t\t\t\t\t2|1.1.1.1.1.1.1.1.1.1")
+            assert metadata_included_text.contains("S4\t2\t\t\t\t\t\t\t\t\t2|1.1.1.1.1.1.1.1.1.2")
+            assert metadata_included_text.contains("S5\t3\t\t\t\t\t\t\t\t\t")
+            assert metadata_included_text.contains("S6\tunassociated\t\t\t\t\t\t\t\t\t")
+        }
+    }
+
+    test("Columns - mixed"){
+        tag "columns"
+        tag "columns_mixed"
+
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-mix.csv"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Arborator outputs:
+            // TODO: Add cluster_summary tests after fixing "nan" issue.
+            // def actual_arborator_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
+            // assert actual_arborator_summary_text.contains("")
+
+            def metadata_included_text = path("$launchDir/results/arborator/metadata.included.tsv").text
+            assert metadata_included_text.contains("Sample\tOutbreak Code\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tgas_denovo_cluster_address")
+            assert metadata_included_text.contains("S1\t1\tEHEC/STEC\t\tO157:H7\t21\t2024/05/30\tbeef\t1|1.1.1.1.1.1.1.1")
+            assert metadata_included_text.contains("S2\t1\tEHEC/STEC\t\tO157:H7\t55\t2024/05/21\tmilk\t1|1.1.1.1.1.1.1.1.2.2")
+            assert metadata_included_text.contains("S3\t2\tEPEC\t\tO125\t14\t2024/04/30\tcheese\t2|1.1.1.1.1.1.1.1.1.1")
+            assert metadata_included_text.contains("S4\t2\tEPEC\t\tO125\t35\t2024/04/22\tcheese\t2|1.1.1.1.1.1.1.1.1.2")
+            assert metadata_included_text.contains("S5\t3\tEAEC\t\tO126:H27\t61\t2012/09/01\tmilk\t")
+            assert metadata_included_text.contains("S6\tunassociated\tEAEC\t\tO111:H21\t43\t2011/12/25\tfruit\t")
         }
     }
 }
