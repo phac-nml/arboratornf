@@ -5,7 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- An option to sort input samples alphabetically before processing them. The order of samples has an effect on the assigned cluster labels and rarely the clustering itself. Sorting samples ensures that the same inputs always generate the same outputs, even when they're re-arranged. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
+
+### Changed
+
 - Modified `MAP_TO_TSV` to keep columns when custom metadata headers are provided. [PR 71](https://github.com/phac-nml/arboratornf/pull/71)
+
+### Fixed
+
+- A bug where the first sample in the sample sheet would never be considered as an outlier, even if it had a distance to all samples in the cluster that was beyond the threshold. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
 
 ## [0.8.1] - 2025-12-04
 
