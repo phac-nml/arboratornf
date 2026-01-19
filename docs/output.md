@@ -36,6 +36,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 `--prefix_include_date`: Renaming files with a prefix date `"{YYYY-MM-DD}_"`.
 
+- `--ar_config`: The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output.
+
 ### Locidex Merge Concat
 
 <details markdown="1">

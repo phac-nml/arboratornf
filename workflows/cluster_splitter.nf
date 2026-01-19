@@ -196,8 +196,8 @@ workflow CLUSTER_SPLITTER {
     merged_metadata_path = merged_metadata_output.tsv_path
     nonempty_column_headers = merged_metadata_output.nonempty_column_headers
 
-    // Build an Arborator config file is none was provided:
-    arborator_config = params.ar_config ? params.ar_config : BUILD_CONFIG(nonempty_column_headers).config
+    // Build an Arborator config file if none was provided:
+    arborator_config = params.ar_config ? file(params.ar_config) : BUILD_CONFIG(nonempty_column_headers).config
 
     // Arborator:
     arborator_output = ARBORATOR(
