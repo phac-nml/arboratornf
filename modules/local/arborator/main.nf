@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.0--pyhdfd78af_1' :
-    'biocontainers/arborator:1.2.0--pyhdfd78af_1' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.1--pyhdfd78af_0' :
+    'biocontainers/arborator:1.2.1--pyhdfd78af_0' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -39,12 +39,15 @@ process ARBORATOR {
 
     script:
     prefix = "output_folder"
+    def args = task.ext.args ?: ''
+
     """
     arborator \\
     --profile $merged_profiles --metadata $metadata \\
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
-    --thresholds $thresholds --tree_distances $tree_distances
+    --thresholds $thresholds --tree_distances $tree_distances \\
+    ${args}
 
     mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 

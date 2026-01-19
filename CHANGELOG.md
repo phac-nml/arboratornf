@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-01-19
+
+### Added
+
+- `--sort_matrix`: An option to sort input samples alphabetically before processing them. The order of samples has an effect on the assigned cluster labels and rarely the clustering itself. In particular, the arbitrary label assigned to each cluster is determined by the order of the samples. However, tie-breaking in the hierarchical clustering procedure is resolved by sample order, and this can create differences in the actual cluster and not just the labels assigned to those clusters. Sorting samples ensures that the same inputs always generate the same outputs, even when they're re-arranged. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
+
+### Changed
+
+- Modified `MAP_TO_TSV` to keep columns when custom metadata headers are provided. [PR 71](https://github.com/phac-nml/arboratornf/pull/71)
+
+### Fixed
+
+- A bug where the first sample in the sample sheet would never be considered as an outlier, even if it had a distance to all samples in the cluster that was beyond the threshold. [PR 72](https://github.com/phac-nml/arboratornf/pull/72)
+
 ## [0.8.1] - 2025-12-04
 
 ### Changed

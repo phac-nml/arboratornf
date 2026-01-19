@@ -1,5 +1,5 @@
 {
-    "outlier_thresh": "25",
+    "outlier_thresh": "1",
     "min_cluster_members": 2,
     "partition_column_name": "outbreak",
     "id_column_name": "sample_name",
