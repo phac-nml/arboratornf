@@ -213,3 +213,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.7.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.7.0
 [0.8.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.0
 [0.8.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.1
+[0.9.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.0
