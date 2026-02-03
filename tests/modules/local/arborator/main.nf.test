@@ -1,0 +1,107 @@
+nextflow_process {
+
+    name "Test Process ARBORATOR"
+    script "modules/local/arborator/main.nf"
+    process "ARBORATOR"
+
+    tag "arborator"
+
+    test("Should use task.cpus when ar_max_cpus exceeds max_cpus") {
+        tag "task_cpus_arborator"
+        when {
+            params {
+                outdir = "tests/results"
+                max_cpus = 2
+            }
+            process {
+                """
+                input[0] = file("$baseDir/tests/data/profiles/merged_profiles.tsv")
+                input[1] = file("$baseDir/tests/data/metadata/expected_merged_data.tsv")
+                input[2] = file("$baseDir/tests/data/configs/arborator-module-config.json")
+                input[3] = 'sample_name'
+                input[4] = 'outbreak'
+                input[5] = '100,50,25,20,15,10,5,0'
+                input[6] = 'cophenetic'
+                input[7] = 6  // max_cpus exceeds
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            // Check run.json contains correct n_threads
+            def run_json_file = process.out.run_json.get(0)
+            def json_content = path(run_json_file).text
+            def json = new groovy.json.JsonSlurper().parseText(json_content)
+
+            assert json.parameters.n_threads == 2
+
+        }
+    }
+
+    test("Should use ar_max_cpus when ar_max_cpus is less than or equal to max_cpus") {
+        tag "ar_max_cpus_arborator"
+        when {
+            params {
+                outdir = "tests/results"
+                max_cpus = 2
+            }
+            process {
+                """
+                input[0] = file("$baseDir/tests/data/profiles/merged_profiles.tsv")
+                input[1] = file("$baseDir/tests/data/metadata/expected_merged_data.tsv")
+                input[2] = file("$baseDir/tests/data/configs/arborator-module-config.json")
+                input[3] = 'sample_name'
+                input[4] = 'outbreak'
+                input[5] = '100,50,25,20,15,10,5,0'
+                input[6] = 'cophenetic'
+                input[7] = 1 // max_cpus exceeds
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            // Check run.json contains correct n_threads
+            def run_json_file = process.out.run_json.get(0)
+            def json_content = path(run_json_file).text
+            def json = new groovy.json.JsonSlurper().parseText(json_content)
+
+            assert json.parameters.n_threads == 1
+
+        }
+    }
+
+    test("0 passed to ar_max_cpus use task.cpus") {
+        tag "ar_max_cpus_0"
+        when {
+            params {
+                outdir = "tests/results"
+                max_cpus = 2
+            }
+            process {
+                """
+                input[0] = file("$baseDir/tests/data/profiles/merged_profiles.tsv")
+                input[1] = file("$baseDir/tests/data/metadata/expected_merged_data.tsv")
+                input[2] = file("$baseDir/tests/data/configs/arborator-module-config.json")
+                input[3] = 'sample_name'
+                input[4] = 'outbreak'
+                input[5] = '100,50,25,20,15,10,5,0'
+                input[6] = 'cophenetic'
+                input[7] = 0 // max_cpus exceeds
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            // Check run.json contains correct n_threads
+            def run_json_file = process.out.run_json.get(0)
+            def json_content = path(run_json_file).text
+            def json = new groovy.json.JsonSlurper().parseText(json_content)
+
+            assert json.parameters.n_threads == 2
+
+        }
+    }
+}
