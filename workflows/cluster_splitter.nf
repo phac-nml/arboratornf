@@ -207,7 +207,8 @@ workflow CLUSTER_SPLITTER {
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
         thresholds=params.ar_thresholds,
-        tree_distances=params.tree_distances)
+        tree_distances=params.tree_distances,
+        max_cpus=params.ar_max_cpus)
 
     ch_versions = ch_versions.mix(arborator_output.versions)
 
