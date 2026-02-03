@@ -69,7 +69,8 @@
                 },
                 "ar_max_cpus": {
                     "type": "integer",
-                    "default": 2,
+                    "default": 4,
+                    "minimum": 1,
                     "hidden": true,
                     "description": "Modifys the arborator parameter,--n_threads, which indicates numbers of threads to use with multithreading",
                     "pattern": "^\\d+?$"
