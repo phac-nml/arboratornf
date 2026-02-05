@@ -104,4 +104,36 @@ nextflow_process {
 
         }
     }
+
+    test("Run with no metadata") {
+        tag "nometadata_arborator"
+        when {
+            params {
+                outdir = "tests/results"
+                max_cpus = 2
+            }
+            process {
+                """
+                input[0] = file("$baseDir/tests/data/profiles/profile_no_metadata.tsv")
+                input[1] = file("$baseDir/tests/data/metadata/metadata_no_metadata.tsv")
+                input[2] = file("$baseDir/tests/data/configs/config_no_metadata.json")
+                input[3] = 'sample_name'
+                input[4] = 'outbreak'
+                input[5] = '100,50,25,20,15,10,5,0'
+                input[6] = 'cophenetic'
+                input[7] = 2
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            def cluster_summary = path("$launchDir/tests/results/arborator/cluster_summary.tsv")
+            assert cluster_summary.text.contains("1\t\t\t\t\t\t\t\t\tnan\tnan\tnan\tnan\t2\t0\t1\t1\t0\t0\t0\t0\tnan\tnan\t3.0\t3.0\t3.0\t3.0\t\tS1,S2")
+            assert cluster_summary.text.contains("2\t\t\t\t\t\t\t\t\tnan\tnan\tnan\tnan\t2\t0\t0\t0\t1\t1\t0\t0\tnan\tnan\t2.0\t2.0\t2.0\t2.0\t\tS3,S4")
+            assert cluster_summary.text.contains("3\t\t\t\t\t\t\t\t\tnan\tnan\tnan\tnan\t1\t0\t0\t0\t0\t0\t1\t0\tnan\tnan\t0\t0\t0\t0\t\tS5")
+            assert cluster_summary.text.contains("unassociated\t\t\t\t\t\t\t\t\tnan\tnan\tnan\tnan\t1\t0\t0\t0\t0\t0\t0\t1\tnan\tnan\t0\t0\t0\t0\t\tS6")
+
+        }
+    }
 }
