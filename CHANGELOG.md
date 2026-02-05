@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added the parameter `--ar_max_cpus` which passes an integer to the option `--n_threads` in `arborator` of the `ARBORATOR` process. The default is set to 4-cpus, and if `task.cpus` is less than `--ar_max_cpus` that value is passed to `arborator` instead.[PR 77](https://github.com/phac-nml/arboratornf/pull/77)
+- Added the parameter `--ignore_empty_metadata_partition`to exclude samples with no `metadata_partition` in the samplesheet. [PR 79](https://github.com/phac-nml/arboratornf/pull/79)
 
 ## [0.9.0] - 2026-01-19
 
