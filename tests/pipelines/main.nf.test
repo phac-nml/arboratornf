@@ -1,6 +1,7 @@
 nextflow_pipeline {
     name "Integration Tests for Arborator pipeline"
     script "main.nf"
+    tag "pipeline"
 
     test("Small-scale test of full pipeline"){
         tag "pipeline_small"
@@ -984,6 +985,7 @@ nextflow_pipeline {
 
         }
     }
+
     test("Testing for when there are repeat MLST allele files in multiple batches"){
         // Previous versions of the pipeline would fail if there were repeat MLST allele files in the samplesheet.
         tag "repeat-mlst"
@@ -2589,6 +2591,189 @@ nextflow_pipeline {
             assert metadata_included_text.contains("S4\t2\tEPEC\t\tO125\t35\t2024/04/22\tcheese\t2|1.1.1.1.1.1.1.1.1.2")
             assert metadata_included_text.contains("S5\t3\tEAEC\t\tO126:H27\t61\t2012/09/01\tmilk\t")
             assert metadata_included_text.contains("S6\tunassociated\tEAEC\t\tO111:H21\t43\t2011/12/25\tfruit\t")
+        }
+    }
+
+    test("Drop empty metadata partition"){
+        tag "ignore_empty_metadata_partition"
+        tag "drop_ignore_empty_metadata_partition"
+        // Similar to full-pipline test cluster 2 samples: S3, and S4, have an empty metadata partition
+        // Samples with empty metadata partition are dropped due to ignore_empty_metadata_partition = true (default)
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.csv"
+                ignore_empty_metadata_partition = true
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles only contain those with metadata partition
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
+            assert actual_profile_tsv.text.contains("S1")
+            assert actual_profile_tsv.text.contains("S2")
+            assert !actual_profile_tsv.text.contains("S3") // Dropped sample
+            assert !actual_profile_tsv.text.contains("S4") // Dropped sample
+            assert actual_profile_tsv.text.contains("S5")
+            assert actual_profile_tsv.text.contains("S6")
+
+
+            // Check aggregated metadata not included for samples without metadata partition
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            assert actual_metadata.text.contains("S1")
+            assert actual_metadata.text.contains("S2")
+            assert !actual_metadata.text.contains("S3") // Dropped sample
+            assert !actual_metadata.text.contains("S4") // Dropped sample
+            assert actual_metadata.text.contains("S5")
+            assert actual_metadata.text.contains("S6")
+
+            // Check auto-built config file should be unchanged by metadata partition
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_50-metadata.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+            assert !actual_arborator_summary.text.contains("2\tEscherichia coli\tEPEC\tFrance\tO125\t14,35") // Sample is dropped
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            assert actual_arborator_meta_included.text.contains("S1")
+            assert actual_arborator_meta_included.text.contains("S2")
+            assert !actual_arborator_meta_included.text.contains("S3") // Dropped sample
+            assert !actual_arborator_meta_included.text.contains("S4") // Dropped sample
+            assert actual_arborator_meta_included.text.contains("S5")
+            assert actual_arborator_meta_included.text.contains("S6")
+
+            // Cluster 1 should exist as is:
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+            // Cluster 2 should no longer exist:
+            assert !path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+        }
+    }
+
+    test("Keep empty metadata partition"){
+        tag "ignore_empty_metadata_partition"
+        tag "keep_ignore_empty_metadata_partition"
+        // Similar to full-pipline test cluster 2 samples: S3, and S4, have an empty metadata partition
+        // Samples with empty metadata partition are kept when ignore_empty_metadata_partition = false
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.csv"
+                ignore_empty_metadata_partition = false
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            // Check merged profiles only contain those with metadata partition
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
+            assert actual_profile_tsv.text.contains("S1")
+            assert actual_profile_tsv.text.contains("S2")
+            assert actual_profile_tsv.text.contains("S3") // Kept sample
+            assert actual_profile_tsv.text.contains("S4") // Kept sample
+            assert actual_profile_tsv.text.contains("S5")
+            assert actual_profile_tsv.text.contains("S6")
+
+
+            // Check aggregated metadata not included for samples without metadata partition
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            assert actual_metadata.text.contains("S1")
+            assert actual_metadata.text.contains("S2")
+            assert actual_metadata.text.contains("S3") // Kept sample
+            assert actual_metadata.text.contains("S4") // Kept sample
+            assert actual_metadata.text.contains("S5")
+            assert actual_metadata.text.contains("S6")
+
+            // Check auto-built config file should be unchanged by metadata partition
+            def actual_config = path("$launchDir/results/build/config.json")
+            def expected_config = path("$baseDir/tests/data/configs/autoconfig_50-metadata.json")
+            assert actual_config.text == expected_config.text
+
+            // Arborator outputs are different because the metadata partition is empty it is dropped here:
+            // NOTE: Arborator produces a (somewhat) non-deterministic cluster summary,
+            // so it's not possible to compare the entire output.
+            def actual_arborator_summary = path("$launchDir/results/arborator/cluster_summary.tsv")
+            assert actual_arborator_summary.text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial")
+            assert actual_arborator_summary.text.contains("1\tEscherichia coli\tEHEC/STEC\tCanada,The United States\tO157:H7\t21,55\t2024/05/21,2024/05/30\tbeef,milk\tfalse,true")
+            assert !actual_arborator_summary.text.contains("2\tEscherichia coli\tEPEC\tFrance\tO125\t14,35") // Sample is still dropped due to lack of metadata partition
+
+            def actual_arborator_meta_included = path("$launchDir/results/arborator/metadata.included.tsv")
+            assert actual_arborator_meta_included.text.contains("S1")
+            assert actual_arborator_meta_included.text.contains("S2")
+            assert !actual_arborator_meta_included.text.contains("S3") // Dropped sample, now in excluded metadata
+            assert !actual_arborator_meta_included.text.contains("S4") // Dropped sample, now in excluded metadata
+            assert actual_arborator_meta_included.text.contains("S5")
+            assert actual_arborator_meta_included.text.contains("S6")
+
+            // Instead S3 and S4 are found in metadata excluded:
+            def actual_arborator_meta_excluded = path("$launchDir/results/arborator/metadata.excluded.tsv")
+            assert actual_arborator_meta_excluded.text.contains("S3") // Dropped sample, now in excluded metadata
+            assert actual_arborator_meta_excluded.text.contains("S4") // Dropped sample, now in excluded metadata
+
+            // Cluster 1 should exist as is:
+            assert path("$launchDir/results/arborator/1_clusters.tsv").exists()
+            assert path("$launchDir/results/arborator/1_loci.summary.tsv").exists()
+            assert path("$launchDir/results/arborator/1_matrix.tsv").exists()
+            assert path("$launchDir/results/arborator/1_metadata.tsv").exists()
+            assert path("$launchDir/results/arborator/1_outliers.tsv").exists()
+            assert path("$launchDir/results/arborator/1_profile.tsv").exists()
+            assert path("$launchDir/results/arborator/1_tree.nwk").exists()
+            // Cluster 2 should STILL no longer exist, due to an empty metadata partition column, not because it is dropped:
+            assert !path("$launchDir/results/arborator/2_clusters.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_loci.summary.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_matrix.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_metadata.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_outliers.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_profile.tsv").exists()
+            assert !path("$launchDir/results/arborator/2_tree.nwk").exists()
+
         }
     }
 }
