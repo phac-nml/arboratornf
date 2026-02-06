@@ -38,7 +38,7 @@
                 },
                 "ignore_empty_metadata_partition": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Skip samples with empty metadata partition values."
                 }
             }

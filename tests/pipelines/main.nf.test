@@ -2598,7 +2598,7 @@ nextflow_pipeline {
         tag "ignore_empty_metadata_partition"
         tag "drop_ignore_empty_metadata_partition"
         // Similar to full-pipline test cluster 2 samples: S3, and S4, have an empty metadata partition
-        // Samples with empty metadata partition are dropped due to ignore_empty_metadata_partition = true (default)
+        // Samples with empty metadata partition are dropped due to ignore_empty_metadata_partition = true (default is false)
         when {
             params {
                 input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.csv"

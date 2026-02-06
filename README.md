@@ -52,7 +52,7 @@ More information about parameters can be found in the [docs/usage.md](docs/usage
 
 The optional parameters are as follows:
 
-- `--ignore_empty_metadata_partition`: If set to false, samples with empty `metadata_partition` in samplesheet will be included up to `arborator` step, then placed in the `metadata.excluded.tsv` file.
+- `--ignore_empty_metadata_partition`: If set to `true`, samples with an empty `metadata_partition` value in the samplesheet will be excluded from pipeline run.
 
 ### Arborator
 
