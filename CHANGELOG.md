@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the parameter `--ignore_empty_metadata_partition`to exclude samples with no `metadata_partition` in the samplesheet. [PR 79](https://github.com/phac-nml/arboratornf/pull/79)
 
 ### Modified
+
 - Rename the `tree_distances` and `sort_matrix` parameters to follow naming convention: adding `ar_` prefix for `arborator` parameters. [PR 80](https://github.com/phac-nml/arboratornf/pull/80)
 
 ## [0.9.0] - 2026-01-19
