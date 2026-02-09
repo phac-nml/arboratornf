@@ -20,7 +20,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -135,7 +135,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "patristic"
+                ar_tree_distances = "patristic"
             }
         }
 
@@ -251,7 +251,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -338,7 +338,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -443,7 +443,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -470,7 +470,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -497,7 +497,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "spe>cial"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -524,7 +524,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -551,7 +551,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -578,7 +578,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -605,7 +605,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -632,7 +632,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -659,7 +659,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -686,7 +686,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
                 output_prefix = "BAD!@#PREFIX"
             }
         }
@@ -715,7 +715,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -820,7 +820,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -928,7 +928,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1006,7 +1006,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
 
                 batch_size = 1
             }
@@ -1139,7 +1139,7 @@ nextflow_pipeline {
                 metadata_8_header = "special"
                 batch_size = 10
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1265,7 +1265,7 @@ nextflow_pipeline {
                 metadata_15_header = "metadata_15"
                 metadata_16_header = "metadata_16"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1420,7 +1420,7 @@ nextflow_pipeline {
                 metadata_49_header = "metadata_49"
                 metadata_50_header = "metadata_50"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1535,7 +1535,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1613,7 +1613,7 @@ nextflow_pipeline {
                 output_prefix              = "test"
                 prefix_include_date        = true
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1711,7 +1711,7 @@ nextflow_pipeline {
                 output_prefix              = "test"
                 prefix_include_date        = false
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1809,7 +1809,7 @@ nextflow_pipeline {
                 output_prefix              = null
                 prefix_include_date        = true
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -1904,7 +1904,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2032,7 +2032,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2160,7 +2160,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2334,8 +2334,8 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
-                sort_matrix = false
+                ar_tree_distances = "cophenetic"
+                ar_sort_matrix = false
             }
         }
 
@@ -2372,8 +2372,8 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
-                sort_matrix = true
+                ar_tree_distances = "cophenetic"
+                ar_sort_matrix = true
             }
         }
 
@@ -2411,7 +2411,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
                 ar_config = "$baseDir/tests/data/configs/low_outlier_threshold.json"
             }
         }
@@ -2446,7 +2446,7 @@ nextflow_pipeline {
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2483,7 +2483,7 @@ nextflow_pipeline {
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2529,7 +2529,7 @@ nextflow_pipeline {
                 metadata_7_header = "source"
                 metadata_8_header = "special"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2570,7 +2570,7 @@ nextflow_pipeline {
                 metadata_6_header = "date"
                 metadata_7_header = "source"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -2862,6 +2862,38 @@ nextflow_pipeline {
             assert !path("$launchDir/results/arborator/2_outliers.tsv").exists()
             assert !path("$launchDir/results/arborator/2_profile.tsv").exists()
             assert !path("$launchDir/results/arborator/2_tree.nwk").exists()
+
+        }
+    }
+
+    test("Empty metadata partition column ERROR"){
+        tag "ignore_empty_metadata_partition"
+        tag "empty_metadata_partition_column_error"
+        // If the samplesheet has an empty metadata_partition column, and "ignore_empty_metadata_partition" is true, then the workflow will error
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-column.csv"
+                ignore_empty_metadata_partition = true
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.contains("No samples to process after filtering for empty metadata partitions. Please check your sample sheet and the value of --metadata_partition_name.")
+
 
         }
     }

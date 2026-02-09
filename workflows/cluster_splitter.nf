@@ -80,7 +80,10 @@ workflow CLUSTER_SPLITTER {
             processedIDs << meta.id
             processedMLST << mlst_file.baseName
 
-            tuple(meta, mlst_file, uniqueMLST)}.loadIridaSampleIds()
+            tuple(meta, mlst_file, uniqueMLST)}
+            .ifEmpty {
+                error "No samples to process after filtering for empty metadata partitions. Please check your sample sheet and the value of --metadata_partition_name."
+            }.loadIridaSampleIds()
 
 
     // For the MLST files that are not unique, rename them
@@ -209,7 +212,7 @@ workflow CLUSTER_SPLITTER {
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
         thresholds=params.ar_thresholds,
-        tree_distances=params.tree_distances,
+        tree_distances=params.ar_tree_distances,
         max_cpus=params.ar_max_cpus)
 
     ch_versions = ch_versions.mix(arborator_output.versions)

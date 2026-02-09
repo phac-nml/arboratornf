@@ -16,7 +16,7 @@ nextflow_pipeline {
                 ar_config = "$baseDir/tests/data/pnc/outbreak-confirmation/arborator.config.json"
                 ar_thresholds = "30,25,20,15,10,5"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -443,7 +443,7 @@ nextflow_pipeline {
                 ar_config = "$baseDir/tests/data/pnc/outbreak-detection/arborator.config.json"
                 ar_thresholds = "30,25,20,15,10,5"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
@@ -920,7 +920,7 @@ nextflow_pipeline {
                 ar_config = "$baseDir/tests/data/pnc/outbreak-reporting/arborator.config.json"
                 ar_thresholds = "30,25,20,15,10,5"
 
-                tree_distances = "cophenetic"
+                ar_tree_distances = "cophenetic"
             }
         }
 
