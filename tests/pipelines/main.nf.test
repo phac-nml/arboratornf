@@ -2865,4 +2865,36 @@ nextflow_pipeline {
 
         }
     }
+
+    test("Empty metadata partition column ERROR"){
+        tag "ignore_empty_metadata_partition"
+        tag "empty_metadata_partition_column_error"
+        // If the samplesheet has an empty metadata_partition column, and "ignore_empty_metadata_partition" is true, then the workflow will error
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-column.csv"
+                ignore_empty_metadata_partition = true
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+                metadata_8_header = "special"
+
+                tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.contains("No samples to process after filtering for empty metadata partitions. Please check your sample sheet and the value of --metadata_partition_name.")
+
+
+        }
+    }
 }
