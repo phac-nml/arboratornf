@@ -58,6 +58,8 @@ workflow CLUSTER_SPLITTER {
     pre_input = Channel.fromSamplesheet("input")
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
     .map { meta, mlst_file ->
+            if (params.ignore_empty_metadata_partition)
+                if (meta.metadata_partition == "" || meta.metadata_partition == null || meta.metadata_partition == "null") return // Skip samples with empty partition metadata
             uniqueMLST = true
             if (!meta.id) {
                 meta.id = meta.irida_id

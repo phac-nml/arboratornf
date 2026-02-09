@@ -38,6 +38,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - `--ar_config`: The Arborator-specific config file for specifying the operations used when summarizing metadata and how such metadata should be displayed in the output.
 
+- `--ignore_empty_metadata_partition`: If set to `true`, samples with an empty `metadata_partition` value in the samplesheet will be excluded from pipeline run.
+
 ### Locidex Merge Concat
 
 <details markdown="1">
