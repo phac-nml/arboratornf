@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2026-02-10
+
+### Updated
+
+- `arborator` version used in `ARBORATOR` module updated from `1.2.1` to `1.2.2`. [PR 78](https://github.com/phac-nml/arboratornf/pull/78)
+- `ArborView` version to [v.0.1.3](https://github.com/phac-nml/ArborView/releases/tag/v0.1.3). Update `assets/AborView.html` in pipeline with [html/table.html](https://github.com/phac-nml/ArborView/blob/1b1d2ed4cc49947f15f77e53441a6382c0fa63c9/html/table.html). [PR #81](https://github.com/phac-nml/arboratornf/pull/81)
+
+### Added
+
+- Added the parameter `--ar_max_cpus` which passes an integer to the option `--n_threads` in `arborator` of the `ARBORATOR` process. The default is set to 4-cpus, and if `task.cpus` is less than `--ar_max_cpus` that value is passed to `arborator` instead.[PR 77](https://github.com/phac-nml/arboratornf/pull/77)
+- Added the parameter `--ignore_empty_metadata_partition`to exclude samples with no `metadata_partition` in the samplesheet. [PR 79](https://github.com/phac-nml/arboratornf/pull/79)
+
+### Modified
+
+- Rename the `tree_distances` and `sort_matrix` parameters to follow naming convention: adding `ar_` prefix for `arborator` parameters. [PR 80](https://github.com/phac-nml/arboratornf/pull/80)
+
 ## [0.9.0] - 2026-01-19
 
 ### Added
@@ -214,3 +230,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.8.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.0
 [0.8.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.1
 [0.9.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.0
+[0.9.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.1

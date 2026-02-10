@@ -1,0 +1,126 @@
+{
+    "outlier_thresh": "25",
+    "min_cluster_members": 2,
+    "partition_column_name": "outbreak",
+    "id_column_name": "sample_name",
+    "only_report_labeled_columns": "False",
+    "skip_qa": "False",
+    "grouped_metadata_columns": {
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_1": {
+            "data_type": "None",
+            "label": "metadata_1",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_2": {
+            "data_type": "None",
+            "label": "metadata_2",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_3": {
+            "data_type": "None",
+            "label": "metadata_3",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_4": {
+            "data_type": "None",
+            "label": "metadata_4",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_5": {
+            "data_type": "None",
+            "label": "metadata_5",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_6": {
+            "data_type": "None",
+            "label": "metadata_6",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_7": {
+            "data_type": "None",
+            "label": "metadata_7",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_8": {
+            "data_type": "None",
+            "label": "metadata_8",
+            "default": "",
+            "display": "True"
+        }
+    },
+    "linelist_columns": {
+        "sample_name": {
+            "data_type": "None",
+            "label": "Sample",
+            "default": "",
+            "display": "True"
+        },
+        "outbreak": {
+            "data_type": "None",
+            "label": "Outbreak Code",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_1": {
+            "data_type": "None",
+            "label": "metadata_1",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_2": {
+            "data_type": "None",
+            "label": "metadata_2",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_3": {
+            "data_type": "None",
+            "label": "metadata_3",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_4": {
+            "data_type": "None",
+            "label": "metadata_4",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_5": {
+            "data_type": "None",
+            "label": "metadata_5",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_6": {
+            "data_type": "None",
+            "label": "metadata_6",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_7": {
+            "data_type": "None",
+            "label": "metadata_7",
+            "default": "",
+            "display": "True"
+        },
+        "metadata_8": {
+            "data_type": "None",
+            "label": "metadata_8",
+            "default": "",
+            "display": "True"
+        }
+    }
+}

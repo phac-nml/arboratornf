@@ -8,8 +8,8 @@ process ARBORATOR {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.1--pyhdfd78af_0' :
-    'biocontainers/arborator:1.2.1--pyhdfd78af_0' }"
+    'https://depot.galaxyproject.org/singularity/arborator%3A1.2.2--pyhdfd78af_0' :
+    'biocontainers/arborator:1.2.2--pyhdfd78af_0' }"
 
     input:
     path merged_profiles // The allelic profiles
@@ -19,6 +19,7 @@ process ARBORATOR {
     val partition_column // Column to split samples on
     val thresholds // String of thresholds e.g. 10,9,8,7,6,5,4,3,2,1
     val tree_distances // "patristic" or "cophenetic"
+    val max_cpus // Number of CPUs to use passed to the arborator --n_threads parameter
 
     output:
     path("${prefix}/*/tree.nwk"), emit: trees, optional: true
@@ -39,6 +40,7 @@ process ARBORATOR {
 
     script:
     prefix = "output_folder"
+    def avail_cpus = max_cpus ? Math.min(max_cpus as int, task.cpus as int) : task.cpus // Ensures we do not exceed allocated CPUs
     def args = task.ext.args ?: ''
 
     """
@@ -47,7 +49,7 @@ process ARBORATOR {
     --config $configuration_file --outdir $prefix \\
     --id_col $id_column --partition_col $partition_column \\
     --thresholds $thresholds --tree_distances $tree_distances \\
-    ${args}
+    --n_threads $avail_cpus ${args}
 
     mv $prefix/metadata.included.xlsx $prefix/metadata.linelist.xlsx
 

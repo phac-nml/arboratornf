@@ -58,6 +58,8 @@ workflow CLUSTER_SPLITTER {
     pre_input = Channel.fromSamplesheet("input")
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
     .map { meta, mlst_file ->
+            if (params.ignore_empty_metadata_partition)
+                if (meta.metadata_partition == "" || meta.metadata_partition == null || meta.metadata_partition == "null") return // Skip samples with empty partition metadata
             uniqueMLST = true
             if (!meta.id) {
                 meta.id = meta.irida_id
@@ -78,7 +80,10 @@ workflow CLUSTER_SPLITTER {
             processedIDs << meta.id
             processedMLST << mlst_file.baseName
 
-            tuple(meta, mlst_file, uniqueMLST)}.loadIridaSampleIds()
+            tuple(meta, mlst_file, uniqueMLST)}
+            .ifEmpty {
+                error "No samples to process after filtering for empty metadata partitions. Please check your sample sheet and the value of --metadata_partition_name."
+            }.loadIridaSampleIds()
 
 
     // For the MLST files that are not unique, rename them
@@ -207,7 +212,8 @@ workflow CLUSTER_SPLITTER {
         id_column=ID_COLUMN,
         partition_col=params.metadata_partition_name,
         thresholds=params.ar_thresholds,
-        tree_distances=params.tree_distances)
+        tree_distances=params.ar_tree_distances,
+        max_cpus=params.ar_max_cpus)
 
     ch_versions = ch_versions.mix(arborator_output.versions)
 
