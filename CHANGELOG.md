@@ -3,11 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.1] - 2026-02-09
+## [0.9.1] - 2026-02-10
 
 ### Updated
 
 - `arborator` version used in `ARBORATOR` module updated from `1.2.1` to `1.2.2`. [PR 78](https://github.com/phac-nml/arboratornf/pull/78)
+- `ArborView` version to [v.0.1.3](https://github.com/phac-nml/ArborView/releases/tag/v0.1.3). Update `assets/AborView.html` in pipeline with [html/table.html](https://github.com/phac-nml/ArborView/blob/1b1d2ed4cc49947f15f77e53441a6382c0fa63c9/html/table.html). [PR #81](https://github.com/phac-nml/arboratornf/pull/81)
 
 ### Added
 
