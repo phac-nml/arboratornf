@@ -38,19 +38,19 @@ process BUILD_CONFIG {
     OUTLIER_THRESH = "outlier_thresh"
     json_data[OUTLIER_THRESH] = lookup_config_json[OUTLIER_THRESH]
 
-    MIN_CLUSTER_MEMBERS = "min_cluster_members"
+    MIN_CLUSTER_MEMBERS = "min_members"
     json_data[MIN_CLUSTER_MEMBERS] = lookup_config_json[MIN_CLUSTER_MEMBERS]
 
-    PARTITION_COLUMN_NAME = "partition_column_name"
+    PARTITION_COLUMN_NAME = "partition_col"
     json_data[PARTITION_COLUMN_NAME] = partition
 
-    ID_COLUMN_NAME = "id_column_name"
+    ID_COLUMN_NAME = "id_col"
     json_data[ID_COLUMN_NAME] = id
 
     ONLY_REPORT_LABLED_COLUMNS = "only_report_labeled_columns"
     json_data[ONLY_REPORT_LABLED_COLUMNS] = lookup_config_json[ONLY_REPORT_LABLED_COLUMNS]
 
-    SKIP_QA = "skip_qa"
+    SKIP_QA = "skip_qc"
     json_data[SKIP_QA] = lookup_config_json[SKIP_QA]
 
     // GROUPED METADATA
