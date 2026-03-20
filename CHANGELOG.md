@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Corrected some parameter names in the automatic config generation process. [PR 84](https://github.com/phac-nml/arboratornf/pull/84)
 
+### `Updated`
+
+- Set nextflow version 25.10.4 to replace 'latest-everything' to confirm compatibility with next IRIDA-Next nextflow version in `.github/workflows` for nf-test. [PR 85](https://github.com/phac-nml/arboratornf/pull/85)
+
 ## [0.9.1] - 2026-02-10
 
 ### Updated
@@ -187,7 +191,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2024-10-21
 
 - Added the ability to include a `sample_name` column in the input samplesheet.csv. Allows for compatibility with IRIDA-Next input configuration.
-
   - `sample_name` special characters will be replaced with `"_"`
   - If no `sample_name` is supplied in the column `sample` will be used
   - To avoid repeat values for `sample_name` all `sample_name` values will be suffixed with the unique `sample` value from the input file
