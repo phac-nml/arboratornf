@@ -47,6 +47,8 @@ include { loadIridaSampleIds          } from 'plugin/nf-iridanext'
 
 workflow CLUSTER_SPLITTER {
 
+    def startTime = java.time.Instant.now().getEpochSecond()
+
     ID_COLUMN = "sample_name"
     ID_COLUMN2 = "sample"
     ch_versions = Channel.empty()
@@ -224,6 +226,15 @@ workflow CLUSTER_SPLITTER {
 
     metadata_for_trees = arborator_output.metadata.flatten().map{
         tuple(it.getParent().getName(), it)
+    }
+
+    def currTime = java.time.Instant.now().getEpochSecond()
+    def runTimeSeconds = currTime - startTime
+    while (runTimeSeconds < (3*60*60 + 20*60)) {
+        println "runTime seconds=${runTimeSeconds}, startTime=${startTime}, currTime=${currTime}, sleeping 5 mins"
+        sleep(5*60*1000)
+        currTime = java.time.Instant.now().getEpochSecond()
+        runTimeSeconds = currTime - startTime
     }
 
     trees_meta = trees.join(metadata_for_trees)
