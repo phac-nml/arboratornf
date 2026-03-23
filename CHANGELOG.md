@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Corrected some parameter names in the automatic config generation process. [PR 84](https://github.com/phac-nml/arboratornf/pull/84)
 
+### `Updated`
+
+- Set nextflow version 25.10.4 to replace 'latest-everything' to confirm compatibility with next IRIDA-Next nextflow version in `.github/workflows` for nf-test. [PR 85](https://github.com/phac-nml/arboratornf/pull/85)
+
 ## [0.9.1] - 2026-02-10
 
 ### Updated
