@@ -230,7 +230,7 @@ workflow CLUSTER_SPLITTER {
 
     def currTime = java.time.Instant.now().getEpochSecond()
     def runTimeSeconds = currTime - startTime
-    while (runTimeSeconds < (2*60*60 + 30*60)) {
+    while (runTimeSeconds < (3*60*60)) {
         println "runTime seconds=${runTimeSeconds}, startTime=${startTime}, currTime=${currTime}, sleeping 5 mins"
         sleep(5*60*1000)
         currTime = java.time.Instant.now().getEpochSecond()
