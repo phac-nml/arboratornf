@@ -4,7 +4,7 @@ Generates a visualization of a dendogram alongside metadata.
 
 
 process ARBOR_VIEW {
-    label "process_low"
+    label "process_single"
     tag "Inlining tree data for: $cluster_group"
     stageInMode 'copy' // Need to copy in arbor view html
 
