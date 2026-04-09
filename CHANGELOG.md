@@ -3,13 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.9.2] - 2026-04-09
+
+### `Fixed`
 
 - Corrected some parameter names in the automatic config generation process. [PR 84](https://github.com/phac-nml/arboratornf/pull/84)
 
 ### `Updated`
 
 - Set nextflow version 25.10.4 to replace 'latest-everything' to confirm compatibility with next IRIDA-Next nextflow version in `.github/workflows` for nf-test. [PR 85](https://github.com/phac-nml/arboratornf/pull/85)
+- Updated resource labels for `ARBOR_VIEW` and `LOCIDEX_MERGE` to be `process_single` so that the pipeline runs more efficiently. [PR 86](https://github.com/phac-nml/arboratornf/pull/86).
 
 ## [0.9.1] - 2026-02-10
 
@@ -239,3 +242,4 @@ Initial release of the arboratornf pipeline to be used for running [Arborator](h
 [0.8.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.8.1
 [0.9.0]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.0
 [0.9.1]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.1
+[0.9.2]: https://github.com/phac-nml/arboratornf/releases/tag/0.9.2
