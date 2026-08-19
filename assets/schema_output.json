@@ -88,14 +88,7 @@
                             "type": "array",
                             "items": {
                                 "properties": {
-                                    "path": {
-                                        "anyOf": [
-                                            {
-                                                "pattern": "^.*staramr/.*_results/.*_settings.staramr.txt$",
-                                                "description": "The StarAMR-specific command-line parameters, settings, and databases used for the sample."
-                                            }
-                                        ]
-                                    }
+                                    "path": {}
                                 },
                                 "additionalProperties": false
                             },
@@ -113,11 +106,7 @@
                     "patternProperties": {
                         "^.*$": {
                             "type": "object",
-                            "properties": {
-                                "StarAMR Quality Module": {
-                                    "description": "Whether or not the sample passed of failed the quality evaluation."
-                                }
-                            },
+                            "properties": {},
                             "additionalProperties": false
                         }
                     }
