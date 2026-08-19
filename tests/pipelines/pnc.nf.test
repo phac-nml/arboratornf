@@ -24,6 +24,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check that files exist:
             def arborator_1_clusters = path("$launchDir/results/arborator/1_clusters.tsv")
             def arborator_1_loci = path("$launchDir/results/arborator/1_loci.summary.tsv")
@@ -450,6 +453,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check that files exist:
             def arborator_1_1_1_1_clusters = path("$launchDir/results/arborator/1.1.1.1_clusters.tsv")
@@ -927,6 +933,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check that files exist:
             def arborator_2501STWGS_01_clusters = path("$launchDir/results/arborator/2501STWGS-01_clusters.tsv")

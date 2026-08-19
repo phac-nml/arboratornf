@@ -28,6 +28,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
@@ -142,6 +145,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -259,6 +265,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
@@ -345,6 +354,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -723,6 +735,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/mismatched_profiles.tsv")
@@ -827,6 +842,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -936,6 +954,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check that the ArborView output is created
             def actual_arborview1 = path("$launchDir/results/arborview/1.1.1.1_arborview.html")
             assert actual_arborview1.exists()
@@ -965,6 +986,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check that LOCIDEX_MERGE was called with the correct batch size
             // Profiles for reference samples
@@ -1015,6 +1039,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check that the COPY_FILE process was called for the correct samples
             assert path("$launchDir/results/copy/sample1_S2_S1.mlst.json").exists()
@@ -1147,6 +1174,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check that the COPY_FILE process was called for the correct samples
             assert path("$launchDir/results/copy/sample1_S2_S1.mlst.json").exists()
             assert !path("$launchDir/results/copy/sample1_S1_S1.mlst.json").exists()
@@ -1272,6 +1302,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -1428,6 +1461,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
@@ -1543,6 +1579,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Zip related files
             def filename = "$launchDir/results/zip/arboratornf.zip"
             def expectedFiles = ['1_arborview.html','1_clusters.tsv', '1_loci.summary.tsv', '1_matrix.tsv', '1_metadata.tsv', '1_outliers.tsv', '1_profile.tsv', '1_tree.nwk', '2_arborview.html', '2_clusters.tsv', '2_loci.summary.tsv', '2_matrix.tsv', '2_metadata.tsv', '2_outliers.tsv', '2_profile.tsv', '2_tree.nwk', 'cluster_summary.tsv', 'metadata.excluded.tsv', 'metadata.included.tsv', 'run.json', 'software_versions.yml', 'threshold_map.json']
@@ -1621,6 +1660,9 @@ nextflow_pipeline {
 
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check some of the files are renamed (iridanext.output.json file)
 
@@ -1720,6 +1762,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check some of the files are renamed (iridanext.output.json file)
 
             // Arborator files
@@ -1818,6 +1863,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check some of the files are renamed (iridanext.output.json file)
 
             // Arborator files
@@ -1911,6 +1959,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -2040,6 +2091,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             assert actual_profile_tsv.text.contains("sample_id\tlocus_1\tlocus_2\tlocus_3\tlocus_4\tlocus_5\tlocus_6\tlocus_7")
@@ -2167,6 +2221,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles
             with(path("$launchDir/results/locidex/merged/profile_1.tsv").text) {
@@ -2343,6 +2400,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Arborator outputs:
             def metadata_included_text = path("$launchDir/results/arborator/metadata.included.tsv").text
             assert metadata_included_text.contains("Sample\tOutbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tgas_denovo_cluster_address")
@@ -2380,6 +2440,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Arborator outputs:
             def metadata_included_text = path("$launchDir/results/arborator/metadata.included.tsv").text
@@ -2420,6 +2483,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Arborator outputs:
             def cluster_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
             assert cluster_summary_text.contains("Outbreak Code\tOrganism\tSubtype\tCountry of Collection\tSerovar\tPatient Age (years)\tDate\tSource Type\tSpecial\tage_max_value\tage_mean_value\tage_median_value\tage_min_value\tcount_country_Canada\tcount_country_France\tcount_country_The United States\tcount_members\tcount_outliers\tcount_sample_S1\tcount_sample_S2\tcount_sample_S3\tcount_sample_S4\tcount_sample_S5\tcount_sample_S6\tcount_serovar_O111:H21\tcount_serovar_O125\tcount_serovar_O126:H27\tcount_serovar_O157:H7\tcount_source_beef\tcount_source_cheese\tcount_source_fruit\tcount_source_milk\tcount_special_false\tcount_special_true\tdate_max_value\tdate_min_value\tmax_dist\tmean_dist\tmedian_dist\tmin_dist\toutlier_ids\tsample")
@@ -2453,6 +2519,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Arborator outputs:
             def actual_arborator_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
@@ -2490,6 +2559,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Arborator outputs:
             def actual_arborator_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
@@ -2537,6 +2609,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Arborator outputs:
             // TODO: Add cluster_summary tests after fixing "nan" issue.
             // def actual_arborator_summary_text = path("$launchDir/results/arborator/cluster_summary.tsv").text
@@ -2577,6 +2652,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Arborator outputs:
             // TODO: Add cluster_summary tests after fixing "nan" issue.
@@ -2622,6 +2700,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles only contain those with metadata partition
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
@@ -2712,6 +2793,9 @@ nextflow_pipeline {
             assert workflow.success
             assert path("$launchDir/results").exists()
 
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
             // Check merged profiles only contain those with metadata partition
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
             assert actual_profile_tsv.text.contains("S1")
@@ -2800,6 +2884,9 @@ nextflow_pipeline {
         then {
             assert workflow.success
             assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
 
             // Check merged profiles only contain those with metadata partition
             def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
