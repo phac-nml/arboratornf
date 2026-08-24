@@ -1870,6 +1870,7 @@ nextflow_pipeline {
 
             // Arborator files
             def arboratorFiles = path("$launchDir/results/arborator/").list()
+            print(arboratorFiles)
 
             def cluster1 = arboratorFiles.find { it.getFileName().toString() ==~ /\d{4}-\d{2}-\d{2}_1_clusters\.tsv/ }.toString()
             assert path(cluster1).exists()
