@@ -10,7 +10,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/pnc/outbreak-confirmation/samplesheet.csv"
+                input = "$baseDir/tests/data/pnc/outbreak-confirmation/samplesheet.json"
                 outdir = "results"
 
                 ar_config = "$baseDir/tests/data/pnc/outbreak-confirmation/arborator.config.json"
@@ -437,7 +437,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/pnc/outbreak-detection/samplesheet.csv"
+                input = "$baseDir/tests/data/pnc/outbreak-detection/samplesheet.json"
                 outdir = "results"
 
                 ar_config = "$baseDir/tests/data/pnc/outbreak-detection/arborator.config.json"
@@ -914,7 +914,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/pnc/outbreak-reporting/samplesheet.csv"
+                input = "$baseDir/tests/data/pnc/outbreak-reporting/samplesheet.json"
                 outdir = "results"
 
                 ar_config = "$baseDir/tests/data/pnc/outbreak-reporting/arborator.config.json"

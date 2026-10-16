@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { paramsSummaryLog; paramsSummaryMap; fromSamplesheet  } from 'plugin/nf-validation'
+include { paramsSummaryMap; paramsSummaryLog; samplesheetToList } from 'plugin/nf-schema'
 
 
 /*
@@ -55,7 +55,7 @@ workflow CLUSTER_SPLITTER {
     def processedIDs = [] as Set
     def processedMLST = [] as Set
 
-    pre_input = Channel.fromSamplesheet("input")
+    pre_input = Channel.fromList(samplesheetToList(params.input, "assets/schema_input.json"))
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
     .map { meta, mlst_file ->
             if (params.ignore_empty_metadata_partition)
