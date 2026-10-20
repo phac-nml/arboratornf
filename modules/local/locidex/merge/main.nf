@@ -14,20 +14,19 @@ process LOCIDEX_MERGE {
     containerOptions "${task.ext.containerOptions ?: ''}"
 
     input:
-    tuple val(batch_index), path(input_values) // [file(sample1), file(sample2), file(sample3), etc...]
-    path  merge_tsv
+    tuple val(id), val(irida_id), val(cluster_name), path(mlst_files) // [file(sample1), file(sample2), file(sample3), etc...]
 
     output:
-    path("profile_${batch_index}.tsv"),           emit: combined_profiles
-    path("MLST_error_report_${batch_index}.csv"), emit: combined_error_report
-    path "versions.yml",                          emit: versions
+    tuple path("profile_${cluster_name}.tsv"), val(cluster_name), emit: combined_profiles
+    //path("MLST_error_report_${cluster_name}.csv"), emit: combined_error_report
+    path "versions.yml", emit: versions
 
     script:
     combined_dir = "merged"
     """
-    locidex merge -i ${input_values.join(' ')} -o ${combined_dir} -p ${merge_tsv}
-    mv ${combined_dir}/MLST_error_report.csv MLST_error_report_${batch_index}.csv
-    mv ${combined_dir}/profile.tsv profile_${batch_index}.tsv
+    locidex merge -i ${mlst_files.join(' ')} -o ${combined_dir}
+    #mv ${combined_dir}/MLST_error_report.csv MLST_error_report_${cluster_name}.csv
+    mv ${combined_dir}/profile.tsv profile_${cluster_name}.tsv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

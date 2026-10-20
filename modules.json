@@ -1,6 +1,6 @@
 {
-    "name": "phac-nml/arboratornf",
-    "homePage": "https://github.com/phac-nml/arboratornf",
+    "name": "phac-nml/castor",
+    "homePage": "https://github.com/phac-nml/castor",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

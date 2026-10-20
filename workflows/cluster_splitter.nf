@@ -20,11 +20,12 @@ include { WRITE_METADATA  } from '../modules/local/write/main'
 include { LOCIDEX_MERGE   } from '../modules/local/locidex/merge/main'
 include { LOCIDEX_CONCAT  } from '../modules/local/locidex/concat/main'
 include { COPY_FILE       } from '../modules/local/copyFile/main'
-include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
+//include { MAP_TO_TSV      } from '../modules/local/maptotsv/main'
 include { ARBORATOR       } from '../modules/local/arborator/main'
 include { ARBOR_VIEW      } from '../modules/local/arborview/main'
-include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
+//include { BUILD_CONFIG    } from '../modules/local/buildconfig/main'
 include { ZIP_OUTPUT      } from '../modules/local/zippy/main'
+include { BEAVE_CALC } from '../modules/local/beave_calc.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,154 +130,165 @@ workflow CLUSTER_SPLITTER {
             params.metadata_49_header, params.metadata_50_header)
         )
 
+
+    metadata_partions = input.map{
+        meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition, mlst_files)
+    }.groupTuple(by: 2) // Group values by metadata partition
+    // Now that we have groups call locidex merge for each group
+
+
+    merged_outbreaks = LOCIDEX_MERGE(metadata_partions) // TODO: need to add profile_ref flag
+    merged_outbreaks.combined_profiles
+    out_data = BEAVE_CALC(merged_outbreaks.combined_profiles)
+    out_data.view()
+
+
     // Metadata rows:
-    metadata_rows = input.map{
-        meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
-        meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
-        meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
-        meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
-        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16,
-        meta.metadata_17, meta.metadata_18, meta.metadata_19, meta.metadata_20,
-        meta.metadata_21, meta.metadata_22, meta.metadata_23, meta.metadata_24,
-        meta.metadata_25, meta.metadata_26, meta.metadata_27, meta.metadata_28,
-        meta.metadata_29, meta.metadata_30, meta.metadata_31, meta.metadata_32,
-        meta.metadata_33, meta.metadata_34, meta.metadata_35, meta.metadata_36,
-        meta.metadata_37, meta.metadata_38, meta.metadata_39, meta.metadata_40,
-        meta.metadata_41, meta.metadata_42, meta.metadata_43, meta.metadata_44,
-        meta.metadata_45, meta.metadata_46, meta.metadata_47, meta.metadata_48,
-        meta.metadata_49, meta.metadata_50)
-    }.toList()
-    // Prepare MLST files for LOCIDEX_MERGE
+    //metadata_rows = input.map{
+    //    meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
+    //    meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
+    //    meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
+    //    meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
+    //    meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16,
+    //    meta.metadata_17, meta.metadata_18, meta.metadata_19, meta.metadata_20,
+    //    meta.metadata_21, meta.metadata_22, meta.metadata_23, meta.metadata_24,
+    //    meta.metadata_25, meta.metadata_26, meta.metadata_27, meta.metadata_28,
+    //    meta.metadata_29, meta.metadata_30, meta.metadata_31, meta.metadata_32,
+    //    meta.metadata_33, meta.metadata_34, meta.metadata_35, meta.metadata_36,
+    //    meta.metadata_37, meta.metadata_38, meta.metadata_39, meta.metadata_40,
+    //    meta.metadata_41, meta.metadata_42, meta.metadata_43, meta.metadata_44,
+    //    meta.metadata_45, meta.metadata_46, meta.metadata_47, meta.metadata_48,
+    //    meta.metadata_49, meta.metadata_50)
+    //}.toList()
+    //// Prepare MLST files for LOCIDEX_MERGE
 
-    merged_alleles = input
-    .map { meta, mlst_file ->
-        mlst_file
-    }.collect()
 
-    // Create channels to be used to create a MLST override file (below)
-    SAMPLE_HEADER = "sample"
-    MLST_HEADER   = "mlst_alleles"
+    //write_metadata_headers = Channel.of(
+    //    tuple(
+    //        params.sample_header, params.mlst_alleles)
+    //    )
 
-    write_metadata_headers = Channel.of(
-        tuple(
-            SAMPLE_HEADER, MLST_HEADER)
-        )
-    write_metadata_rows = input.map{
-        def meta = it[0]
-        def mlst = it[1]
-        tuple(meta.id,mlst)
-    }.toList()
+    //write_metadata_rows = input.map{
+    //    def meta = it[0]
+    //    def mlst = it[1]
+    //    tuple(meta.id,mlst)
+    //}.toList()
 
-    merge_tsv = WRITE_METADATA (write_metadata_headers, write_metadata_rows).results.first() // MLST override file value channel
+    //merge_tsv = WRITE_METADATA (write_metadata_headers, write_metadata_rows).results.first() // MLST override file value channel
+    //merged_alleles = input
+    //.map { meta, mlst_file ->
+    //    mlst_file
+    //}.collect()
+
 
     // Merge MLST files into TSV
 
     // 1A) Divide up inputs into groups for LOCIDEX
-    def batchCounter = 1
-    grouped_ref_files = merged_alleles.flatten() //
-        .buffer( size: params.batch_size, remainder: true )
-                .map { batch ->
-        def index = batchCounter++
-        return tuple(index, batch)
-    }
-    // 1B) Run LOCIDEX
+    //def batchCounter = 1
+    //grouped_ref_files = merged_alleles.flatten() //
+    //    .buffer( size: params.batch_size, remainder: true )
+    //            .map { batch ->
+    //    def index = batchCounter++
+    //    return tuple(index, batch)
+    //}
+    //// 1B) Run LOCIDEX
 
-    // Merging individual JSON-formatted genomic profile files
-    // into one TSV-formatted file:
-    merged = LOCIDEX_MERGE(grouped_ref_files, merge_tsv)
-    ch_versions = ch_versions.mix(merged.versions)
+    //// Merging individual JSON-formatted genomic profile files
+    //// into one TSV-formatted file:
+    //merged = LOCIDEX_MERGE(grouped_ref_files, merge_tsv)
+    //ch_versions = ch_versions.mix(merged.versions)
 
-    // LOCIDEX Step 2:
-    // Combine outputs
+    //// LOCIDEX Step 2:
+    //// Combine outputs
 
-    // LOCIDEX Concatenate
+    //// LOCIDEX Concatenate
 
-    combined_merged = LOCIDEX_CONCAT(merged.combined_profiles.collect(),
-    merged.combined_error_report.collect(),
-    merged.combined_profiles.collect().flatten().count())
+    //combined_merged = LOCIDEX_CONCAT(merged.combined_profiles.collect(),
+    //merged.combined_error_report.collect(),
+    //merged.combined_profiles.collect().flatten().count())
 
-    // Mapping metadata provided in the sample sheet
-    // into a Arborator-compatible TSV-formatted file:
-    merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
-    merged_metadata_path = merged_metadata_output.tsv_path
-    nonempty_column_headers = merged_metadata_output.nonempty_column_headers
+    //// Mapping metadata provided in the sample sheet
+    //// into a Arborator-compatible TSV-formatted file:
+    //merged_metadata_output = MAP_TO_TSV(metadata_headers, metadata_rows)
+    //merged_metadata_path = merged_metadata_output.tsv_path
+    //nonempty_column_headers = merged_metadata_output.nonempty_column_headers
 
-    // Build an Arborator config file if none was provided:
-    arborator_config = params.ar_config ? file(params.ar_config) : BUILD_CONFIG(nonempty_column_headers).config
+    //// Build an Arborator config file if none was provided:
+    //arborator_config = params.ar_config ? file(params.ar_config) : BUILD_CONFIG(nonempty_column_headers).config
 
-    // Arborator:
-    arborator_output = ARBORATOR(
-        merged_profiles=combined_merged.combined_profiles,
-        metadata=merged_metadata_path,
-        configuration_file=arborator_config,
-        id_column=ID_COLUMN,
-        partition_col=params.metadata_partition_name,
-        thresholds=params.ar_thresholds,
-        tree_distances=params.ar_tree_distances,
-        max_cpus=params.ar_max_cpus)
+    //// Arborator:
+    //arborator_output = ARBORATOR(
+    //    merged_profiles=combined_merged.combined_profiles,
+    //    metadata=merged_metadata_path,
+    //    configuration_file=arborator_config,
+    //    id_column=ID_COLUMN,
+    //    partition_col=params.metadata_partition_name,
+    //    thresholds=params.ar_thresholds,
+    //    tree_distances=params.ar_tree_distances,
+    //    max_cpus=params.ar_max_cpus)
 
-    ch_versions = ch_versions.mix(arborator_output.versions)
+    //ch_versions = ch_versions.mix(arborator_output.versions)
 
-    // ArborView
-    trees = arborator_output.trees.flatten().map {
-        tuple(it.getParent().getName(), it)
-    }
+    //// ArborView
+    //trees = arborator_output.trees.flatten().map {
+    //    tuple(it.getParent().getName(), it)
+    //}
 
-    metadata_for_trees = arborator_output.metadata.flatten().map{
-        tuple(it.getParent().getName(), it)
-    }
+    //metadata_for_trees = arborator_output.metadata.flatten().map{
+    //    tuple(it.getParent().getName(), it)
+    //}
 
-    trees_meta = trees.join(metadata_for_trees)
-    tree_html = file("$projectDir/assets/ArborView.html")
-    ARBOR_VIEW(trees_meta, tree_html)
+    //trees_meta = trees.join(metadata_for_trees)
+    //tree_html = file("$projectDir/assets/ArborView.html")
+    //ARBOR_VIEW(trees_meta, tree_html)
 
-    ch_versions = ch_versions.mix(ARBOR_VIEW.out.versions)
+    //ch_versions = ch_versions.mix(ARBOR_VIEW.out.versions)
 
-    CUSTOM_DUMPSOFTWAREVERSIONS (
-        ch_versions.unique().collectFile(name: 'collated_versions.yml')
-    )
-    // Zip outputs of arborator, ArborView, and software_version.yml if parameter 'true'
-    if (params.zip_cluster_results) {
+    //CUSTOM_DUMPSOFTWAREVERSIONS (
+    //    ch_versions.unique().collectFile(name: 'collated_versions.yml')
+    //)
+    //// Zip outputs of arborator, ArborView, and software_version.yml if parameter 'true'
+    //if (params.zip_cluster_results) {
 
-        // Pass all (except the version.yml) for the process into one channel
-        all_arborator_files = arborator_output.trees
-            .combine(arborator_output.metadata)
-            .combine(arborator_output.clusters_tsv)
-            .combine(arborator_output.loci_summary)
-            .combine(arborator_output.matrix_tsv)
-            .combine(arborator_output.outliers)
-            .combine(arborator_output.profiles)
-            .combine(arborator_output.cluster_summary)
-            .combine(arborator_output.metadata_excluded)
-            .combine(arborator_output.metadata_included)
-            .combine(arborator_output.threshold_map)
-            .combine(arborator_output.run_json)
+    //    // Pass all (except the version.yml) for the process into one channel
+    //    all_arborator_files = arborator_output.trees
+    //        .combine(arborator_output.metadata)
+    //        .combine(arborator_output.clusters_tsv)
+    //        .combine(arborator_output.loci_summary)
+    //        .combine(arborator_output.matrix_tsv)
+    //        .combine(arborator_output.outliers)
+    //        .combine(arborator_output.profiles)
+    //        .combine(arborator_output.cluster_summary)
+    //        .combine(arborator_output.metadata_excluded)
+    //        .combine(arborator_output.metadata_included)
+    //        .combine(arborator_output.threshold_map)
+    //        .combine(arborator_output.run_json)
 
-        // Renaming files to use the cluster (parent directory) of files
-        // Follows the same renaming process as used in outdir (via conf/modules.confg)
-        // Where the parent_directory for cluster files is prefixed to the name
-        // Makes copy of file with new name in work-directory not produced by process
-        all_arborator_files.flatten().map {
-            file ->
-            def elements = file.toString().tokenize(File.separator)
-            def cluster_name = elements[-2]
-            def file_name = elements[-1]
+    //    // Renaming files to use the cluster (parent directory) of files
+    //    // Follows the same renaming process as used in outdir (via conf/modules.confg)
+    //    // Where the parent_directory for cluster files is prefixed to the name
+    //    // Makes copy of file with new name in work-directory not produced by process
+    //    all_arborator_files.flatten().map {
+    //        file ->
+    //        def elements = file.toString().tokenize(File.separator)
+    //        def cluster_name = elements[-2]
+    //        def file_name = elements[-1]
 
-            repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv","outliers.tsv"]
-            def new_name
-            if (repeated_file_names.contains(file_name)) {
-                new_name = cluster_name + "_" + file_name
-            } else {
-                new_name = file_name
-            }
-            def renamedFile = file.copyTo("${file.parent}/${new_name}")
-            return renamedFile
-        }.collect().set{renamed_arborator_files}
+    //        repeated_file_names = ["tree.nwk", "metadata.tsv","clusters.tsv", "loci.summary.tsv", "matrix.tsv", "profile.tsv","outliers.tsv"]
+    //        def new_name
+    //        if (repeated_file_names.contains(file_name)) {
+    //            new_name = cluster_name + "_" + file_name
+    //        } else {
+    //            new_name = file_name
+    //        }
+    //        def renamedFile = file.copyTo("${file.parent}/${new_name}")
+    //        return renamedFile
+    //    }.collect().set{renamed_arborator_files}
 
-        ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
-            renamed_arborator_files,
-            CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
-    }
+    //    ZIP_OUTPUT(ARBOR_VIEW.out.html.collect(),
+    //        renamed_arborator_files,
+    //        CUSTOM_DUMPSOFTWAREVERSIONS.out[0])
+    //}
 
 }
 
