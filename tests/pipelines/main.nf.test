@@ -7,7 +7,7 @@ nextflow_pipeline {
         tag "pipeline_small"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -125,7 +125,7 @@ nextflow_pipeline {
         tag "pipeline_small_patristic"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -244,7 +244,7 @@ nextflow_pipeline {
         tag "pipeline_all"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-all-single-partition.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-all-single-partition.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -334,7 +334,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-little-metadata.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-little-metadata.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -442,7 +442,7 @@ nextflow_pipeline {
         tag "bad_metadata_partition_name"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "bad;>"
@@ -461,7 +461,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("string [bad;>] does not match pattern")
+            assert workflow.stderr.join("\n").contains("\"bad;>\" does not match regular expression")
         }
     }
 
@@ -469,7 +469,7 @@ nextflow_pipeline {
         tag "bad_metadata_1_header"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -488,7 +488,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("string [organism|] does not match pattern")
+            assert workflow.stderr.join("\n").contains("\"organism|\" does not match regular expression")
         }
     }
 
@@ -496,7 +496,7 @@ nextflow_pipeline {
         tag "bad_metadata_8_header"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -515,7 +515,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("string [spe>cial] does not match pattern")
+            assert workflow.stderr.join("\n").contains("\"spe>cial\" does not match regular expression")
         }
     }
 
@@ -523,7 +523,7 @@ nextflow_pipeline {
         tag "bad_meta_partition_entry"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -542,7 +542,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters. (1@)")
+            assert workflow.stderr.join("\n").contains("Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters.")
         }
     }
 
@@ -550,7 +550,7 @@ nextflow_pipeline {
         tag "bad_metadata_partition_entry"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata_partition.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -569,7 +569,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_partition: Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters. (1@)")
+            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_partition\' (1@): \"1@\" does not match regular expression ")
         }
     }
 
@@ -577,7 +577,7 @@ nextflow_pipeline {
         tag "bad_metadata_1_tab"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -596,7 +596,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("metadata_1: Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes (Escherichia\tcoli)")
+            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia\tcoli): \"Escherichia\tcoli\" does not match regular expression")
         }
     }
 
@@ -604,7 +604,7 @@ nextflow_pipeline {
         tag "bad_metadata_1_double_quote"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-double-quote.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-double-quote.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -623,7 +623,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stdout.join("\n").contains("ERROR ~ Invalid CSV value -- offending line: \"Escherichia \"the name\" coli\"")
+            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia the name\" coli\"): \"Escherichia the name\" coli\"\" does not match regular expression")
         }
     }
 
@@ -631,7 +631,7 @@ nextflow_pipeline {
         tag "bad_metadata_1_newline"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-newline.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-newline.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -650,7 +650,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stdout.join("\n").contains("ERROR ~ Missing double-quote termination in CSV value -- offending line: \"Escherichia")
+            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia\ncoli): \"Escherichia\ncoli\"")
         }
     }
 
@@ -658,7 +658,7 @@ nextflow_pipeline {
         tag "bad_metadata_1_escape"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-escape.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-escape.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -677,7 +677,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes (Escherichia\\t coli)")
+            assert workflow.stderr.join("\n").contains("Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes")
         }
     }
 
@@ -685,7 +685,7 @@ nextflow_pipeline {
         tag "bad_outbreak_prefix"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -705,7 +705,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.failed
-            assert workflow.stderr.join("\n").contains("string [BAD!@#PREFIX] does not match pattern")
+            assert workflow.stderr.join("\n").contains("\"BAD!@#PREFIX\" does not match regular expression")
         }
     }
 
@@ -714,7 +714,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-id-mismatch.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-id-mismatch.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -822,7 +822,7 @@ nextflow_pipeline {
         tag "sample_name"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-samplename.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-samplename.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -933,7 +933,7 @@ nextflow_pipeline {
         // between Arborator and ArborView, which is part of the pipeline.
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-filename-fix.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-filename-fix.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -977,7 +977,7 @@ nextflow_pipeline {
 
         when{
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-batchsize.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-batchsize.json"
                 outdir = "results"
                 batch_size = 1
             }
@@ -1016,7 +1016,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-duplicateMLST.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-duplicateMLST.json"
                 outdir = "results"
                 gm_thresholds = "10"
 
@@ -1151,7 +1151,7 @@ nextflow_pipeline {
 
         when{
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-duplicateMLST.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-duplicateMLST.json"
                 outdir = "results"
                 gm_thresholds = "10"
 
@@ -1274,7 +1274,7 @@ nextflow_pipeline {
         tag "pipeline_16_metadata"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-16.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-16.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -1398,7 +1398,7 @@ nextflow_pipeline {
         tag "pipeline_50_metadata"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-50.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-50.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -1556,7 +1556,7 @@ nextflow_pipeline {
         tag "zip-output"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 zip_cluster_results = true
@@ -1636,7 +1636,7 @@ nextflow_pipeline {
         tag "output_prefix_with_date"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -1737,7 +1737,7 @@ nextflow_pipeline {
         tag "output_prefix_no_date"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -1838,7 +1838,7 @@ nextflow_pipeline {
         tag "output_prefix_just_date"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -1939,7 +1939,7 @@ nextflow_pipeline {
         tag "integer_id_metadata_partition"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-integers.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-integers.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2070,7 +2070,7 @@ nextflow_pipeline {
         tag "float_id_metadata_partition"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-floats.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-floats.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2201,7 +2201,7 @@ nextflow_pipeline {
         tag "special_metadata"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-special-characters.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-metadata-special-characters.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2378,7 +2378,7 @@ nextflow_pipeline {
         tag "unsorted"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-reversed.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-reversed.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2419,7 +2419,7 @@ nextflow_pipeline {
         tag "sorted"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-reversed.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-reversed.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2461,7 +2461,7 @@ nextflow_pipeline {
         tag "outlier_all"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2508,7 +2508,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-default-all-empty.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-default-all-empty.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2548,7 +2548,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-default-some-empty.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-default-some-empty.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2588,7 +2588,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-changed-all-empty.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-all-changed-all-empty.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2634,7 +2634,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-mix.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-columns-mix.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -2679,7 +2679,7 @@ nextflow_pipeline {
         // Samples with empty metadata partition are dropped due to ignore_empty_metadata_partition = true (default is false)
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-mixed.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-mixed.json"
                 ignore_empty_metadata_partition = true
                 outdir = "results"
 
@@ -2771,7 +2771,7 @@ nextflow_pipeline {
         // Samples with empty metadata partition are dropped due to ignore_empty_metadata_partition = true (default is false)
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.json"
                 ignore_empty_metadata_partition = true
                 outdir = "results"
 
@@ -2863,7 +2863,7 @@ nextflow_pipeline {
         // Samples with empty metadata partition are kept when ignore_empty_metadata_partition = false
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition.json"
                 ignore_empty_metadata_partition = false
                 outdir = "results"
 
@@ -2959,7 +2959,7 @@ nextflow_pipeline {
         // If the samplesheet has an empty metadata_partition column, and "ignore_empty_metadata_partition" is true, then the workflow will error
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-column.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-empty-metadata_partition-column.json"
                 ignore_empty_metadata_partition = true
                 outdir = "results"
 

@@ -1,0 +1,80 @@
+[
+  {
+    "sample": "S1",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json",
+    "metadata_partition": "1.1.1.1",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EHEC/STEC",
+    "metadata_3": "Canada",
+    "metadata_4": "O157:H7",
+    "metadata_5": "21",
+    "metadata_6": "2024/05/30",
+    "metadata_7": "beef",
+    "metadata_8": "true"
+  },
+  {
+    "sample": "S2",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json",
+    "metadata_partition": "1.1.1.1",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EHEC/STEC",
+    "metadata_3": "The United States",
+    "metadata_4": "O157:H7",
+    "metadata_5": "55",
+    "metadata_6": "2024/05/21",
+    "metadata_7": "milk",
+    "metadata_8": "false"
+  },
+  {
+    "sample": "S3",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S3.mlst.json",
+    "metadata_partition": "1.1.1.2",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EPEC",
+    "metadata_3": "France",
+    "metadata_4": "O125",
+    "metadata_5": "14",
+    "metadata_6": "2024/04/30",
+    "metadata_7": "cheese",
+    "metadata_8": "true"
+  },
+  {
+    "sample": "S4",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S4.mlst.json",
+    "metadata_partition": "1.1.1.2",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EPEC",
+    "metadata_3": "France",
+    "metadata_4": "O125",
+    "metadata_5": "35",
+    "metadata_6": "2024/04/22",
+    "metadata_7": "cheese",
+    "metadata_8": "true"
+  },
+  {
+    "sample": "S5",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json",
+    "metadata_partition": "1.1.1.3",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EAEC",
+    "metadata_3": "Canada",
+    "metadata_4": "O126:H27",
+    "metadata_5": "61",
+    "metadata_6": "2012/09/01",
+    "metadata_7": "milk",
+    "metadata_8": "false"
+  },
+  {
+    "sample": "S6",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json",
+    "metadata_partition": "unassociated",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EAEC",
+    "metadata_3": "Canada",
+    "metadata_4": "O111:H21",
+    "metadata_5": "43",
+    "metadata_6": "2011/12/25",
+    "metadata_7": "fruit",
+    "metadata_8": "false"
+  }
+]

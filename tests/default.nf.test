@@ -8,7 +8,7 @@ nextflow_pipeline {
 
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.csv"
+                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
                 outdir = "$outputDir"
 
                 metadata_partition_name = "outbreak"
