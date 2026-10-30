@@ -57,7 +57,7 @@ workflow CLUSTER_SPLITTER {
 
     pre_input = Channel.fromList(samplesheetToList(params.input, "assets/schema_input.json"))
     // and remove non-alphanumeric characters in sample_names (meta.id), whilst also correcting for duplicate sample_names (meta.id)
-    .map { meta, mlst_file ->
+    .map { meta, mlst_path ->
             if (params.ignore_empty_metadata_partition)
                 if (meta.metadata_partition == "" || meta.metadata_partition == null || meta.metadata_partition == "null") return // Skip samples with empty partition metadata
             uniqueMLST = true
@@ -71,7 +71,7 @@ workflow CLUSTER_SPLITTER {
             while (processedIDs.contains(meta.id)) {
                 meta.id = "${meta.id}_${meta.irida_id}"
             }
-
+            def mlst_file = file(mlst_path)
             // Check if the MLST file is unique
             if (processedMLST.contains(mlst_file.baseName)) {
                 uniqueMLST = false
