@@ -31,6 +31,7 @@ Entries in the metadata columns in the sample sheet (`metadata_1` through `metad
 An example of the sample sheet is available in [tests/data/samplesheets/samplesheet.csv](tests/data/samplesheets/samplesheet.csv) and corresponding example metadata headers are available in [assets/parameters.yaml](assets/parameters.yaml).
 
 Furthermore, the structure of the sample sheet is programmatically defined in [assets/schema_input.json](assets/schema_input.json). Validation of the sample sheet is performed by [nf-validation](https://nextflow-io.github.io/nf-validation/).
+
 ## JSON-formatted samplesheet
 
 If the provided sample sheet is in JSON format, then the JSON sample sheet must be an array of objects with each object containing the `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_50` fields, as illustrated below.
@@ -55,6 +56,7 @@ If the provided sample sheet is in JSON format, then the JSON sample sheet must 
   }
 ]
 ```
+
 ## IRIDA-Next Optional Input Configuration
 
 `arboratornf` accepts the [IRIDA-Next](https://github.com/phac-nml/irida-next) format for samplesheets which can contain an additional column: `sample_name`

@@ -27,6 +27,7 @@ S4,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profile
 S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json,3,"Escherichia coli","EAEC","Canada","O126:H27",61,"2012/09/01","milk",false,s5-meta9,s5-meta10,s5-meta11,s5-meta12,s5-meta13,s5-meta14,s5-meta15,s5-meta16,s5-meta16,s5-meta17,s5-meta18,s5-meta19,s5-meta20,s5-meta21,s5-meta22,s5-meta23,s5-meta24,s5-meta25,s5-meta26,s5-meta27,s5-meta28,s5-meta29,s5-meta30,s5-meta31,s5-meta32,s5-meta33,s5-meta34,s5-meta35,s5-meta36,s5-meta37,s5-meta38,s5-meta39,s5-meta40,s5-meta41,s5-meta42,s5-meta43,s5-meta44,s5-meta45,s5-meta46,s5-meta47,s5-meta48,s5-meta49,s5-meta50
 S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16,s6-meta16,s6-meta17,s6-meta18,s6-meta19,s6-meta20,s6-meta21,s6-meta22,s6-meta23,s6-meta24,s6-meta25,s6-meta26,s6-meta27,s6-meta28,s6-meta29,s6-meta30,s6-meta31,s6-meta32,s6-meta33,s6-meta34,s6-meta35,s6-meta36,s6-meta37,s6-meta38,s6-meta39,s6-meta40,s6-meta41,s6-meta42,s6-meta43,s6-meta44,s6-meta45,s6-meta46,s6-meta47,s6-meta48,s6-meta49,s6-meta50
 ```
+
 If the provided sample sheet is in JSON format, then the JSON sample sheet must be an array of objects with each object containing the `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_50` fields, as illustrated below.
 
 ```json
