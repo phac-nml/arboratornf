@@ -1,0 +1,80 @@
+[
+  {
+    "sample": "S1",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S1.mlst.json",
+    "metadata_partition": "1",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  },
+  {
+    "sample": "S2",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S2.mlst.json",
+    "metadata_partition": "1",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  },
+  {
+    "sample": "S3",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S3.mlst.json",
+    "metadata_partition": "2",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  },
+  {
+    "sample": "S4",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S4.mlst.json",
+    "metadata_partition": "2",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  },
+  {
+    "sample": "S5",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S5.mlst.json",
+    "metadata_partition": "3",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  },
+  {
+    "sample": "S6",
+    "mlst_alleles": "https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json",
+    "metadata_partition": "unassociated",
+    "metadata_1": "",
+    "metadata_2": "",
+    "metadata_3": "",
+    "metadata_4": "",
+    "metadata_5": "",
+    "metadata_6": "",
+    "metadata_7": "",
+    "metadata_8": ""
+  }
+]

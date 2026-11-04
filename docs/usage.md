@@ -6,7 +6,7 @@ This [Nextflow](https://www.nextflow.io/) pipeline implements [Arborator](https:
 
 ## Samplesheet Input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be either a comma-separated file with 3 columns, and a header row as shown in the examples below OR a JSON-formatted file..
 
 ```bash
 --input '[path to samplesheet file]'
@@ -14,7 +14,7 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Full Standard Samplesheet
 
-The input samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_50`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
+The input CSV samplesheet must contain the following columns: `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_50`. The IDs (sample column) within a samplesheet should be unique and contain no spaces. Any other additionally specified trailing columns will be ignored.
 
 An input sample sheet compatible with this workflow would look as follows:
 
@@ -28,14 +28,69 @@ S5,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profile
 S6,https://raw.githubusercontent.com/phac-nml/arboratornf/dev/tests/data/profiles/S6.mlst.json,unassociated,"Escherichia coli","EAEC","Canada","O111:H21",43,"2011/12/25","fruit",false,s6-meta9,s6-meta10,s6-meta11,s6-meta12,s6-meta13,s6-meta14,s6-meta15,s6-meta16,s6-meta16,s6-meta17,s6-meta18,s6-meta19,s6-meta20,s6-meta21,s6-meta22,s6-meta23,s6-meta24,s6-meta25,s6-meta26,s6-meta27,s6-meta28,s6-meta29,s6-meta30,s6-meta31,s6-meta32,s6-meta33,s6-meta34,s6-meta35,s6-meta36,s6-meta37,s6-meta38,s6-meta39,s6-meta40,s6-meta41,s6-meta42,s6-meta43,s6-meta44,s6-meta45,s6-meta46,s6-meta47,s6-meta48,s6-meta49,s6-meta50
 ```
 
-| Column                    | Description                                                                                                                                                                     |
+If the provided sample sheet is in JSON format, then the JSON sample sheet must be an array of objects with each object containing the `sample`, `mlst_alleles`, `metadata_partition`, and `metadata_1` through `metadata_50` fields, as illustrated below.
+
+```json
+[
+  {
+    "sample": "S1",
+    "mlst_alleles": "S1.mlst.json",
+    "metadata_partition": "1",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EHEC/STEC",
+    "metadata_3": "Canada",
+    "metadata_4": "O157:H7",
+    "metadata_5": "21",
+    "metadata_6": "2024/05/30",
+    "metadata_7": "beef",
+    "metadata_8": "true",
+    "metadata_9": "s1-meta9",
+    ...
+    "metadata_50": "s1-meta50"
+  },
+  {
+    "sample": "S2",
+    "mlst_alleles": "S2.mlst.json",
+    "metadata_partition": "1",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EHEC/STEC",
+    "metadata_3": "The United States",
+    "metadata_4": "O157:H7",
+    "metadata_5": "55",
+    "metadata_6": "2024/05/21",
+    "metadata_7": "milk",
+    "metadata_8": "false",
+    "metadata_9": "s2-meta9",
+    ...
+    "metadata_50": "s1-meta50"
+  },
+  {
+    "sample": "S3",
+    "mlst_alleles": "S3.mlst.json",
+    "metadata_partition": "2",
+    "metadata_1": "Escherichia coli",
+    "metadata_2": "EPEC",
+    "metadata_3": "France",
+    "metadata_4": "O125",
+    "metadata_5": "14",
+    "metadata_6": "2024/04/30",
+    "metadata_7": "cheese",
+    "metadata_8": "true",
+    "metadata_9": "s3-meta9",
+    ...
+    "metadata_50": "s1-meta50"
+  }
+]
+```
+
+| Column/Array              | Description                                                                                                                                                                     |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `sample`                  | Custom sample name. Samples should be unique within a samplesheet and contain no spaces.                                                                                        |
 | `mlst_alleles`            | A URI path to a JSON-formatted genomic profile. An example of this file is provided in [tests/data/profiles/S1.mlst.json](../tests/data/profiles/S1.mlst.json).                 |
 | `metadata_partition`      | The specific metadata column used to partition the genomic profiles. For example, this column might refer to the outbreak number and the contain such entries as "1", "2", etc. |
 | `metadata_1..metadata_50` | Metadata that will be associated with each genomic profile. These metadata will be summarized in the Arborator outputs.                                                         |
 
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+A [example samplesheet](../assets/samplesheet_minimal.csv) and an [example JSON sample sheet](../assets/samplesheet.json) has been provided with the pipeline.
 
 ### IRIDA-Next Optional Samplesheet Configuration
 
