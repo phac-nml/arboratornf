@@ -52,6 +52,11 @@ process MAP_TO_TSV {
     }
 
     metadata = metadata.transpose()
+    metadata = metadata.collect { row ->
+        row.collect { value ->
+            value == null ? null : value.toString().replaceAll(/[\t\n\r\\]/, '_')
+        }
+    }
     nonempty_column_headers = metadata[0]
 
     output_place.withWriter{ writer ->

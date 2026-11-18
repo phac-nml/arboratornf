@@ -36,6 +36,34 @@ nextflow_process {
 
     }
 
+    test("Embedded separators are replaced") {
+        tag "embedded_separators"
+        when {
+            params {
+                outdir = "tests/results"
+            }
+            process {
+                """
+                input[0] = new Tuple("sample", "out\\nbreak", "special\\tname")
+                input[1] = new Tuple(["S1", "group\\n1", "value\\twith\\nlines"])
+                """
+            }
+        }
+
+        then {
+            assert process.success
+
+            with(process.out) {
+                assert nonempty_column_headers == [["sample", "out_break", "special_name"]]
+
+                def tsv_text = path(tsv_path[0]).readLines()
+                assert tsv_text.size() == 2
+                assert tsv_text.contains("sample\tout_break\tspecial_name")
+                assert tsv_text.contains("S1\tgroup_1\tvalue_with_lines")
+            }
+        }
+    }
+
     test("Single row, empty columns, head, drop") {
         tag "single_row_empty_columns_head_drop"
         // Metadata columns that are empty and default are dropped
