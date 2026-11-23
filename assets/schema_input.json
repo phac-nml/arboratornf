@@ -8,700 +8,381 @@
         "type": "object",
         "properties": {
             "sample": {
-                "type": [
-                    "string"
-                ],
+                "type": ["string"],
                 "pattern": "^\\S+$",
-                "meta": [
-                    "irida_id"
-                ],
+                "meta": ["irida_id"],
                 "unique": true,
                 "errorMessage": "Sample name must be provided and cannot contain spaces."
             },
             "sample_name": {
-                "type": [
-                    "string"
-                ],
-                "meta": [
-                    "id"
-                ],
+                "type": ["string"],
+                "meta": ["id"],
                 "errorMessage": "Sample name is optional, if provided will replace sample for filenames and outputs"
             },
             "mlst_alleles": {
-                "type": [
-                    "string"
-                ],
+                "type": ["string"],
                 "format": "file-path",
                 "pattern": "^\\S+\\.mlst(\\.subtyping)?\\.json(\\.gz)?$",
                 "errorMessage": "MLST JSON file from locidex report. The file path cannot contain spaces and must have one of the following extensions: '.mlst.json', '.mlst.json.gz', '.mlst.subtyping.json', or '.mlst.subtyping.json.gz'."
             },
             "metadata_partition": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_partition"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_partition).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_partition"],
+                "errorMessage": "Metadata column used to partition clusters. Must contain only alphanumeric, underscore, period, and dash characters.",
                 "default": "",
-                "pattern": "^[\\s\\S]*$"
+                "pattern": "^[a-zA-Z0-9_.-]*$"
             },
             "metadata_1": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_1"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_1).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_1"],
+                "errorMessage": "Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_2": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_2"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_2).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_2"],
+                "errorMessage": "Metadata associated with the sample (metadata_2). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_3": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_3"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_3).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_3"],
+                "errorMessage": "Metadata associated with the sample (metadata_3). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_4": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_4"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_4).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_4"],
+                "errorMessage": "Metadata associated with the sample (metadata_4). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_5": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_5"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_5).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_5"],
+                "errorMessage": "Metadata associated with the sample (metadata_5). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_6": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_6"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_6).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_6"],
+                "errorMessage": "Metadata associated with the sample (metadata_6). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_7": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_7"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_7).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_7"],
+                "errorMessage": "Metadata associated with the sample (metadata_7). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_8": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_8"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_8).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_8"],
+                "errorMessage": "Metadata associated with the sample (metadata_8). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_9": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_9"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_9).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_9"],
+                "errorMessage": "Metadata associated with the sample (metadata_9). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_10": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_10"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_10).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_10"],
+                "errorMessage": "Metadata associated with the sample (metadata_10). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_11": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_11"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_11).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_11"],
+                "errorMessage": "Metadata associated with the sample (metadata_11). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_12": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_12"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_12).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_12"],
+                "errorMessage": "Metadata associated with the sample (metadata_12). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_13": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_13"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_13).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_13"],
+                "errorMessage": "Metadata associated with the sample (metadata_13). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_14": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_14"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_14).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_14"],
+                "errorMessage": "Metadata associated with the sample (metadata_14). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_15": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_15"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_15).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_15"],
+                "errorMessage": "Metadata associated with the sample (metadata_15). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_16": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_16"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_16).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_16"],
+                "errorMessage": "Metadata associated with the sample (metadata_16). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_17": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_17"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_17).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_17"],
+                "errorMessage": "Metadata associated with the sample (metadata_17). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_18": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_18"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_18).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_18"],
+                "errorMessage": "Metadata associated with the sample (metadata_18). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_19": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_19"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_19).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_19"],
+                "errorMessage": "Metadata associated with the sample (metadata_19). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_20": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_20"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_20).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_20"],
+                "errorMessage": "Metadata associated with the sample (metadata_20). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_21": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_21"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_21).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_21"],
+                "errorMessage": "Metadata associated with the sample (metadata_21). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_22": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_22"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_22).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_22"],
+                "errorMessage": "Metadata associated with the sample (metadata_22). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_23": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_23"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_23).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_23"],
+                "errorMessage": "Metadata associated with the sample (metadata_23). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_24": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_24"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_24).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_24"],
+                "errorMessage": "Metadata associated with the sample (metadata_24). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_25": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_25"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_25).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_25"],
+                "errorMessage": "Metadata associated with the sample (metadata_25). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_26": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_26"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_26).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_26"],
+                "errorMessage": "Metadata associated with the sample (metadata_26). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_27": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_27"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_27).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_27"],
+                "errorMessage": "Metadata associated with the sample (metadata_27). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_28": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_28"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_28).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_28"],
+                "errorMessage": "Metadata associated with the sample (metadata_28). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_29": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_29"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_29).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_29"],
+                "errorMessage": "Metadata associated with the sample (metadata_29). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_30": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_30"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_30).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_30"],
+                "errorMessage": "Metadata associated with the sample (metadata_30). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_31": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_31"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_31).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_31"],
+                "errorMessage": "Metadata associated with the sample (metadata_31). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_32": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_32"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_32).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_32"],
+                "errorMessage": "Metadata associated with the sample (metadata_32). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_33": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_33"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_33).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_33"],
+                "errorMessage": "Metadata associated with the sample (metadata_33). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_34": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_34"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_34).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_34"],
+                "errorMessage": "Metadata associated with the sample (metadata_34). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_35": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_35"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_35).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_35"],
+                "errorMessage": "Metadata associated with the sample (metadata_35). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_36": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_36"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_36).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_36"],
+                "errorMessage": "Metadata associated with the sample (metadata_36). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_37": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_37"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_37).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_37"],
+                "errorMessage": "Metadata associated with the sample (metadata_37). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_38": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_38"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_38).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_38"],
+                "errorMessage": "Metadata associated with the sample (metadata_38). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_39": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_39"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_39).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_39"],
+                "errorMessage": "Metadata associated with the sample (metadata_39). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_40": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_40"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_40).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_40"],
+                "errorMessage": "Metadata associated with the sample (metadata_40). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_41": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_41"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_41).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_41"],
+                "errorMessage": "Metadata associated with the sample (metadata_41). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_42": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_42"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_42).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_42"],
+                "errorMessage": "Metadata associated with the sample (metadata_42). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_43": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_43"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_43).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_43"],
+                "errorMessage": "Metadata associated with the sample (metadata_43). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_44": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_44"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_44).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_44"],
+                "errorMessage": "Metadata associated with the sample (metadata_44). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_45": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_45"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_45).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_45"],
+                "errorMessage": "Metadata associated with the sample (metadata_45). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_46": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_46"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_46).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_46"],
+                "errorMessage": "Metadata associated with the sample (metadata_46). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_47": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_47"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_47).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_47"],
+                "errorMessage": "Metadata associated with the sample (metadata_47). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_48": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_48"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_48).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_48"],
+                "errorMessage": "Metadata associated with the sample (metadata_48). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_49": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_49"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_49).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_49"],
+                "errorMessage": "Metadata associated with the sample (metadata_49). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             },
             "metadata_50": {
-                "type": [
-                    "string",
-                    "integer",
-                    "number"
-                ],
-                "meta": [
-                    "metadata_50"
-                ],
-                "errorMessage": "Metadata associated with the sample (metadata_50).",
+                "type": ["string", "integer", "number"],
+                "meta": ["metadata_50"],
+                "errorMessage": "Metadata associated with the sample (metadata_50). Cannot contain newlines, tabs, backslash, or double quotes",
                 "default": "",
                 "pattern": "^[\\s\\S]*$"
             }
         },
-        "required": [
-            "sample",
-            "mlst_alleles"
-        ]
+        "required": ["sample", "mlst_alleles"]
     }
 }
