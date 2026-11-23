@@ -19,7 +19,7 @@ process WRITE_METADATA {
 
     task.workDir.resolve("results.csv").withWriter { writer ->
         // Header:
-        writer.writeLine(metadata_headers.collect(replaceInvalidSeparatorCharacters).join(","))
+        writer.writeLine(metadata_headers.join(","))
 
         // Contents:
         metadata_rows.each {

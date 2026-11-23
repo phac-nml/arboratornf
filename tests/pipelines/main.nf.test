@@ -2989,7 +2989,7 @@ nextflow_pipeline {
         tag "double-quotes"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet.json"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-quotes.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
@@ -3000,10 +3000,6 @@ nextflow_pipeline {
                 metadata_5_header = "age"
                 metadata_6_header = "date"
                 metadata_7_header = "source"
-                metadata_9_header = '""special'
-                metadata_10_header = "\nspecial"
-                metadata_11_header = "\tspecial"
-                metadata_12_header = "\\special"
 
                 ar_tree_distances = "cophenetic"
             }

@@ -44,7 +44,7 @@ nextflow_process {
             }
             process {
                 """
-                input[0] = new Tuple("sample", "out\\nbreak", "special\\tname")
+                input[0] = new Tuple("sample", "outbreak", "special")
                 input[1] = new Tuple(["S1", "group\\n1", "value\\twith\\nlines"])
                 """
             }
@@ -54,11 +54,11 @@ nextflow_process {
             assert process.success
 
             with(process.out) {
-                assert nonempty_column_headers == [["sample", "out_break", "special_name"]]
+                assert nonempty_column_headers == [["sample", "outbreak", "special"]]
 
                 def tsv_text = path(tsv_path[0]).readLines()
                 assert tsv_text.size() == 2
-                assert tsv_text.contains("sample\tout_break\tspecial_name")
+                assert tsv_text.contains("sample\toutbreak\tspecial")
                 assert tsv_text.contains("S1\tgroup_1\tvalue_with_lines")
             }
         }

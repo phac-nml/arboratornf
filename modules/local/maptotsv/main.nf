@@ -32,6 +32,12 @@ process MAP_TO_TSV {
     def delimiter = '\t'
     output_place = task.workDir.resolve(output_file)
 
+    metadata_rows = metadata_rows.collect { row ->
+        row.collect { value ->
+            value == null ? null : value.toString().replaceAll(/[\t\n\r\\]/, '_')
+        }
+    }
+
     metadata = [metadata_headers] + metadata_rows
     metadata = metadata.transpose()
 
@@ -52,11 +58,6 @@ process MAP_TO_TSV {
     }
 
     metadata = metadata.transpose()
-    metadata = metadata.collect { row ->
-        row.collect { value ->
-            value == null ? null : value.toString().replaceAll(/[\t\n\r\\]/, '_')
-        }
-    }
     nonempty_column_headers = metadata[0]
 
     output_place.withWriter{ writer ->
