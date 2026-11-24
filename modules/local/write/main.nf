@@ -10,12 +10,6 @@ process WRITE_METADATA {
     path("results.csv"), emit: results
 
     exec:
-    def replaceInvalidSeparatorCharacters = { value ->
-        value.toString()
-            .replace('\t', '_')
-            .replace('\n', '_')
-            .replace('\r', '_')
-    }
 
     task.workDir.resolve("results.csv").withWriter { writer ->
         // Header:
@@ -23,7 +17,7 @@ process WRITE_METADATA {
 
         // Contents:
         metadata_rows.each {
-            writer.writeLine(it.collect(replaceInvalidSeparatorCharacters).join(","))
+            writer.writeLine(it.join(","))
         }
     }
 }

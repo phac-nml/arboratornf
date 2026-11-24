@@ -2877,7 +2877,7 @@ nextflow_pipeline {
         }
     }
 
-        test("Double quotes in metadata"){
+    test("Double quotes in metadata"){
         tag "double-quotes"
         when {
             params {
