@@ -136,7 +136,7 @@ workflow CLUSTER_SPLITTER {
     metadata_rows = input.map { meta, mlst_files ->
         def metadataValues = (1..METADATA_ROW_COUNT).collect { n ->
             def value = meta["metadata_${n}".toString()]
-            value == null ? null : value.toString().replaceAll(CHARACTERS_TO_REPLACE, REPLACE_WITH)
+            return (value == null) ? null : value.toString().replaceAll(CHARACTERS_TO_REPLACE, REPLACE_WITH)
         }
         [
             meta.id,

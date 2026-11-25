@@ -60,8 +60,6 @@ runs:
       shell: bash
       env:
         NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
-        NFT_VER: "0.9.4"
-        NXF_VER: "25.10.4"
       run: |
         nf-test test \
           --profile=+${{ inputs.profile }} \
