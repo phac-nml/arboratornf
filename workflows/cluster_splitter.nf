@@ -51,6 +51,7 @@ workflow CLUSTER_SPLITTER {
     ID_COLUMN2 = "sample"
     CHARACTERS_TO_REPLACE = /[\t\n\r\\]/
     REPLACE_WITH = "_"
+    METADATA_ROW_COUNT = 50
     ch_versions = Channel.empty()
 
     // Track processed IDs
@@ -133,7 +134,7 @@ workflow CLUSTER_SPLITTER {
 
     // Metadata rows:
     metadata_rows = input.map { meta, mlst_files ->
-        def metadataValues = (1..50).collect { n ->
+        def metadataValues = (1..METADATA_ROW_COUNT).collect { n ->
             def value = meta["metadata_${n}".toString()]
             value == null ? null : value.toString().replaceAll(CHARACTERS_TO_REPLACE, REPLACE_WITH)
         }

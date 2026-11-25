@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
-- Samplesheet metadata values now supoort special characters ( `""`, `\t`, `\n`, and `\`). [PR 90](https://github.com/phac-nml/arboratornf/pull/90)
+- Samplesheet metadata values now support special characters ( `""`, `\t`, `\n`, and `\`). [PR 90](https://github.com/phac-nml/arboratornf/pull/90)
 
 ## [0.10.0] - 2026-10-04
 

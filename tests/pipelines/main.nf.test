@@ -2877,11 +2877,11 @@ nextflow_pipeline {
         }
     }
 
-    test("Double quotes in metadata"){
-        tag "double-quotes"
+    test("Check special characters in metadata"){
+        tag "special-characters"
         when {
             params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-quotes.json"
+                input = "$baseDir/tests/data/samplesheets/samplesheet-special-characters.json"
                 outdir = "results"
 
                 metadata_partition_name = "outbreak"
