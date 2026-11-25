@@ -49,6 +49,9 @@ workflow CLUSTER_SPLITTER {
 
     ID_COLUMN = "sample_name"
     ID_COLUMN2 = "sample"
+    CHARACTERS_TO_REPLACE = /[\t\n\r\\]/
+    REPLACE_WITH = "_"
+    METADATA_ROW_COUNT = 50
     ch_versions = Channel.empty()
 
     // Track processed IDs
@@ -130,22 +133,18 @@ workflow CLUSTER_SPLITTER {
         )
 
     // Metadata rows:
-    metadata_rows = input.map{
-        meta, mlst_files -> tuple(meta.id, meta.irida_id, meta.metadata_partition,
-        meta.metadata_1, meta.metadata_2, meta.metadata_3, meta.metadata_4,
-        meta.metadata_5, meta.metadata_6, meta.metadata_7, meta.metadata_8,
-        meta.metadata_9, meta.metadata_10, meta.metadata_11, meta.metadata_12,
-        meta.metadata_13, meta.metadata_14, meta.metadata_15, meta.metadata_16,
-        meta.metadata_17, meta.metadata_18, meta.metadata_19, meta.metadata_20,
-        meta.metadata_21, meta.metadata_22, meta.metadata_23, meta.metadata_24,
-        meta.metadata_25, meta.metadata_26, meta.metadata_27, meta.metadata_28,
-        meta.metadata_29, meta.metadata_30, meta.metadata_31, meta.metadata_32,
-        meta.metadata_33, meta.metadata_34, meta.metadata_35, meta.metadata_36,
-        meta.metadata_37, meta.metadata_38, meta.metadata_39, meta.metadata_40,
-        meta.metadata_41, meta.metadata_42, meta.metadata_43, meta.metadata_44,
-        meta.metadata_45, meta.metadata_46, meta.metadata_47, meta.metadata_48,
-        meta.metadata_49, meta.metadata_50)
+    metadata_rows = input.map { meta, mlst_files ->
+        def metadataValues = (1..METADATA_ROW_COUNT).collect { n ->
+            def value = meta["metadata_${n}".toString()]
+            return (value == null) ? null : value.toString().replaceAll(CHARACTERS_TO_REPLACE, REPLACE_WITH)
+        }
+        [
+            meta.id,
+            meta.irida_id,
+            meta.metadata_partition
+        ] + metadataValues
     }.toList()
+
     // Prepare MLST files for LOCIDEX_MERGE
 
     merged_alleles = input

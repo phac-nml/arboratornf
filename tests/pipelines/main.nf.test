@@ -573,114 +573,6 @@ nextflow_pipeline {
         }
     }
 
-    test("bad metadata_1 tab"){
-        tag "bad_metadata_1_tab"
-        when {
-            params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-tab.json"
-                outdir = "results"
-
-                metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
-
-                ar_tree_distances = "cophenetic"
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia\tcoli): \"Escherichia\tcoli\" does not match regular expression")
-        }
-    }
-
-    test("bad metadata_1 double quote (\")"){
-        tag "bad_metadata_1_double_quote"
-        when {
-            params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-double-quote.json"
-                outdir = "results"
-
-                metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
-
-                ar_tree_distances = "cophenetic"
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia the name\" coli\"): \"Escherichia the name\" coli\"\" does not match regular expression")
-        }
-    }
-
-    test("bad metadata_1 newline (\\n)"){
-        tag "bad_metadata_1_newline"
-        when {
-            params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-newline.json"
-                outdir = "results"
-
-                metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
-
-                ar_tree_distances = "cophenetic"
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Entry 1: Error for field \'metadata_1\' (Escherichia\ncoli): \"Escherichia\ncoli\"")
-        }
-    }
-
-    test("bad metadata_1 escape (\\)"){
-        tag "bad_metadata_1_escape"
-        when {
-            params {
-                input = "$baseDir/tests/data/samplesheets/samplesheet-bad-metadata-escape.json"
-                outdir = "results"
-
-                metadata_partition_name = "outbreak"
-                metadata_1_header = "organism"
-                metadata_2_header = "subtype"
-                metadata_3_header = "country"
-                metadata_4_header = "serovar"
-                metadata_5_header = "age"
-                metadata_6_header = "date"
-                metadata_7_header = "source"
-                metadata_8_header = "special"
-
-                ar_tree_distances = "cophenetic"
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.stderr.join("\n").contains("Metadata associated with the sample (metadata_1). Cannot contain newlines, tabs, backslash, or double quotes")
-        }
-    }
-
     test("bad output_prefix"){
         tag "bad_outbreak_prefix"
         when {
@@ -2981,6 +2873,46 @@ nextflow_pipeline {
             assert workflow.failed
             assert workflow.stdout.contains("No samples to process after filtering for empty metadata partitions. Please check your sample sheet and the value of --metadata_partition_name.")
 
+
+        }
+    }
+
+    test("Check special characters in metadata"){
+        tag "special-characters"
+        when {
+            params {
+                input = "$baseDir/tests/data/samplesheets/samplesheet-special-characters.json"
+                outdir = "results"
+
+                metadata_partition_name = "outbreak"
+                metadata_1_header = "organism"
+                metadata_2_header = "subtype"
+                metadata_3_header = "country"
+                metadata_4_header = "serovar"
+                metadata_5_header = "age"
+                metadata_6_header = "date"
+                metadata_7_header = "source"
+
+                ar_tree_distances = "cophenetic"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("$launchDir/results").exists()
+
+            def combined_stdout = workflow.stdout.join(",")
+            assert combined_stdout.contains("JSON did not match schema") == false
+
+            // Check merged profiles
+            def actual_profile_tsv = path("$launchDir/results/locidex/merged/profile_1.tsv")
+            def expected_profile_tsv = path("$baseDir/tests/data/profiles/merged_profiles.tsv")
+            assert actual_profile_tsv.text == expected_profile_tsv.text
+
+            // Check aggregated metadata
+            def actual_metadata = path("$launchDir/results/metadata/aggregated_data.tsv")
+            def expected_metadata = path("$baseDir/tests/data/metadata/expected_characters-metadata.tsv")
+            assert actual_metadata.text == expected_metadata.text
 
         }
     }

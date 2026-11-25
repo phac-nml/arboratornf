@@ -10,6 +10,7 @@ process WRITE_METADATA {
     path("results.csv"), emit: results
 
     exec:
+
     task.workDir.resolve("results.csv").withWriter { writer ->
         // Header:
         writer.writeLine(metadata_headers.join(","))
